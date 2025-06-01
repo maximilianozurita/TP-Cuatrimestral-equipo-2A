@@ -23,13 +23,13 @@ namespace negocio
             comando = new SqlCommand();
         }
 
-        public void setearConsulta(string consulta)
+        public void SetearConsulta(string consulta)
         {
             comando.CommandType = System.Data.CommandType.Text;
             comando.CommandText = consulta;
         }
 
-        public void ejecutarLectura()
+        public void EjecutarLectura()
         {
             comando.Connection = conexion;
             try
@@ -42,7 +42,7 @@ namespace negocio
                 throw new Exception("Error al conectar a la base de datos", ex);
             }
         }
-        public void ejecutarAccion()
+        public void EjecutarAccion()
         {
             comando.Connection = conexion;
             try
@@ -55,7 +55,7 @@ namespace negocio
                 throw ex;
             }
         }
-        public int ejecutarAccionAndReturnId()
+        public int EjecutarAccionAndReturnId()
         {
             comando.Connection = conexion;
             try
@@ -80,11 +80,11 @@ namespace negocio
                 conexion.Close();
             }
         }
-        public void setearParametros(string nombre, object valor)
+        public void SetearParametros(string nombre, object valor)
         {
             comando.Parameters.AddWithValue(nombre, valor);
         }
-        public void cerrarConexion()
+        public void CerrarConexion()
         {
             if (lector != null)
                 lector.Close();
