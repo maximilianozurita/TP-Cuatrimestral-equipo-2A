@@ -15,6 +15,6 @@ namespace dominio
         public float Precio { get; set; }
         public List<Imagen> Imagen { get; set; }
         public float Descuento { get; set; }
-        public bool Estado { get; set; }
+        public DateTime? FechaBaja { get; set; }
     }
 }

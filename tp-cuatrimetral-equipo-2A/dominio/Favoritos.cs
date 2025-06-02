@@ -5,10 +5,10 @@ using System.Web;
 
 namespace dominio
 {
-    public class Imagen
+    public class Favoritos
     {
         public int ID { get; set; }
-        public string ImagenUrl { get; set; }
-        public DateTime? FechaBaja { get; set; }
+        public Producto Producto { get; set; }
+        public Usuario Usuario { get; set; }
     }
 }
