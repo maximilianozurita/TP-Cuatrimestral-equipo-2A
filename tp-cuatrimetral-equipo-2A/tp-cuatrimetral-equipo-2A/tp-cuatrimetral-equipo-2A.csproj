@@ -67,12 +67,180 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Admin\Envios\List.aspx" />
+    <Content Include="Admin\Productos\Agregar.aspx" />
+    <Content Include="Admin\Productos\List.aspx" />
+    <Content Include="Admin\Productos\Modificar.aspx" />
+    <Content Include="Admin\Usuarios\Agregar.aspx" />
+    <Content Include="Admin\Usuarios\List.aspx" />
+    <Content Include="Admin\Usuarios\Modificar.aspx" />
+    <Content Include="Admin\Ventas\Detalle.aspx" />
+    <Content Include="Admin\Ventas\List.aspx" />
+    <Content Include="Default.aspx" />
+    <Content Include="Error.aspx" />
+    <Content Include="Productos\Carrito.aspx" />
+    <Content Include="Productos\Detalle.aspx" />
+    <Content Include="Productos\Favoritos.aspx" />
+    <Content Include="Productos\FormularioCompra.aspx" />
+    <Content Include="Productos\List.aspx" />
+    <Content Include="Productos\MisCompras.aspx" />
+    <Content Include="Usuarios\Login.aspx" />
+    <Content Include="Usuarios\RecuperarContrasena.aspx" />
+    <Content Include="Usuarios\Registro.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\Envios\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Envios\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Productos\Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Productos\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Productos\Modificar.aspx.cs">
+      <DependentUpon>Modificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\Modificar.aspx.designer.cs">
+      <DependentUpon>Modificar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Usuarios\Agregar.aspx.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Usuarios\Agregar.aspx.designer.cs">
+      <DependentUpon>Agregar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Usuarios\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Usuarios\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Usuarios\Modificar.aspx.cs">
+      <DependentUpon>Modificar.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Usuarios\Modificar.aspx.designer.cs">
+      <DependentUpon>Modificar.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Ventas\Detalle.aspx.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Ventas\Detalle.aspx.designer.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Ventas\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Ventas\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPage.Master.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPage.Master.designer.cs">
+      <DependentUpon>MasterPage.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\Carrito.aspx.cs">
+      <DependentUpon>Carrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\Carrito.aspx.designer.cs">
+      <DependentUpon>Carrito.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\Detalle.aspx.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\Detalle.aspx.designer.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\Favoritos.aspx.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\Favoritos.aspx.designer.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\FormularioCompra.aspx.cs">
+      <DependentUpon>FormularioCompra.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\FormularioCompra.aspx.designer.cs">
+      <DependentUpon>FormularioCompra.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Productos\MisCompras.aspx.cs">
+      <DependentUpon>MisCompras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Productos\MisCompras.aspx.designer.cs">
+      <DependentUpon>MisCompras.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Usuarios\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\RecuperarContrasena.aspx.cs">
+      <DependentUpon>RecuperarContrasena.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\RecuperarContrasena.aspx.designer.cs">
+      <DependentUpon>RecuperarContrasena.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MasterPage.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -81,6 +249,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

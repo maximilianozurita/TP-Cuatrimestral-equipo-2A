@@ -13,7 +13,7 @@ namespace dominio
         AdministrarUsuarios = 4,
         AdministrarProductos = 8,
         AdministrarVentas = 16,
-        Mask = 63,
+        Mask = 31,
     }
     public class Permiso
     {
