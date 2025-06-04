@@ -1,4 +1,6 @@
-﻿using System;
+﻿using dominio;
+using negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +13,20 @@ namespace tp_cuatrimetral_equipo_2A.Productos
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                ProductoNegocio prodNegocio = new ProductoNegocio();
+                List<Producto> ListaProducto = new List<Producto>();
+                ListaProducto = prodNegocio.Listar();
+                System.Diagnostics.Debug.WriteLine("Cantidad de imágenes: " + ListaProducto.Count);
+                rptArticulos.DataSource = ListaProducto;
+                rptArticulos.DataBind();
+            }
+        }
 
+        protected string GetPrimeraImagen(object o)
+        {
+            return "";
         }
     }
 }

@@ -44,7 +44,6 @@ CREATE TABLE Usuarios (
 
 CREATE TABLE Productos (
 	ID INT PRIMARY KEY IDENTITY(1,1),
-	
 	Nombre NVARCHAR(100),
 	Descripcion NVARCHAR(MAX),
 	Categoria_ID INT FOREIGN KEY REFERENCES Categorias(ID),
