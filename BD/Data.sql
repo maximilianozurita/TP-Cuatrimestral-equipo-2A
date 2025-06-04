@@ -1,71 +1,82 @@
 USE eCommerce;
 GO
--- Permisos
-INSERT INTO Permisos (Codigo, BitWise, Estado) VALUES
-('Ninguno', 0, 1),
-('Prueba', 1, 1),
-('Cliente', 2, 1),
-('AdministrarUsuarios', 4, 1),
-('AdministrarProductos', 8, 1),
-('AdministrarVentas', 16, 1)
 
--- Categorias
-INSERT INTO Categorias (Nombre, Estado) VALUES
-('Electrónica', 1),
-('Ropa', 1),
-('Hogar', 1),
-('Juguetes', 1);
+-- Insertar Categorías
+INSERT INTO Categorias (Nombre) VALUES
+('Electrónica'),
+('Ropa'),
+('Hogar'),
+('Libros');
+GO
 
--- Marcas
-INSERT INTO Marcas (Nombre, Estado) VALUES
-('Sony', 1),
-('Nike', 1),
-('Samsung', 1),
-('LG', 1);
+-- Insertar Marcas
+INSERT INTO Marcas (Nombre) VALUES
+('Sony'),
+('Apple'),
+('Nike'),
+('Samsung');
+GO
 
--- Estado_envio
-INSERT INTO Estado_envio (Descripcion, Estado) VALUES
-('Pendiente', 1),
-('Enviado', 1),
-('Entregado', 1),
-('Cancelado', 1);
+-- Insertar Estados de envío
+INSERT INTO Estado_envio (Descripcion) VALUES
+('Pendiente'),
+('En camino'),
+('Entregado'),
+('Cancelado');
+GO
 
--- Usuarios
-INSERT INTO Usuarios (Permisos, Fecha_alta, Fecha_baja, Nombre, Apellido, Email, Telefono, Password, Direccion) VALUES
-(1, GETDATE(), NULL, 'Juan', 'Pérez', 'juan.perez@mail.com', '1234567890', 'hashpassword1', 'Calle Falsa 123'),
-(2, GETDATE(), NULL, 'Ana', 'Gómez', 'ana.gomez@mail.com', '0987654321', 'hashpassword2', 'Avenida Siempre Viva 742'),
-(3, GETDATE(), NULL, 'Carlos', 'Lopez', 'carlos.lopez@mail.com', '111222333', 'hashpassword3', 'Boulevard Central 55');
+-- Insertar Usuarios
+INSERT INTO Usuarios (Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta)
+VALUES
+('Juan', 'Pérez', 'juan@example.com', '123456', '1234567890', 'Calle Falsa 123', 1, GETDATE()),
+('Ana', 'García', 'ana@example.com', 'abcdef', '0987654321', 'Av. Siempre Viva 742', 0, GETDATE());
+GO
 
--- Productos
-INSERT INTO Productos (Nombre, Descripcion, Categoria_ID, Marca_ID, Precio, Descuento, Estado) VALUES
-('Smart TV 50"', 'Televisor 50 pulgadas 4K Ultra HD', 1, 3, 1200.00, 100.00, 1),
-('Zapatillas Running', 'Zapatillas deportivas para correr', 2, 2, 150.00, 20.00, 1),
-('Refrigerador', 'Refrigerador con congelador separado', 3, 4, 850.00, 50.00, 1),
-('Robot de Cocina', 'Robot multifunción para cocina', 3, 1, 300.00, 25.00, 1);
+-- Insertar Productos
+INSERT INTO Productos (Nombre, Descripcion, Categoria_ID, Marca_ID, Precio, Descuento)
+VALUES
+('Televisor 50"', 'TV LED 50 pulgadas 4K', 1, 1, 350000.00, 10.00),
+('Zapatillas Running', 'Zapatillas deportivas', 2, 3, 85000.00, 5.00),
+('iPhone 14', 'Último modelo de Apple', 1, 2, 900000.00, 15.00),
+('Silla Gamer', 'Silla ergonómica para juegos', 3, 4, 120000.00, 20.00);
+GO
 
--- Ventas
-INSERT INTO Ventas (Usuario_id, Suma_total, Fecha_venta) VALUES
-(1, 1100.00, GETDATE()),
-(2, 170.00, GETDATE());
+-- Insertar Ventas
+INSERT INTO Ventas (Usuario_id, Suma_total, Fecha_venta)
+VALUES
+(1, 435000.00, GETDATE()),
+(2, 900000.00, GETDATE());
+GO
 
--- Carrito
-INSERT INTO Carrito (Usuario_id, Producto_id, Cantidad, Precio, Venta_id) VALUES
-(1, 1, 1, 1100.00, 1),
-(2, 2, 1, 150.00, 2);
+-- Insertar Carrito (con productos vendidos y no vendidos)
+INSERT INTO Carrito (Usuario_id, Producto_id, Cantidad, Precio, Venta_id)
+VALUES
+(1, 1, 1, 350000.00, 1),
+(1, 2, 1, 85000.00, 1),
+(2, 3, 1, 900000.00, 2),
+(1, 4, 1, 120000.00, NULL);
+GO
 
--- Imagenes
-INSERT INTO Imagenes (Uri_imagen, Producto_ID, Estado) VALUES
-('https://mi-tienda.com/images/smarttv50.jpg', 1, 1),
-('https://mi-tienda.com/images/zapatillas_running.jpg', 2, 1),
-('https://mi-tienda.com/images/refrigerador.jpg', 3, 1),
-('https://mi-tienda.com/images/robot_cocina.jpg', 4, 1);
+-- Insertar Imágenes
+INSERT INTO Imagenes (Uri_imagen, Producto_ID)
+VALUES
+('https://example.com/tv.jpg', 1),
+('https://example.com/zapatillas.jpg', 2),
+('https://example.com/iphone.jpg', 3),
+('https://example.com/silla.jpg', 4);
+GO
 
--- Favoritos
-INSERT INTO Favoritos (Usuario_id, Producto_id) VALUES
-(1, 2),
-(2, 1);
+-- Insertar Favoritos
+INSERT INTO Favoritos (Producto_id, Usuario_id)
+VALUES
+(1, 1),
+(3, 1),
+(2, 2);
+GO
 
--- Envios
-INSERT INTO Envios (Usuario_id, Venta_ID, Estado_envio_ID) VALUES
+-- Insertar Envíos
+INSERT INTO Envios (Usuario_id, Venta_ID, Estado_envio_ID)
+VALUES
 (1, 1, 2),
 (2, 2, 1);
+GO
