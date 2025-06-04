@@ -5,6 +5,7 @@ using System.Web;
 
 namespace dominio
 {
+    [Flags]
     public enum Permisos
     {
         Ninguno = 0,
@@ -14,12 +15,5 @@ namespace dominio
         AdministrarProductos = 8,
         AdministrarVentas = 16,
         Mask = 31,
-    }
-    public class Permiso
-    {
-        public int ID { get; set; }
-        public int BitWise { get; set; }
-        public string Codigo { get; set; }
-        public DateTime? FechaBaja { get; set; }
     }
 }
