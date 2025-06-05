@@ -15,11 +15,13 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , a.Marca_id , a.precio , a.descuento , a.Estado , " +
+                datos.SetearConsulta("select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
+                    "a.Marca_id , a.precio , a.descuento , " +
                     "m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre " +
                     "from Productos as a " +
                     "inner join Categorias as c on c.ID = a.Categoria_ID " +
-                    "inner join Marcas as m on m.ID = a.Marca_ID ");
+                    "inner join Marcas as m on m.ID = a.Marca_ID " +
+                    "where a.FechaBaja is null");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -41,8 +43,8 @@ namespace negocio
             Producto producto = new Producto();
             producto.ID = (int)datos.Lector["ID"];
             producto.Nombre = datos.Lector["Nombre"].ToString();
-            producto.Descuento = (float)datos.Lector["Descuento"];
-            producto.Precio = (float)datos.Lector["Precio"];
+            producto.Descuento = float.Parse( datos.Lector["Descuento"].ToString());
+            producto.Precio = float.Parse(datos.Lector["Precio"].ToString());
             producto.Descripcion = datos.Lector["Descripcion"].ToString();
             producto.Categoria = new Categoria();
             producto.Marca = new Marca();

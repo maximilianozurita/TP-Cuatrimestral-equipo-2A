@@ -16,17 +16,43 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             if (!IsPostBack)
             {
                 ProductoNegocio prodNegocio = new ProductoNegocio();
-                List<Producto> ListaProducto = new List<Producto>();
-                ListaProducto = prodNegocio.Listar();
-                System.Diagnostics.Debug.WriteLine("Cantidad de imágenes: " + ListaProducto.Count);
-                rptArticulos.DataSource = ListaProducto;
+                rptArticulos.DataSource = prodNegocio.Listar();
                 rptArticulos.DataBind();
             }
         }
 
-        protected string GetPrimeraImagen(object o)
+        protected string GetPrimeraImagen(object imagenesObj)
         {
-            return "";
+            List<Imagen> lista = imagenesObj as List<Imagen>;
+            if (lista != null && lista.Count > 0)
+                return lista[0].ImagenUrl;
+            return "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
+        }
+
+        protected void carritoClick(object sender, EventArgs e)
+        {
+
+            Button button = (Button)sender;
+
+            int id = int.Parse(button.CommandArgument);
+
+            if (Session["carrito"] == null)
+            {
+                Session.Add("carrito", new List<int>());
+            }
+
+            List<int> carrito = (List<int>)Session["carrito"];
+            if (!carrito.Contains(id))
+            {
+                carrito.Add(id);
+            }
+            Session["carrito"] = carrito;
+
+        }
+
+        protected void comprarClick(object sender, EventArgs e)
+        {
+            Response.Redirect("FormularioCompra.aspx", false);
         }
     }
 }
