@@ -35,13 +35,20 @@
                 </ul>
 
                 <div class="navbar-text">
-                    <%--Mostrar sin sesion--%>
+                    <%if (Session["usuario"] == null) { %>
                       <a href="/Usuarios/Login.aspx" type="button" class="btn btn-outline-primary">Iniciar sesion</a>
                       <a href="/Usuarios/Registro.aspx" type="button" class="btn btn-outline-primary">Registrarse</a>
-                    <%--Mostrar con sesion iniciada--%>
+                    <%} else { %>
+                     <%if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).IsCliente()) { %>
                       <a href="/Productos/Carrito.aspx" type="button" class="btn btn-outline-primary">Carrito de compras</a>
+                     <%} %>
+
+                    <%if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).AdminUsuarios()) { %>
+                     <a href="/Admin/Usuarios/List.aspx" type="button" class="btn btn-outline-primary">Lista de usuarios</a>
+                    <%} %>
                       <a href="/Usuarios/DatosPersonales.aspx" type="button" class="btn btn-outline-primary">Mi Cuenta</a>
                       <asp:Button Text="Cerrar sesion" CssClass="btn btn-outline-primary" ID="Button_cerrar_sesion" OnClick="Button_cerrar_sesion_Click" runat="server" />
+                    <%} %>
                 </div>
             </div>
           </div>

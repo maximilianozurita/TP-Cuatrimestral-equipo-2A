@@ -5,17 +5,18 @@
     <div class="container d-flex justify-content-center mt-5">
         <div class="w-100" style="max-width: 400px;">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="exampleInputEmail1" class="form-label">Email</label>
+            <asp:TextBox runat="server" type="email" CssClass="form-control" ID="txtEmail" placeholder="Email" />
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
+            <asp:TextBox runat="server" type="password" CssClass="form-control" ID="txtContraseña" placeholder="Password" />
           </div>
             <div class="mb-3">
                 <span><a href="./RecuperarContrasena.aspx">Recuperar contraseña</a></span>
             </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+            <asp:Button Text="Cancelar" CssClass="btn btn-primary" ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" />
+            <asp:Button Text="Iniciar sesión" CssClass="btn btn-primary" ID="ButtonAceptar" OnClick="ButtonAceptar_Click" runat="server" />
         </div>
     </div>
 </asp:Content>

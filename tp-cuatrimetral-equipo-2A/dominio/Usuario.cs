@@ -17,6 +17,11 @@ namespace dominio
         public DateTime FechaAlta { get; set; }
         public DateTime? FechaBaja { get; set; }
         public Permisos Permisos { get; set; } = Permisos.Ninguno;
+        public Usuario(string email, string pass)
+        {
+            Email = email;
+            Password = pass;
+        }
         public bool TienePermiso(Permisos permiso) { return (Permisos & permiso) == permiso; }
         public bool AdminTotal()
         {
@@ -26,5 +31,6 @@ namespace dominio
         public bool AdminUsuarios() { return TienePermiso(Permisos.AdministrarUsuarios); }
         public bool AdminProductos() { return TienePermiso(Permisos.AdministrarProductos); }
         public bool AdminVentas() { return TienePermiso(Permisos.AdministrarVentas); }
+        public bool IsCliente() { return TienePermiso(Permisos.Cliente); }
     }
 }

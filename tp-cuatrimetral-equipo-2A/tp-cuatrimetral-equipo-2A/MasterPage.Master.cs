@@ -15,7 +15,8 @@ namespace tp_cuatrimetral_equipo_2A
         }
         protected void Button_cerrar_sesion_Click(object sender, EventArgs e)
         {
-
+            Session.Abandon();
+            Response.Redirect("/Usuarios/Login.aspx");
         }
     }
 }
