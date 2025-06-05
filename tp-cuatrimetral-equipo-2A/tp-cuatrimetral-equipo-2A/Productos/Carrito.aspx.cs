@@ -13,5 +13,10 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         {
 
         }
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
