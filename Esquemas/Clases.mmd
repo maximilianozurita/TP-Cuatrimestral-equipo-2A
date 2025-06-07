@@ -96,6 +96,16 @@ classDiagram
         +bool Cancelado = false
     }
 
+    class Permisos{
+        0 = Ninguno
+        1 = Prueba
+        2 = Cliente
+        4 = AdministrarUsuarios
+        8 = AdministrarProductos
+        16 = AdministrarVentas
+        31 = Mask
+    }
+
     ItemCarrito --> Producto : contiene
     Venta --> Usuario : Usuario
     Venta "1" o-- "0..*" Producto : ProductosDeVenta
@@ -110,9 +120,16 @@ classDiagram
     Usuario --> Permisos
     Carrito "1" o-- "0..*" Producto : Productos
 
-    cssClass "Carrito,ItemCarrito,Favoritos,Venta,EstadoEnvio" green
-
+    cssClass "Carrito,ItemCarrito,Favoritos,Venta,EstadoEnvio,envio" green
     classDef green fill:#191,stroke:#333,stroke-width:4px;
+
+    cssClass "Producto,Categoria,Imagen,Marca" white
+    classDef white fill:white,stroke:#333,stroke-width:4px,color:blue;
+
+    cssClass "Usuario,Envio,Permisos" red
+    classDef red fill:red,stroke:#333,stroke-width:4px,color:white;
+
+      
 
     
     
