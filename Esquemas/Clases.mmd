@@ -1,0 +1,120 @@
+
+classDiagram
+
+    class Venta {
+        +int ID
+        +Usuario Usuario
+        +float SumaTotal
+        +DateTime FechaVenta
+        +List~Producto~ ProductosDeVenta
+    }
+
+    class Usuario {
+        +int ID
+        +string Nombre
+        +string Apellido
+        +string Email
+        +string Password
+        +string Telefono
+        +string Direccion
+        +DateTime FechaAlta
+        +DateTime? FechaBaja
+        +Permisos Permisos
+        +Usuario(string email, string pass)
+        +bool TienePermiso(Permisos permiso)
+        +bool AdminTotal()
+        +bool AdminUsuarios()
+        +bool AdminProductos()
+        +bool AdminVentas()
+        +bool IsCliente()
+    }
+    
+    class Producto {
+        +int ID
+        +string Nombre
+        +string Descripcion
+        +Categoria Categoria
+        +Marca Marca
+        +float Precio
+        +List~Imagen~ Imagen
+        +float Descuento
+        +DateTime? FechaBaja
+    }
+
+    class Marca {
+        +int Id
+        +string Nombre
+        +DateTime? FechaBaja
+    }
+
+    class Imagen {
+        +int ID
+        +string ImagenUrl
+        +DateTime? FechaBaja
+    }
+
+    class Favoritos {
+        +int ID
+        +Producto Producto
+        +Usuario Usuario
+    }
+
+    class EstadoEnvio {
+        +int ID
+        +string Descripcion
+        +DateTime? FechaBaja
+    }
+
+    class Envio {
+        +int ID
+        +Usuario Usuario
+        +Venta Venta
+        +EstadoEnvio EstadoEnvio
+    }
+
+    class Categoria {
+        +int Id
+        +string Nombre
+        +DateTime? FechaBaja
+    }
+
+    class Carrito {
+        +int? UsuarioID
+        +List~ItemCarrito~ ItemCarrito
+        +float SumaTotal
+    } 
+
+
+
+	class ItemCarrito {
+        +int Id
+        +Producto Producto
+        +DateTime FechaAgregado
+        +int Cantidad = 1
+        +float PrecioTotal = 0
+        +bool Vendido = false
+        +bool Cancelado = false
+    }
+
+    ItemCarrito --> Producto : contiene
+    Venta --> Usuario : Usuario
+    Venta "1" o-- "0..*" Producto : ProductosDeVenta
+    Producto --> Categoria : Categoria
+    Producto --> Marca : Marca
+    Producto "1" o-- "0..*" Imagen : Imagen
+    Favoritos --> Producto : Producto
+    Favoritos --> Usuario : Usuario
+    Envio --> Usuario : Usuario
+    Envio --> Venta : Venta
+    Envio --> EstadoEnvio : EstadoEnvio
+    Usuario --> Permisos
+    Carrito "1" o-- "0..*" Producto : Productos
+
+    cssClass "Carrito,ItemCarrito,Favoritos,Venta,EstadoEnvio" green
+
+    classDef green fill:#191,stroke:#333,stroke-width:4px;
+
+    
+    
+      
+      

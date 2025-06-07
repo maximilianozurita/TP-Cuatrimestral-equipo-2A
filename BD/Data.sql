@@ -58,7 +58,7 @@ VALUES
 GO
 
 -- Insertar Imágenes
-INSERT INTO Imagenes (Uri_imagen, Producto_ID)
+INSERT INTO Imagenes (URI, Producto_ID)
 VALUES
 ('https://example.com/tv.jpg', 1),
 ('https://example.com/zapatillas.jpg', 2),

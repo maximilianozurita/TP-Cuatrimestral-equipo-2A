@@ -12,3 +12,4 @@ namespace dominio
         public DateTime? FechaBaja { get; set; }
     }
 }
+    

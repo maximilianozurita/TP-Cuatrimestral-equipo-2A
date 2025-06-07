@@ -38,15 +38,13 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
             if (Session["carrito"] == null)
             {
-                Session.Add("carrito", new List<int>());
+                Session.Add("carrito", new Carrito());
             }
 
-            List<int> carrito = (List<int>)Session["carrito"];
-            if (!carrito.Contains(id))
-            {
-                carrito.Add(id);
-            }
-            Session["carrito"] = carrito;
+            dominio.Carrito carrito = Session["carrito"] as dominio.Carrito;
+            List<Producto> listaArticulos = rptArticulos.DataSource as List<Producto>;
+            //carrito.Productos.Add(listaArticulos.Find(p => p.ID == id));
+
 
         }
 

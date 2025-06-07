@@ -1,0 +1,113 @@
+Table Categorias {
+  ID int [pk, increment]
+  Nombre varchar(100)
+  FechaBaja datetime
+}
+
+Table Marcas {
+  ID int [pk, increment]
+  Nombre varchar(100)
+  FechaBaja datetime
+}
+
+Table Estado_envio {
+  ID int [pk, increment]
+  Descripcion varchar(100)
+  FechaBaja datetime
+}
+
+Table Usuarios {
+  ID int [pk, increment]
+  Nombre varchar(50)
+  Apellido varchar(50)
+  Email varchar(100) [unique]
+  Password varchar(255)
+  Telefono varchar(20)
+  Direccion varchar(255)
+  Permisos int
+  Fecha_alta datetime
+  Fecha_baja datetime
+}
+
+Table Productos {
+  ID int [pk, increment]
+  Nombre varchar(100)
+  Descripcion varchar(MAX)
+  Categoria_ID int 
+  Marca_ID int 
+  Precio decimal(18,2)
+  Descuento decimal(5,2)
+  FechaBaja datetime
+}
+
+Table Ventas {
+  ID int [pk, increment] 
+  Usuario_ID int 
+  Suma_total decimal(18,2)
+  Fecha_venta datetime
+}
+
+Table VentasProducto {
+  Venta_ID int 
+  Producto_ID int
+  Cantidad int
+  PrecioUnitario decimal(18,2)
+}
+
+Table Carrito {
+  ID int [pk,increment]
+  Usuario_ID int
+  SumaTotal decimal(18,2)
+}
+
+Table ItemCarrito {
+  ID int [pk, increment] 
+  Carrito_ID int 
+  Producto_ID int 
+  FechaAgregado datetime
+  Cantidad int
+  PrecioTotal decimal(18,2)
+  Vendido bit
+  Cancelado bit
+}
+
+Table Imagenes {
+  ID int [pk, increment] 
+  Uri varchar(255) 
+  Producto_ID int 
+  FechaBaja datetime
+}
+
+Table Favoritos {
+  Usuario_ID int 
+  Producto_ID int 
+
+  Indexes {
+    (Usuario_ID, Producto_ID) [pk] 
+  }
+}
+
+Table Envios {
+  Venta_ID int
+  Usuario_ID int 
+  Estado_envio_ID int 
+
+  Indexes {
+    (Usuario_ID, Venta_ID) [pk] 
+  }
+}
+
+Ref: Categorias.ID < Productos.Categoria_ID
+Ref: Marcas.ID < Productos.Marca_ID
+Ref: Usuarios.ID < Ventas.Usuario_ID 
+Ref: Usuarios.ID < Carrito.Usuario_ID 
+Ref: Productos.ID < Imagenes.Producto_ID
+Ref: Productos.ID < Favoritos.Producto_ID 
+Ref: Usuarios.ID < Favoritos.Usuario_ID 
+Ref: Usuarios.ID < Envios.Usuario_ID 
+Ref: Ventas.ID < Envios.Venta_ID 
+Ref: Estado_envio.ID < Envios.Estado_envio_ID
+Ref: Carrito.ID < ItemCarrito.Carrito_ID 
+Ref: Productos.ID < ItemCarrito.Producto_ID 
+Ref: Ventas.ID < VentasProducto.Venta_ID 
+Ref: Productos.ID < VentasProducto.Producto_ID 

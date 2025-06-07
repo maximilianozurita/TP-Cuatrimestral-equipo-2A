@@ -14,7 +14,7 @@ namespace negocio
             List<Imagen> lista = new List<Imagen>();
             try
             {
-                datos.SetearConsulta("select Uri_imagen, Producto_ID from Imagenes where FechaBaja is null and Producto_ID = @IdArticulo");
+                datos.SetearConsulta("select URI, Producto_ID from Imagenes where FechaBaja is null and Producto_ID = @IdArticulo");
                 datos.SetearParametros("@IdArticulo", id);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
@@ -22,7 +22,7 @@ namespace negocio
                     Imagen imagen = new Imagen
                     {
                         ID = (int)datos.Lector["Producto_ID"],
-                        ImagenUrl = (string)datos.Lector["Uri_imagen"]
+                        ImagenUrl = (string)datos.Lector["URI"]
                     };
                     lista.Add(imagen);
                 }

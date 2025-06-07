@@ -45,23 +45,38 @@ CREATE TABLE Productos (
 );
 go
 CREATE TABLE Ventas (
-	Venta_ID INT PRIMARY KEY IDENTITY(1,1),
+	ID INT PRIMARY KEY IDENTITY(1,1),
 	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
-	Suma_total DECIMAL(18, 2),
-	Fecha_venta DATETIME
+	SumaTotal DECIMAL(18, 2),
+	FechaVenta DATETIME
+);
+go
+CREATE TABLE VentasProducto (
+	Venta_ID INT FOREIGN KEY REFERENCES Ventas(ID),
+	Producto_id INT FOREIGN KEY REFERENCES Productos(ID),
+	Cantidad INT,
+	PrecioUnitario DECIMAL(18,2)
 );
 go
 CREATE TABLE Carrito (
 	ID INT PRIMARY KEY IDENTITY(1,1),
 	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
-	Producto_id INT FOREIGN KEY REFERENCES Productos(ID),
-	Cantidad INT,
 	Precio DECIMAL(18, 2),
-	Venta_id INT NULL FOREIGN KEY REFERENCES Ventas(Venta_ID),
 );
+GO
+CREATE TABLE ItemCarrito(
+	ID INT PRIMARY KEY IDENTITY (1,1),
+	Carrito_ID int FOREIGN KEY REFERENCES Carrito(ID),
+   Producto_ID int FOREIGN KEY REFERENCES Productos(ID),
+   FechaAgregado DATETIME,
+   Cantidad int,
+   PrecioTotal decimal (18,2),
+	Vendido BIT,
+	Cancelado BIT
+)
 go
 CREATE TABLE Imagenes (
-	Uri_imagen NVARCHAR(255),
+	URI NVARCHAR(255),
 	Producto_ID INT FOREIGN KEY REFERENCES Productos(ID),
 	FechaBaja DATETIME NULL
 );
@@ -74,7 +89,7 @@ CREATE TABLE Favoritos (
 go
 CREATE TABLE Envios (
 	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
-	Venta_ID INT FOREIGN KEY REFERENCES Ventas(Venta_ID),
+	Venta_ID INT FOREIGN KEY REFERENCES Ventas(ID),
 	Estado_envio_ID INT FOREIGN KEY REFERENCES Estado_envio(ID),
 	PRIMARY KEY (Usuario_id, Venta_ID)
 );
