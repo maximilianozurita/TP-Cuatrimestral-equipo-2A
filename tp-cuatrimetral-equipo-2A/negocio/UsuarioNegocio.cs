@@ -47,5 +47,65 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public Usuario FindActivoByEmail(string emain)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email and Fecha_baja is null");
+                datos.SetearParametros("@email", emain);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return InicializarObjeto(datos);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public void Agregar(Usuario usuario, Permisos permisos)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("insert into Usuarios (Email, Password, Permisos) values (@email, @password, @permisos)");
+                datos.SetearParametros("@email", usuario.Email);
+                datos.SetearParametros("@password", usuario.Password);
+                datos.SetearParametros("@permisos", (int)permisos);
+                datos.EjecutarLectura();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        private Usuario InicializarObjeto(AccesoDatos datos)
+        {
+            Usuario usuario = new Usuario();
+            usuario.ID = (int)datos.Lector["ID"];
+            usuario.Email = datos.Lector["Email"].ToString();
+            usuario.Password = datos.Lector["Password"].ToString();
+            usuario.Nombre = datos.Lector["Nombre"].ToString();
+            usuario.Apellido = datos.Lector["Apellido"].ToString();
+            usuario.Direccion = datos.Lector["Direccion"].ToString();
+            usuario.FechaAlta = (DateTime)datos.Lector["Fecha_alta"];
+            return usuario;
+        }
     }
 }

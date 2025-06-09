@@ -1,6 +1,6 @@
-CREATE DATABASE eCommerce
+CREATE DATABASE eCommerce;
 go
-use eCommerce
+USE eCommerce;
 go
 CREATE TABLE Categorias (
 	ID INT PRIMARY KEY IDENTITY(1,1),
@@ -24,38 +24,45 @@ CREATE TABLE Usuarios (
 	ID INT PRIMARY KEY IDENTITY(1,1),
 	Nombre NVARCHAR(50),
 	Apellido NVARCHAR(50),
-	Email NVARCHAR(100) UNIQUE,
-	Password NVARCHAR(255),
+	Email NVARCHAR(100) UNIQUE NOT NULL,
+	Password NVARCHAR(255) NOT NULL,
 	Telefono NVARCHAR(20),
 	Direccion NVARCHAR(255),
-	Permisos INT,
-	Fecha_alta DATETIME,
-	Fecha_baja DATETIME NULL,
+	Permisos INT NOT NULL,
+	Fecha_alta DATETIME NOT NULL DEFAULT GETDATE(),
+	Fecha_baja DATETIME NULL
 );
 go
 CREATE TABLE Productos (
 	ID INT PRIMARY KEY IDENTITY(1,1),
 	Nombre NVARCHAR(100),
 	Descripcion NVARCHAR(MAX),
-	Categoria_ID INT FOREIGN KEY REFERENCES Categorias(ID),
-	Marca_ID INT FOREIGN KEY REFERENCES Marcas(ID),
+	Categoria_ID INT,
+	Marca_ID INT,
 	Precio DECIMAL(18, 2),
 	Descuento DECIMAL(5, 2),
-	FechaBaja DATETIME NULL
+	Destacado BIT,
+	FechaBaja DATETIME NULL,
+	CONSTRAINT FK_Productos_Categorias FOREIGN KEY (Categoria_ID) REFERENCES Categorias(ID),
+	CONSTRAINT FK_Productos_Marcas FOREIGN KEY (Marca_ID) REFERENCES Marcas(ID)
 );
 go
 CREATE TABLE Ventas (
 	ID INT PRIMARY KEY IDENTITY(1,1),
-	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
+	Usuario_ID INT,
 	SumaTotal DECIMAL(18, 2),
-	FechaVenta DATETIME
+	FechaVenta DATETIME,
+	CONSTRAINT FK_Ventas_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
 );
 go
 CREATE TABLE VentasProducto (
-	Venta_ID INT FOREIGN KEY REFERENCES Ventas(ID),
-	Producto_id INT FOREIGN KEY REFERENCES Productos(ID),
+	Venta_ID INT,
+	Producto_ID INT,
 	Cantidad INT,
-	PrecioUnitario DECIMAL(18,2)
+	PrecioUnitario DECIMAL(18,2),
+	CONSTRAINT FK_VentasProducto_Ventas FOREIGN KEY (Venta_ID) REFERENCES Ventas(ID),
+	CONSTRAINT FK_VentasProducto_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID),
+	PRIMARY KEY (Venta_ID, Producto_ID)
 );
 GO
 CREATE TABLE ItemCarrito(
@@ -65,24 +72,33 @@ CREATE TABLE ItemCarrito(
    FechaAgregado DATETIME,
    Cantidad int,
 	Vendido BIT,
-	Cancelado BIT
-)
+	Cancelado BIT,
+	CONSTRAINT FK_ItemCarrito_Carrito FOREIGN KEY (Carrito_ID) REFERENCES Carrito(ID),
+	CONSTRAINT FK_ItemCarrito_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID)
+);
 go
 CREATE TABLE Imagenes (
 	URI NVARCHAR(255),
-	Producto_ID INT FOREIGN KEY REFERENCES Productos(ID),
-	FechaBaja DATETIME NULL
+	Producto_ID INT,
+	FechaBaja DATETIME NULL,
+	CONSTRAINT FK_Imagenes_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID)
 );
 go
 CREATE TABLE Favoritos (
-	Producto_id INT FOREIGN KEY REFERENCES Productos(ID),
-	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
-	PRIMARY KEY (Usuario_id, Producto_id)
+	Producto_ID INT,
+	Usuario_ID INT,
+	PRIMARY KEY (Usuario_ID, Producto_ID),
+	CONSTRAINT FK_Favoritos_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID),
+	CONSTRAINT FK_Favoritos_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
 );
 go
 CREATE TABLE Envios (
-	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
-	Venta_ID INT FOREIGN KEY REFERENCES Ventas(ID),
-	Estado_envio_ID INT FOREIGN KEY REFERENCES Estado_envio(ID),
-	PRIMARY KEY (Usuario_id, Venta_ID)
+	Usuario_ID INT,
+	Venta_ID INT,
+	Estado_envio_ID INT,
+	PRIMARY KEY (Usuario_ID, Venta_ID),
+	CONSTRAINT FK_Envios_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID),
+	CONSTRAINT FK_Envios_Ventas FOREIGN KEY (Venta_ID) REFERENCES Ventas(ID),
+	CONSTRAINT FK_Envios_EstadoEnvio FOREIGN KEY (Estado_envio_ID) REFERENCES Estado_envio(ID)
 );
+GO
