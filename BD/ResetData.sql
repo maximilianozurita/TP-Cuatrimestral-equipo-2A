@@ -6,7 +6,11 @@ DELETE FROM Favoritos;
 go
 DELETE FROM Imagenes;
 go
+DROP TABLE ItemCarrito;
+go
 DELETE FROM Carrito;
+go
+DROP TABLE VentasProducto;
 go
 DELETE FROM Ventas;
 go

@@ -28,8 +28,11 @@ GO
 -- Insertar Usuarios
 INSERT INTO Usuarios (Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta)
 VALUES
-('Juan', 'Pérez', 'juan@example.com', '123456', '1234567890', 'Calle Falsa 123', 1, GETDATE()),
-('Ana', 'García', 'ana@example.com', 'abcdef', '0987654321', 'Av. Siempre Viva 742', 0, GETDATE());
+('adminUsuario', 'admin', 'adminUsuario@example.com', '1234', '1234567890', 'Calle Falsa 1523', 4, GETDATE()),
+('adminProductos', 'admin', 'adminProductos@example.com', '1234', '0987654321', 'Av. Siempre Viva 742', 8, GETDATE()),
+('adminVentas', 'admin', 'adminVentas@example.com', '1234', '0987654321', 'Av. Siempre Viva 5642', 16, GETDATE()),
+('admin', 'admin', 'admin@example.com', '1234', '0987654321', 'Av. Siempre Viva 7492', 28, GETDATE()),
+('cliente', 'cliente', 'cliente@example.com', '1234', '0987654321', 'Av. Siempre Viva 74872', 2, GETDATE());
 GO
 
 -- Insertar Productos
@@ -42,19 +45,34 @@ VALUES
 GO
 
 -- Insertar Ventas
-INSERT INTO Ventas (Usuario_id, Suma_total, Fecha_venta)
+INSERT INTO Ventas (Usuario_id, SumaTotal, FechaVenta)
 VALUES
 (1, 435000.00, GETDATE()),
 (2, 900000.00, GETDATE());
 GO
 
--- Insertar Carrito (con productos vendidos y no vendidos)
-INSERT INTO Carrito (Usuario_id, Producto_id, Cantidad, Precio, Venta_id)
+-- Insertar VentasProducto
+INSERT INTO VentasProducto (Venta_ID, Producto_id, Cantidad, PrecioUnitario)
 VALUES
-(1, 1, 1, 350000.00, 1),
-(1, 2, 1, 85000.00, 1),
-(2, 3, 1, 900000.00, 2),
-(1, 4, 1, 120000.00, NULL);
+(1, 1, 1, 350000.00),
+(1, 2, 1, 85000.00),
+(2, 3, 1, 900000.00);
+GO
+
+-- Insertar Carrito
+INSERT INTO Carrito (Usuario_id, Precio)
+VALUES
+(1, 435000.00),
+(2, 900000.00);
+GO
+
+-- Insertar ItemCarrito
+INSERT INTO ItemCarrito (Carrito_ID, Producto_ID, FechaAgregado, Cantidad, PrecioTotal, Vendido, Cancelado)
+VALUES
+(1, 1, GETDATE(), 1, 350000.00, 1, 0),
+(1, 2, GETDATE(), 1, 85000.00, 1, 0),
+(2, 3, GETDATE(), 1, 900000.00, 1, 0),
+(1, 4, GETDATE(), 1, 120000.00, 0, 0);  -- producto en carrito pero no vendido
 GO
 
 -- Insertar Imágenes
