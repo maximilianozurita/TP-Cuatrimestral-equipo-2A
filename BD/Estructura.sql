@@ -57,20 +57,13 @@ CREATE TABLE VentasProducto (
 	Cantidad INT,
 	PrecioUnitario DECIMAL(18,2)
 );
-go
-CREATE TABLE Carrito (
-	ID INT PRIMARY KEY IDENTITY(1,1),
-	Usuario_id INT FOREIGN KEY REFERENCES Usuarios(ID),
-	Precio DECIMAL(18, 2),
-);
 GO
 CREATE TABLE ItemCarrito(
 	ID INT PRIMARY KEY IDENTITY (1,1),
-	Carrito_ID int FOREIGN KEY REFERENCES Carrito(ID),
+	Usuario_ID int FOREIGN KEY REFERENCES Usuarios(ID),
    Producto_ID int FOREIGN KEY REFERENCES Productos(ID),
    FechaAgregado DATETIME,
    Cantidad int,
-   PrecioTotal decimal (18,2),
 	Vendido BIT,
 	Cancelado BIT
 )

@@ -54,19 +54,13 @@ Table VentasProducto {
   PrecioUnitario decimal(18,2)
 }
 
-Table Carrito {
-  ID int [pk,increment]
-  Usuario_ID int
-  SumaTotal decimal(18,2)
-}
 
-Table ItemCarrito {
+Table Carrito {
   ID int [pk, increment] 
-  Carrito_ID int 
   Producto_ID int 
+  Usuario_ID int 
   FechaAgregado datetime
   Cantidad int
-  PrecioTotal decimal(18,2)
   Vendido bit
   Cancelado bit
 }
@@ -107,7 +101,6 @@ Ref: Usuarios.ID < Favoritos.Usuario_ID
 Ref: Usuarios.ID < Envios.Usuario_ID 
 Ref: Ventas.ID < Envios.Venta_ID 
 Ref: Estado_envio.ID < Envios.Estado_envio_ID
-Ref: Carrito.ID < ItemCarrito.Carrito_ID 
-Ref: Productos.ID < ItemCarrito.Producto_ID 
+Ref: Productos.ID < Carrito.Producto_ID 
 Ref: Ventas.ID < VentasProducto.Venta_ID 
 Ref: Productos.ID < VentasProducto.Producto_ID 
