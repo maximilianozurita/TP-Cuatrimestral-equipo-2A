@@ -10,6 +10,7 @@
 TestResults/
 *.log
 *.tlog
+BD/consultas.sql
 
 _UpgradeReport_Files/
 UpgradeLog*.XML

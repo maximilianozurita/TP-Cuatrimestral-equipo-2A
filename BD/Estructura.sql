@@ -64,21 +64,13 @@ CREATE TABLE VentasProducto (
 	CONSTRAINT FK_VentasProducto_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID),
 	PRIMARY KEY (Venta_ID, Producto_ID)
 );
-go
-CREATE TABLE Carrito (
-	ID INT PRIMARY KEY IDENTITY(1,1),
-	Usuario_ID INT,
-	Precio DECIMAL(18, 2),
-	CONSTRAINT FK_Carrito_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
-);
 GO
-CREATE TABLE ItemCarrito (
-	ID INT PRIMARY KEY IDENTITY(1,1),
-	Carrito_ID INT,
-	Producto_ID INT,
-	FechaAgregado DATETIME,
-	Cantidad INT,
-	PrecioTotal DECIMAL(18,2),
+CREATE TABLE ItemCarrito(
+	ID INT PRIMARY KEY IDENTITY (1,1),
+	Usuario_ID int FOREIGN KEY REFERENCES Usuarios(ID),
+   Producto_ID int FOREIGN KEY REFERENCES Productos(ID),
+   FechaAgregado DATETIME,
+   Cantidad int,
 	Vendido BIT,
 	Cancelado BIT,
 	CONSTRAINT FK_ItemCarrito_Carrito FOREIGN KEY (Carrito_ID) REFERENCES Carrito(ID),
