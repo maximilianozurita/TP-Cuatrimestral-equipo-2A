@@ -8,41 +8,38 @@
             <!-- Email -->
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" placeholder="Email" TextMode="Email"></asp:TextBox>
-                <label for="txtEmail">Email</label>
+                <label for="txtEmail">Email (obligatorio)</label>
             </div>
 
             <!-- Password -->
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" placeholder="Password" TextMode="Password"></asp:TextBox>
-                <label for="txtPassword">Password</label>
+                <label for="txtPassword">Password (obligatorio)</label>
             </div>
 
-            <%--Inputs opcionales a visualizar al modificar--%>
-<%--            <!-- Nombre -->
+            <!-- Nombre (opcional) -->
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Nombre"></asp:TextBox>
-                <label for="txtNombre">Nombre</label>
+                <label for="txtNombre">Nombre (opcional)</label>
             </div>
 
-            <!-- Apellido -->
+            <!-- Apellido (opcional) -->
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtApellido" runat="server" CssClass="form-control" placeholder="Apellido"></asp:TextBox>
-                <label for="txtApellido">Apellido</label>
+                <label for="txtApellido">Apellido (opcional)</label>
             </div>
 
-            <!-- Teléfono -->
+            <!-- Teléfono (opcional) -->
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtTelefono" runat="server" CssClass="form-control" placeholder="Teléfono"></asp:TextBox>
-                <label for="txtTelefono">Teléfono</label>
+                <label for="txtTelefono">Teléfono (opcional)</label>
             </div>
 
-            <!-- Dirección -->
+            <!-- Dirección (opcional) -->
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control" placeholder="Dirección"></asp:TextBox>
-                <label for="txtDireccion">Dirección</label>
-            </div>--%>
-
-
+                <label for="txtDireccion">Dirección (opcional)</label>
+            </div>
 
             <!-- Mensaje de error -->
             <div class="mb-3">

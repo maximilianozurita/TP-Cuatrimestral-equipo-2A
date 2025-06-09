@@ -79,10 +79,21 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("insert into Usuarios (Email, Password, Permisos) values (@email, @password, @permisos)");
+                datos.SetearConsulta(@"
+                    INSERT INTO Usuarios (Email, Password, Permisos, Nombre, Apellido, Telefono, Direccion)
+                    VALUES (@email, @password, @permisos, @nombre, @apellido, @telefono, @direccion)
+                ");
+                //datos obligatorios
                 datos.SetearParametros("@email", usuario.Email);
                 datos.SetearParametros("@password", usuario.Password);
                 datos.SetearParametros("@permisos", (int)permisos);
+
+
+                // Datos opcionales
+                datos.SetearParametros("@nombre", string.IsNullOrWhiteSpace(usuario.Nombre) ? (object)DBNull.Value : usuario.Nombre);
+                datos.SetearParametros("@apellido", string.IsNullOrWhiteSpace(usuario.Apellido) ? (object)DBNull.Value : usuario.Apellido);
+                datos.SetearParametros("@telefono", string.IsNullOrWhiteSpace(usuario.Telefono) ? (object)DBNull.Value : usuario.Telefono);
+                datos.SetearParametros("@direccion", string.IsNullOrWhiteSpace(usuario.Direccion) ? (object)DBNull.Value : usuario.Direccion);
                 datos.EjecutarLectura();
             }
             catch (Exception ex)

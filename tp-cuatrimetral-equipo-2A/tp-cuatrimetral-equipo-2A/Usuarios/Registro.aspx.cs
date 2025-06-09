@@ -26,12 +26,18 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     lblMensajeError.Visible = true;
                     return;
                 }
-
-                // Aquí iría la lógica de guardar en la base de datos
                 UsuarioNegocio usuarioNeg = new UsuarioNegocio();
                 if(usuarioNeg.FindActivoByEmail(txtEmail.Text) == null)
                 {
-                    Usuario usuario = new Usuario(txtEmail.Text, txtPassword.Text);
+                    Usuario usuario = new Usuario();
+                    usuario.Email = txtEmail.Text;
+                    usuario.Password = txtPassword.Text;
+
+                    usuario.Nombre = txtNombre.Text;
+                    usuario.Apellido = txtApellido.Text;
+                    usuario.Telefono = txtTelefono.Text;
+                    usuario.Direccion = txtDireccion.Text;
+
                     usuarioNeg.Agregar(usuario, Permisos.Cliente);
                     Response.Redirect("/Usuarios/Login.aspx", false);
                 } else
