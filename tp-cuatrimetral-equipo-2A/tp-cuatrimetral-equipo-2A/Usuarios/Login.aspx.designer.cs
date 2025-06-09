@@ -33,6 +33,15 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         protected global::System.Web.UI.WebControls.TextBox txtContraseña;
 
         /// <summary>
+        /// lblMensajeError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblMensajeError;
+
+        /// <summary>
         /// btnCancelar control.
         /// </summary>
         /// <remarks>

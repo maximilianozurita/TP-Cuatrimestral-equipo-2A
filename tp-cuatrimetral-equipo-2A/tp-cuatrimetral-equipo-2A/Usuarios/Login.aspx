@@ -13,6 +13,9 @@
             <asp:TextBox runat="server" type="password" CssClass="form-control" ID="txtContraseña" placeholder="Password" />
           </div>
             <div class="mb-3">
+                <asp:Label ID="lblMensajeError" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+            </div>
+            <div class="mb-3">
                 <span><a href="./RecuperarContrasena.aspx">Recuperar contraseña</a></span>
             </div>
             <asp:Button Text="Cancelar" CssClass="btn btn-primary" ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" />

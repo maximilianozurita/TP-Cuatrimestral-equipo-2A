@@ -35,8 +35,9 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                 }
                 else
                 {
-                    Session.Add("Error", "Error al iniciar sesion");
-                    Response.Redirect("/Error.aspx", false);
+                    lblMensajeError.Text = "Verifique su mail o contraseña";
+                    lblMensajeError.Visible = true;
+                    return;
                 }
             }
             catch (Exception ex)

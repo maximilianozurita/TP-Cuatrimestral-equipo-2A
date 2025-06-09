@@ -8,15 +8,16 @@ namespace dominio
     public class Usuario
     {
         public int ID { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
+        public string Nombre { get; set; } = string.Empty;
+        public string Apellido { get; set; } = string.Empty;
         public string Email { get; set; }
         public string Password { get; set; }
-        public string Telefono { get; set; }
-        public string Direccion { get; set; }
+        public string Telefono { get; set; } = string.Empty;
+        public string Direccion { get; set; } = string.Empty;
         public DateTime FechaAlta { get; set; }
         public DateTime? FechaBaja { get; set; }
         public Permisos Permisos { get; set; } = Permisos.Ninguno;
+        public Usuario() { }
         public Usuario(string email, string pass)
         {
             Email = email;
