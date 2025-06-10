@@ -105,6 +105,41 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public void Modificar(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta(@"
+                    UPDATE Usuarios
+                    SET
+                        Email = @email,
+                        Password = @password,
+                        Nombre = @nombre,
+                        Apellido = @apellido,
+                        Telefono = @telefono,
+                        Direccion = @direccion
+                    WHERE Email = @email;
+                ");
+
+                datos.SetearParametros("@email", usuario.Email);
+                datos.SetearParametros("@password", usuario.Password);
+                datos.SetearParametros("@nombre", string.IsNullOrWhiteSpace(usuario.Nombre) ? (object)DBNull.Value : usuario.Nombre);
+                datos.SetearParametros("@apellido", string.IsNullOrWhiteSpace(usuario.Apellido) ? (object)DBNull.Value : usuario.Apellido);
+                datos.SetearParametros("@telefono", string.IsNullOrWhiteSpace(usuario.Telefono) ? (object)DBNull.Value : usuario.Telefono);
+                datos.SetearParametros("@direccion", string.IsNullOrWhiteSpace(usuario.Direccion) ? (object)DBNull.Value : usuario.Direccion);
+                datos.EjecutarLectura();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
         private Usuario InicializarObjeto(AccesoDatos datos)
         {
