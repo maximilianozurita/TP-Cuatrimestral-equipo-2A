@@ -11,13 +11,20 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 {
     public partial class List : System.Web.UI.Page
     {
+        public dominio.Carrito carrito = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 ProductoNegocio prodNegocio = new ProductoNegocio();
-                rptArticulos.DataSource = prodNegocio.Listar();
-                rptArticulos.DataBind();
+                rptProductos.DataSource = prodNegocio.Listar();
+                rptProductos.DataBind();
+                carrito = (dominio.Carrito)Session["Carrito"];
+                if (carrito is null)
+                {
+                    carrito = new dominio.Carrito();
+                    Session.Add("Carrito", carrito);
+                }
             }
         }
 
@@ -31,19 +38,30 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         protected void carritoClick(object sender, EventArgs e)
         {
-
             Button button = (Button)sender;
-
             int id = int.Parse(button.CommandArgument);
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            Producto producto = productoNegocio.ProductoPorId(id);
 
-            if (Session["carrito"] == null)
+            try
             {
-                Session.Add("carrito", new Carrito());
-            }
+                carrito = (dominio.Carrito)Session["Carrito"];
+                dominio.Carrito carritoBefore = carrito.Clonar();
+                carrito.AgregarProducto(producto);
+                Usuario usuarioId = (Usuario)Session["Usuario"];
+                if (usuarioId != null)
+                {
+                    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    carritoNegocio.AgregarItemCarrito(carrito, carritoBefore);
+                }
 
-            dominio.Carrito carrito = Session["carrito"] as dominio.Carrito;
-            List<Producto> listaArticulos = rptArticulos.DataSource as List<Producto>;
-            //carrito.Productos.Add(listaArticulos.Find(p => p.ID == id));
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex.Message);
+                Response.Redirect("../Error.aspx", false);
+            }
 
 
         }

@@ -31,7 +31,7 @@
     <div class="container mt-5">
         <h2 class="text-center mb-4">Lista de articulos</h2>
         <div class="row justify-content-center">
-            <asp:Repeater ID="rptArticulos" runat="server">
+            <asp:Repeater ID="rptProductos" runat="server">
                 <ItemTemplate>
                     <div class="col-md-4 mb-4 d-flex">
                         <div class="card text-center w-100">
