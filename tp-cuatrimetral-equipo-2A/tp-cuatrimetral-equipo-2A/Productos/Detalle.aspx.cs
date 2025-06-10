@@ -59,12 +59,13 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             try
             {
                 carrito = (dominio.Carrito)Session["Carrito"];
+                dominio.Carrito carritoBefore = carrito.Clonar();
                 carrito.AgregarProducto(producto);
                 Usuario usuarioId = (Usuario)Session["Usuario"];
                 if (usuarioId != null)
                 {
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
-                    carritoNegocio.AgregarItemCarrito
+                    carritoNegocio.AgregarItemCarrito(carrito,carritoBefore);
                 }
 
 

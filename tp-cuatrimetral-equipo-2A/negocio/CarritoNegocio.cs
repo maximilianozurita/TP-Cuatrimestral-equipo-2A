@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 
 namespace negocio
 {
@@ -52,11 +53,22 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-        public void AgregarItemCarrito(ItemCarrito item)
+        public void AgregarItemCarrito(Carrito carrito, Carrito carritoBefore)
         {
+
+            //aun no funciona, estoy en duda como implemenar la logica de agregar un item al carrito, la comparacio y demas
             AccesoDatos datos = new AccesoDatos();
+            List<ItemCarrito> listaActual = carrito.Items;
+            List<ItemCarrito> listaAnterior = carritoBefore.Items;
+            List<ItemCarrito> result = listaActual.Where(value => !listaAnterior.Any(item => item.Producto.ID == value.Producto.ID)).ToList();
+            if (result.Count == 0) return; // No hay cambios, no se agrega nada
+            
+
             try
             {
+                
+                ItemCarrito item = new ItemCarrito();
+
                 datos.SetearConsulta("insert into ItemCarrito (Usuario_ID, Producto_ID, FechaAgregado, Cantidad, Vendido, Cancelado) " +
                     "values (@UsuarioId, @ProductoId, @FechaAgregado, @Cantidad, @Vendido, @Cancelado)");
                 datos.SetearParametros("@UsuarioId", item.Producto.ID);
