@@ -15,17 +15,29 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null || !((dominio.Usuario)Session["usuario"]).AdminUsuarios())
+            if (Session["usuario"] != null)
             {
-                Session.Add("Error", "Acceso denegado");
-                Response.Redirect("/Error.aspx", false);
+                Usuario usuario = (Usuario)Session["usuario"];
+                if (usuario.AdminUsuarios())
+                {
+                    if (!IsPostBack)
+                    {
+                        List<Usuario> lista = usuarioNeg.Listar();
+                        List<Usuario> filtrados = lista.Where(u => !u.Email.Equals(usuario.Email, StringComparison.OrdinalIgnoreCase)).ToList();
+                        gvUsuarios.DataSource = filtrados;
+                        gvUsuarios.DataBind();
+                    }
+                }
+                else
+                {
+                    Session.Add("Error", "Acceso denegado, no tienes permisos para ingresar a esta seccion");
+                    Response.Redirect("/Error.aspx", false);
+                }
             }
-
-            if (!IsPostBack)
+            else
             {
-                List<Usuario> lista = usuarioNeg.Listar();
-                gvUsuarios.DataSource = lista;
-                gvUsuarios.DataBind();
+                Session.Add("Error", "Acceso denegado, loguear usuario");
+                Response.Redirect("/Error.aspx", false);
             }
         }
 
@@ -35,7 +47,6 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
             int idUsuario = Convert.ToInt32(gvUsuarios.DataKeys[index].Value);
             if (e.CommandName == "Modificar")
             {
-                //GridViewRow row = gvUsuarios.Rows[index];
                 Response.Redirect("Modificar.aspx?id=" + idUsuario);
             }
 

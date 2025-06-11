@@ -13,7 +13,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT ID, Email, Password, Nombre, Apellido, Direccion, Telefono, Fecha_alta FROM Usuarios WHERE Fecha_baja is null");
+                datos.SetearConsulta("SELECT ID, Email, Password, Nombre, Apellido, Direccion, Telefono, Fecha_alta, Permisos FROM Usuarios WHERE Fecha_baja is null");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -96,6 +96,32 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public Usuario FindActivoById(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where ID = @id and Fecha_baja is null");
+                datos.SetearParametros("@id", id);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return InicializarObjeto(datos);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public void Agregar(Usuario usuario, Permisos permisos)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -142,7 +168,8 @@ namespace negocio
                         Nombre = @nombre,
                         Apellido = @apellido,
                         Telefono = @telefono,
-                        Direccion = @direccion
+                        Direccion = @direccion,
+                        Permisos = @permisos
                     WHERE Email = @email;
                 ");
 
@@ -152,6 +179,7 @@ namespace negocio
                 datos.SetearParametros("@apellido", string.IsNullOrWhiteSpace(usuario.Apellido) ? (object)DBNull.Value : usuario.Apellido);
                 datos.SetearParametros("@telefono", string.IsNullOrWhiteSpace(usuario.Telefono) ? (object)DBNull.Value : usuario.Telefono);
                 datos.SetearParametros("@direccion", string.IsNullOrWhiteSpace(usuario.Direccion) ? (object)DBNull.Value : usuario.Direccion);
+                datos.SetearParametros("@permisos", (int)usuario.Permisos);
                 datos.EjecutarLectura();
             }
             catch (Exception ex)
@@ -193,6 +221,7 @@ namespace negocio
             usuario.Telefono = datos.Lector["Telefono"].ToString();
             usuario.Apellido = datos.Lector["Apellido"].ToString();
             usuario.Direccion = datos.Lector["Direccion"].ToString();
+            usuario.Permisos = (Permisos)(int)datos.Lector["Permisos"];
             usuario.FechaAlta = (DateTime)datos.Lector["Fecha_alta"];
             return usuario;
         }

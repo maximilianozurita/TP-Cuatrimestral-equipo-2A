@@ -13,6 +13,7 @@
                     <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
                     <asp:BoundField DataField="Telefono" HeaderText="Telefono" />
                     <asp:BoundField DataField="Direccion" HeaderText="Direccion" />
+                    <asp:BoundField DataField="Permisos" HeaderText="Permisos" />
                     <asp:BoundField DataField="FechaAlta" HeaderText="FechaAlta" />
                     <asp:ButtonField Text="Modificar" CommandName="Modificar" ButtonType="Button" />
                     <asp:ButtonField Text="Dar de baja" CommandName="Baja" ButtonType="Button" />
