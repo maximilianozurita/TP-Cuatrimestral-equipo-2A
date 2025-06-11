@@ -18,8 +18,8 @@
             <div class="mb-3">
                 <span><a href="./RecuperarContrasena.aspx">Recuperar contraseña</a></span>
             </div>
-            <asp:Button Text="Cancelar" CssClass="btn btn-primary" ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" />
             <asp:Button Text="Iniciar sesión" CssClass="btn btn-primary" ID="ButtonAceptar" OnClick="ButtonAceptar_Click" runat="server" />
+            <asp:Button Text="Cancelar" CssClass="btn btn-primary" ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" />
         </div>
     </div>
 </asp:Content>

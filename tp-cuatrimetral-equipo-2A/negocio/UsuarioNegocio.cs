@@ -7,6 +7,29 @@ namespace negocio
 {
     public class UsuarioNegocio
     {
+        public List<Usuario> Listar()
+        {
+            List<Usuario> lista = new List<Usuario>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT ID, Email, Password, Nombre, Apellido, Direccion, Telefono, Fecha_alta FROM Usuarios WHERE Fecha_baja is null");
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    lista.Add(InicializarObjeto(datos));
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public bool Login(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -140,6 +163,25 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public void Borrar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("UPDATE Usuarios SET Fecha_baja = GETDATE() WHERE ID = @id");
+                datos.SetearParametros("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
 
         private Usuario InicializarObjeto(AccesoDatos datos)
         {
@@ -148,6 +190,7 @@ namespace negocio
             usuario.Email = datos.Lector["Email"].ToString();
             usuario.Password = datos.Lector["Password"].ToString();
             usuario.Nombre = datos.Lector["Nombre"].ToString();
+            usuario.Telefono = datos.Lector["Telefono"].ToString();
             usuario.Apellido = datos.Lector["Apellido"].ToString();
             usuario.Direccion = datos.Lector["Direccion"].ToString();
             usuario.FechaAlta = (DateTime)datos.Lector["Fecha_alta"];

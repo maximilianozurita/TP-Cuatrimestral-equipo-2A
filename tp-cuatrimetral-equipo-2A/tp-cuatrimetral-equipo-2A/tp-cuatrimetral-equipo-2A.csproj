@@ -86,7 +86,6 @@
     <Content Include="Productos\FormularioCompra.aspx" />
     <Content Include="Productos\List.aspx" />
     <Content Include="Productos\MisCompras.aspx" />
-    <Content Include="Usuarios\DatosPersonales.aspx" />
     <Content Include="Usuarios\Login.aspx" />
     <Content Include="Usuarios\RecuperarContrasena.aspx" />
     <Content Include="Usuarios\Registro.aspx" />
@@ -227,13 +226,6 @@
       <DependentUpon>MisCompras.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Usuarios\DatosPersonales.aspx.cs">
-      <DependentUpon>DatosPersonales.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Usuarios\DatosPersonales.aspx.designer.cs">
-      <DependentUpon>DatosPersonales.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Usuarios\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -2,54 +2,22 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <table class="table">
-        <thead class="table table-striped-columns">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Email</th>
-                <th scope="col">Celular</th>
-                <th scope="col">Fecha de Nacimiento</th>
-
-            </tr>
-        </thead>
-        <tbody>
-<%--            <% foreach (var item in Listausuarios)
-                { %>
-            <tr>
-                <th scope="row"><%=item.ID %></th>
-                <td><%=item.Nombre %></td>
-                <td><%=item.Apellido %></td>
-                <td><%=item.Email %></td>
-                <td><%=item.Celular %></td>
-                <td><%=item.FechaNacimiento %></td>
-
-            </tr>
-            <%} %>--%>
-            <tr>
-                <th scope="row">12546</th>
-                <td>nombreA></td>
-                <td>apellidoA</td>
-                <td>EmailA</td>
-                <td>15654654</td>
-                <td>12-12-12</td>
-            </tr>
-            <tr>
-                <th scope="row">12546</th>
-                <td>nombreAb</td>
-                <td>apellidoA</td>
-                <td>EmailA</td>
-                <td>1565465465</td>
-                <td>12-12-12</td>
-            </tr>
-            <tr>
-                <th scope="row">12546</th>
-                <td>nombreb</td>
-                <td>apellidoA</td>
-                <td>EmailA</td>
-                <td>1565465489</td>
-                <td>12-12-12</td>
-            </tr>
-    </table>
+<body>
+        <div class="container mt-5">
+            <h2>Usuarios</h2>
+            <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvUsuarios_RowCommand" DataKeyNames="ID">
+                <Columns>
+                    <asp:BoundField DataField="ID" HeaderText="ID" />
+                    <asp:BoundField DataField="Email" HeaderText="Email" />
+                    <asp:BoundField DataField="Nombre" HeaderText="Nombre" />
+                    <asp:BoundField DataField="Apellido" HeaderText="Apellido" />
+                    <asp:BoundField DataField="Telefono" HeaderText="Telefono" />
+                    <asp:BoundField DataField="Direccion" HeaderText="Direccion" />
+                    <asp:BoundField DataField="FechaAlta" HeaderText="FechaAlta" />
+                    <asp:ButtonField Text="Modificar" CommandName="Modificar" ButtonType="Button" />
+                    <asp:ButtonField Text="Dar de baja" CommandName="Baja" ButtonType="Button" />
+                </Columns>
+            </asp:GridView>
+        </div>
+</body>
 </asp:Content>
