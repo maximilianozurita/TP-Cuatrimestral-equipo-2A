@@ -125,7 +125,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("DELETE FROM ItemCarrito WHERE ID = @Id");
+                datos.SetearConsulta("UPDATE ItemCarrito Set Cancelado = 1 Where ID = @Id");
                 datos.SetearParametros("@Id", id);
                 datos.EjecutarAccion();
             }
