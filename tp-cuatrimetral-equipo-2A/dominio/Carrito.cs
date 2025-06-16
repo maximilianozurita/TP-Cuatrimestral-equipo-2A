@@ -10,14 +10,12 @@ namespace dominio
         public int? UsuarioID { get; set; }
         public float SumaTotal { get; private set; }
         public List<ItemCarrito> Items { get; set; } = new List<ItemCarrito>();
-
-        public void AgregarProducto(Producto producto)
+        public void AgregarProducto(Producto producto, int cantidad)
         {
             ItemCarrito itemCarrito = Items.Find(i => i.Producto.ID == producto.ID);
             if (itemCarrito != null)
             {
-                itemCarrito.Cantidad++;
-                itemCarrito.PrecioTotal = itemCarrito.Cantidad * producto.Precio * (1 - producto.Descuento / 100);
+                this.ModificarCantidad(producto.ID, cantidad);
             }
             else
             {
@@ -31,55 +29,43 @@ namespace dominio
                 Items.Add(itemCarrito);
             }
         }
-
         public void EliminarProducto(int productoId)
         {
             ItemCarrito itemCarrito = Items.Find(i => i.Producto.ID == productoId);
             if (itemCarrito != null)
             {
-                Items.Remove(itemCarrito);
+                itemCarrito.Cantidad = 0;
+                itemCarrito.flag_Eliminado = true;
             }
         }
-
-        public void DescontarProducto(int productoId)
+        public void ModificarCantidad(int productoId,int cantidad)
         {
             ItemCarrito itemCarrito = Items.Find(i => i.Producto.ID == productoId);
             if (itemCarrito != null)
             {
+                itemCarrito.Cantidad += cantidad;
                 if (itemCarrito.Cantidad > 1)
                 {
-                    itemCarrito.Cantidad--;
+                    itemCarrito.flag_CantidadModificado = true; // Marca el producto como descontado
                     itemCarrito.PrecioTotal = itemCarrito.Cantidad * itemCarrito.Producto.Precio * (1 - itemCarrito.Producto.Descuento / 100);
                 }
-                else
+                else if (itemCarrito.Cantidad <= 0)
                 {
-                    Items.Remove(itemCarrito);
+                    itemCarrito.Cantidad = 0;
+                    itemCarrito.flag_Eliminado = true;  // Elimina el producto del carrito
+                    itemCarrito.PrecioTotal = 0;
                 }
             }
         }
-
-        public Carrito Clonar()
+        public void AgregarUnidad(int productId)
         {
-            Carrito clon = new Carrito
-            {
-                UsuarioID = this.UsuarioID,
-                SumaTotal = this.SumaTotal,
-                Items = new List<ItemCarrito>(this.Items.Select(item => new ItemCarrito
-                {
-                    Id = item.Id,
-                    Producto = item.Producto,
-                    FechaAgregado = item.FechaAgregado,
-                    Cantidad = item.Cantidad,
-                    PrecioTotal = item.PrecioTotal,
-                    Vendido = item.Vendido,
-                    Cancelado = item.Cancelado
-                }))
-            };
-            return clon;
+            this.ModificarCantidad(productId, 1);
+        }
+        public void QuitarUnidad(int productId)
+        {
+            this.ModificarCantidad(productId, -1);
         }
     }
-
-
 
     public class ItemCarrito
     {
@@ -90,8 +76,10 @@ namespace dominio
         public float PrecioTotal { get; set; } = 0;
         public bool Vendido { get; set; } = false; // Indica si el producto ya fue vendido o no
         public bool Cancelado { get; set; } = false; // Indica si el producto fue cancelado por el usuario
+
+        public bool flag_Eliminado { get; set; } = false; // Indica si el producto fue eliminado del carrito por el usuario
+        public bool flag_CantidadModificado { get; set; } = false; // Indica si el producto fue descontado del carrito por el usuario
+        public bool flag_NuevoProducto { get; set; } = false; // Indica si el producto fue agregado al carrito por el usuario
     }
-
-
 
 }

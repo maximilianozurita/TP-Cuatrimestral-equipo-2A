@@ -29,7 +29,7 @@ namespace negocio
                         Cantidad = (int)datos.Lector["Cantidad"],
                         Vendido = (bool)datos.Lector["Vendido"],
                         Cancelado = (bool)datos.Lector["Cancelado"],
-                        PrecioTotal = 0 // calc mas adelante
+                        PrecioTotal = 0 // calc mas adelante -- ya me olvide de esto creo que lo resolvi, ver mas adelante
                     };
                     lista.Add(item);
                 }
@@ -46,32 +46,42 @@ namespace negocio
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Error al leer en la base de datos...",ex);
             }
             finally
             {
                 datos.CerrarConexion();
             }
         }
-        public void AgregarItemCarrito(Carrito carrito, Carrito carritoBefore)
+
+        public void GuardarCarritoEnBd(Carrito carrito)
         {
+            foreach (ItemCarrito item in carrito.Items)
+            {
+                if (item.flag_Eliminado)
+                {
+                    EliminarItemCarrito(item.Id);
+                }
+                else if (item.Id == 0)
+                {
+                    InsertarItemCarrito(item, carrito.UsuarioID.Value);
+                }
+                else if (item.flag_CantidadModificado)
+                {
+                    ModificarItemCarrito(item);
+                }
+            }
+        }
 
-            //aun no funciona, estoy en duda como implemenar la logica de agregar un item al carrito, la comparacio y demas
+        private void InsertarItemCarrito(ItemCarrito item, int usuarioId)
+        {
             AccesoDatos datos = new AccesoDatos();
-            List<ItemCarrito> listaActual = carrito.Items;
-            List<ItemCarrito> listaAnterior = carritoBefore.Items;
-            List<ItemCarrito> result = listaActual.Where(value => !listaAnterior.Any(item => item.Producto.ID == value.Producto.ID)).ToList();
-            if (result.Count == 0) return; // No hay cambios, no se agrega nada
-            
-
             try
             {
-                
-                ItemCarrito item = new ItemCarrito();
-
-                datos.SetearConsulta("insert into ItemCarrito (Usuario_ID, Producto_ID, FechaAgregado, Cantidad, Vendido, Cancelado) " +
-                    "values (@UsuarioId, @ProductoId, @FechaAgregado, @Cantidad, @Vendido, @Cancelado)");
-                datos.SetearParametros("@UsuarioId", item.Producto.ID);
+                datos.SetearConsulta("INSERT INTO ItemCarrito " +
+                    "(Usuario_ID, Producto_ID, FechaAgregado, Cantidad, Vendido, Cancelado) " +
+                    "VALUES (@UsuarioId, @ProductoId, @FechaAgregado, @Cantidad, @Vendido, @Cancelado)");
+                datos.SetearParametros("@UsuarioId", usuarioId);
                 datos.SetearParametros("@ProductoId", item.Producto.ID);
                 datos.SetearParametros("@FechaAgregado", item.FechaAgregado);
                 datos.SetearParametros("@Cantidad", item.Cantidad);
@@ -81,7 +91,47 @@ namespace negocio
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception("Error al insertar el item en el carrito", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        private void ModificarItemCarrito(ItemCarrito item)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE ItemCarrito " +
+                    "SET Cantidad = @Cantidad WHERE ID = @Id");
+                datos.SetearParametros("@Cantidad", item.Cantidad);
+                datos.SetearParametros("@Id", item.Id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al modificar el item del carrito", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        private void EliminarItemCarrito(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE ItemCarrito Set Cancelado = 1 Where ID = @Id");
+                datos.SetearParametros("@Id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al eliminar el item del carrito", ex);
             }
             finally
             {
