@@ -16,27 +16,14 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         {
             try
             {
-                if (Session["usuario"] != null)
+                if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminProducto))
                 {
-                    Usuario usuario = (Usuario)Session["usuario"];
-                    if (usuario.AdminProductos())
-                    {
-                        if (!IsPostBack)
-                        {
-                            CargarCategorias();
-                            CargarMarcas();
-                        }
-                    }
-                    else
-                    {
-                        Session.Add("Error", "Acceso denegado, no tienes permisos para ingresar a esta seccion");
-                        Response.Redirect("/Error.aspx", false);
-                    }
+                    return;
                 }
-                else
+                if (!IsPostBack)
                 {
-                    Session.Add("Error", "Acceso denegado, loguear usuario");
-                    Response.Redirect("/Error.aspx", false);
+                    CargarCategorias();
+                    CargarMarcas();
                 }
             }
             catch (Exception ex)

@@ -135,7 +135,27 @@ namespace negocio
         }
         public void Eliminar(int producto_id)
         {
-        //ToDo: Agregar logica para eliminar producto y sus imagenes
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Eliminar todas las imagenes asociadas al articulo antes de eliminar el articulo
+                ImagenNegocio imgNegocio = new ImagenNegocio();
+                if (imgNegocio.EliminarByProductoId(producto_id))
+                {
+                    //Eliminar articulo
+                    datos.SetearConsulta("Delete from Productos WHERE Id=@Id");
+                    datos.SetearParametros("@Id", producto_id);
+                    datos.EjecutarAccion();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
         }
     }
 }

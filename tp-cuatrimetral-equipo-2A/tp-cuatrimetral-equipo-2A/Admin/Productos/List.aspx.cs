@@ -14,6 +14,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         public List<Producto> ListaProductos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminProducto))
+            {
+                return;
+            }
             try
             {
                 if (!IsPostBack)
@@ -45,7 +49,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
 
             if (e.CommandName == "Editar")
             {
-                Response.Redirect($"~/Admin/Productos/Modificar.aspx?id={id}");
+                Response.Redirect("~/Admin/Productos/Modificar.aspx?id={id}");
             }
             else if (e.CommandName == "Eliminar")
             {

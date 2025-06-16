@@ -15,10 +15,9 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
         private int idUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] == null || !((dominio.Usuario)Session["usuario"]).AdminUsuarios())
+            if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminUsuario))
             {
-                Session.Add("Error", "Acceso denegado");
-                Response.Redirect("/Error.aspx", false);
+                return;
             }
             if (!IsPostBack)
             {

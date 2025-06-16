@@ -15,24 +15,18 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["usuario"] != null)
+            if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminUsuario))
+            {
+                return;
+            }
+
+            if (!IsPostBack)
             {
                 Usuario usuario = (Usuario)Session["usuario"];
-                if (usuario.AdminUsuarios())
-                {
-                    if (!IsPostBack)
-                    {
-                        List<Usuario> lista = usuarioNeg.Listar();
-                        List<Usuario> filtrados = lista.Where(u => !u.Email.Equals(usuario.Email, StringComparison.OrdinalIgnoreCase)).ToList();
-                        gvUsuarios.DataSource = filtrados;
-                        gvUsuarios.DataBind();
-                    }
-                }
-                else
-                {
-                    Session.Add("Error", "Acceso denegado, no tienes permisos para ingresar a esta seccion");
-                    Response.Redirect("/Error.aspx", false);
-                }
+                List<Usuario> lista = usuarioNeg.Listar();
+                List<Usuario> filtrados = lista.Where(u => !u.Email.Equals(usuario.Email, StringComparison.OrdinalIgnoreCase)).ToList();
+                gvUsuarios.DataSource = filtrados;
+                gvUsuarios.DataBind();
             }
             else
             {

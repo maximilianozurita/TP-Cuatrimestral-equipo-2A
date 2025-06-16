@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using dominio;
 
 namespace tp_cuatrimetral_equipo_2A.Admin
 {
@@ -11,7 +12,14 @@ namespace tp_cuatrimetral_equipo_2A.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                Helper.VerificarUsuario(Session, Response, Permisos.AdminVenta, Permisos.AdminProducto, Permisos.AdminUsuario);
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error", ex);
+            }
         }
     }
 }

@@ -60,5 +60,24 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
         }
+        public bool EliminarByProductoId(int producto_id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("DELETE FROM IMAGENES WHERE Producto_ID=@id");
+                datos.SetearParametros("@id", producto_id);
+                datos.EjecutarAccion();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

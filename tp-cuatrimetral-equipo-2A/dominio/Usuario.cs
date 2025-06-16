@@ -29,6 +29,10 @@ namespace dominio
             var flag = Permisos.AdminUsuario | Permisos.AdminProducto | Permisos.AdminVenta;
             return (Permisos & flag) == flag;
         }
+        public bool IsAdmin()
+        {
+            return TienePermiso(Permisos.AdminUsuario) || TienePermiso(Permisos.AdminProducto) || TienePermiso(Permisos.AdminVenta);
+        }
         public bool AdminUsuarios() { return TienePermiso(Permisos.AdminUsuario); }
         public bool AdminProductos() { return TienePermiso(Permisos.AdminProducto); }
         public bool AdminVentas() { return TienePermiso(Permisos.AdminVenta); }
