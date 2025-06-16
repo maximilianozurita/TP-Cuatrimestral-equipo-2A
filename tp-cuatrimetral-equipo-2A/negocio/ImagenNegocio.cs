@@ -37,5 +37,28 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public void AgregarMasivoByArticuloId(int id, List<string> urlImagenes)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            try
+            {
+                string query = "Insert into Imagenes (Producto_ID,URI) values ";
+                foreach (string url in urlImagenes)
+                {
+                    query += "(" + id + ",'" + url + "'),";
+                }
+                query = query.Substring(0, query.Length - 1);
+                accesoDatos.SetearConsulta(query);
+                accesoDatos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
     }
 }

@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-<body>
+
         <div class="container mt-5">
             <h2>Usuarios</h2>
             <asp:GridView ID="gvUsuarios" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvUsuarios_RowCommand" DataKeyNames="ID">
@@ -20,5 +20,5 @@
                 </Columns>
             </asp:GridView>
         </div>
-</body>
+
 </asp:Content>

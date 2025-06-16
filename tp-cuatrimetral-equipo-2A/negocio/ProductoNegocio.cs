@@ -48,7 +48,7 @@ namespace negocio
             producto.Descripcion = datos.Lector["Descripcion"].ToString();
             producto.Categoria = new Categoria();
             producto.Marca = new Marca();
-            producto.Imagen = new List<Imagen>();
+            producto.Imagenes = new List<Imagen>();
             if (datos.Lector["Categoria_ID"] != DBNull.Value)
             {
                 producto.Categoria.Id = (int)datos.Lector["Categoria_ID"];
@@ -59,7 +59,7 @@ namespace negocio
                 producto.Marca.Id = (int)datos.Lector["Marca_ID"];
                 producto.Marca.Nombre = datos.Lector["MarcaNombre"].ToString();
             }
-            producto.Imagen = new ImagenNegocio().ListarByArticuloId(producto.ID);
+            producto.Imagenes = new ImagenNegocio().ListarByArticuloId(producto.ID);
             return producto;
         }
 
@@ -92,6 +92,50 @@ namespace negocio
             {
                 datos.CerrarConexion();
             }
+        }
+        public bool Agregar(Producto producto)
+        {
+
+            AccesoDatos accesoDatos = new AccesoDatos();
+            ImagenNegocio imgNegocio = new ImagenNegocio();
+            try
+            {
+                string query = @"Insert into Productos (Nombre, Descripcion, Categoria_ID, Marca_ID, Precio, Descuento, Destacado) 
+                        values (@Nombre, @Descripcion, @Categoria_ID, @Marca_ID, @Precio, @Descuento, @Destacado);
+                        select scope_identity();";
+
+                accesoDatos.SetearConsulta(query);
+                accesoDatos.SetearParametros("@Nombre", producto.Nombre);
+                accesoDatos.SetearParametros("@Descripcion", producto.Descripcion);
+                accesoDatos.SetearParametros("@Categoria_ID", producto.Categoria.Id);
+                accesoDatos.SetearParametros("@Marca_ID", producto.Marca.Id);
+                accesoDatos.SetearParametros("@Precio", producto.Precio);
+                accesoDatos.SetearParametros("@Descuento", producto.Descuento);
+                accesoDatos.SetearParametros("@Destacado", producto.Destacado);
+                int Producto_ID = accesoDatos.EjecutarAccionAndReturnId();
+
+                if (Producto_ID != 0)
+                {
+                    List<string> urlsImagenes = producto.Imagenes.Select(img => img.ImagenUrl).ToList();
+                    imgNegocio.AgregarMasivoByArticuloId(Producto_ID, urlsImagenes);
+                    return true;
+                } else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
+        public void Eliminar(int producto_id)
+        {
+        //ToDo: Agregar logica para eliminar producto y sus imagenes
         }
     }
 }
