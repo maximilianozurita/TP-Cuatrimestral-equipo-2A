@@ -16,14 +16,21 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         {
             try
             {
-                if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminProducto))
-                {
-                    return;
-                }
                 if (!IsPostBack)
                 {
+                    if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminProducto))
+                    {
+                        return;
+                    }
+
                     CargarCategorias();
                     CargarMarcas();
+
+                    if (Request.QueryString["id"] != null && int.TryParse(Request.QueryString["id"], out int id))
+                    {
+                        CargarProducto(id);
+                        btnGuardar.Text = "Modificar Producto";
+                    }
                 }
             }
             catch (Exception ex)
@@ -32,6 +39,29 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
             }
         }
 
+        private void CargarProducto(int id)
+        {
+            ProductoNegocio productoNeg = new ProductoNegocio();
+            Producto producto = productoNeg.FindById(id);
+            ImagenNegocio imagenNeg = new ImagenNegocio();
+
+            if (producto != null)
+            {
+                txtNombre.Text = producto.Nombre;
+                txtDescripcion.Text = producto.Descripcion;
+                txtPrecio.Text = producto.Precio.ToString();
+                txtDescuento.Text = producto.Descuento.ToString();
+                chkDestacado.Checked = producto.Destacado;
+                ddlCategoria.SelectedValue = producto.Categoria.Id.ToString();
+                ddlMarca.SelectedValue = producto.Marca.Id.ToString();
+
+
+                List<Imagen> imagenes = imagenNeg.ListarByProductoId(id);
+                rptImagenes.DataSource = imagenes;
+                rptImagenes.DataBind();
+                Session.Add("producto_id", producto.ID);
+            }
+        }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             try
@@ -58,13 +88,32 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
 
                 List<Imagen> imagenes = CargarImagenes();
                 producto.Imagenes = imagenes;
-                if (productoNeg.Agregar(producto))
+
+                if (Session["producto_id"] != null)
                 {
-                    Response.Redirect("/Admin/Productos/List.aspx", false);
-                } else
+                    producto.ID = (int)Session["producto_id"];
+                    if (productoNeg.Modificar(producto))
+                    {
+                        Response.Redirect("/Admin/Productos/List.aspx", false);
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "No se pudo modificar producto";
+                        lblMensaje.Visible = true;
+                    }
+                    Session.Remove("producto_id");
+                }
+                else
                 {
-                    lblMensaje.Text = "No se pudo guardar producto";
-                    lblMensaje.Visible = true;
+                    if (productoNeg.Agregar(producto))
+                    {
+                        Response.Redirect("/Admin/Productos/List.aspx", false);
+                    }
+                    else
+                    {
+                        lblMensaje.Text = "No se pudo agregar producto";
+                        lblMensaje.Visible = true;
+                    }
                 }
             }
             catch (Exception ex)
@@ -93,7 +142,31 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
                     }
                 }
             }
+            GetImagenesSinEliminar(imagenes);
             return imagenes;
+        }
+        private void GetImagenesSinEliminar(List <Imagen> imagenes)
+        {
+
+            foreach (RepeaterItem item in rptImagenes.Items)
+            {
+                CheckBox chkEliminar = item.FindControl("chkEliminar") as CheckBox;
+                HiddenField hfIdImagen = item.FindControl("hfIdImagen") as HiddenField;
+                HiddenField hfUrlImagen = item.FindControl("hfUrlImagen") as HiddenField;
+
+                if (chkEliminar != null && hfIdImagen != null && hfUrlImagen != null)
+                {
+                    int id;
+                    if (int.TryParse(hfIdImagen.Value, out id) && !chkEliminar.Checked)
+                    {
+                        imagenes.Add(new Imagen
+                        {
+                            ID = id,
+                            ImagenUrl = hfUrlImagen.Value
+                        });
+                    }
+                }
+            }
         }
         private void CargarCategorias()
         {

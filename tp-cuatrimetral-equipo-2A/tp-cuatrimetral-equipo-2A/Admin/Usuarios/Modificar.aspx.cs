@@ -12,7 +12,6 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
     public partial class Modificar : System.Web.UI.Page
     {
         private UsuarioNegocio usuarioNeg = new UsuarioNegocio();
-        private int idUsuario;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminUsuario))
@@ -27,6 +26,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
                     Usuario usuario = usuarioNeg.FindActivoById(idUsuario);
                     if (usuario != null)
                     {
+                        Session.Add("idUsuario", idUsuario);
                         txtEmail.Text = usuario.Email;
                         txtPassword.Text = usuario.Password;
                         txtNombre.Text = usuario.Nombre;
@@ -64,8 +64,9 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
                     lblMensajeError.Visible = true;
                     return;
                 }
+               
                 Usuario user = new Usuario();
-                user.ID = idUsuario;
+                user.ID = (int)Session["idUsuario"];
                 user.Email = txtEmail.Text;
                 user.Password = txtPassword.Text;
                 user.Nombre = txtNombre.Text;
@@ -76,6 +77,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 
                 usuarioNeg.Modificar(user);
                 Response.Redirect("/Admin/Usuarios/List.aspx", false);
+                Session.Remove("idUsuario");
             }
             catch (Exception ex)
             {

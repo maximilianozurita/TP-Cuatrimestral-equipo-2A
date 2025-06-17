@@ -69,7 +69,7 @@
   <ItemGroup>
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\Envios\List.aspx" />
-    <Content Include="Admin\Productos\Agregar.aspx" />
+    <Content Include="Admin\Productos\AgregarModificar.aspx" />
     <Content Include="Admin\Productos\List.aspx" />
     <Content Include="Admin\Productos\Modificar.aspx" />
     <Content Include="Admin\Usuarios\Agregar.aspx" />
@@ -106,12 +106,12 @@
     <Compile Include="Admin\Envios\List.aspx.designer.cs">
       <DependentUpon>List.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Productos\Agregar.aspx.cs">
-      <DependentUpon>Agregar.aspx</DependentUpon>
+    <Compile Include="Admin\Productos\AgregarModificar.aspx.cs">
+      <DependentUpon>AgregarModificar.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Productos\Agregar.aspx.designer.cs">
-      <DependentUpon>Agregar.aspx</DependentUpon>
+    <Compile Include="Admin\Productos\AgregarModificar.aspx.designer.cs">
+      <DependentUpon>AgregarModificar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Productos\List.aspx.cs">
       <DependentUpon>List.aspx</DependentUpon>

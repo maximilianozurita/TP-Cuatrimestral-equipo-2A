@@ -78,6 +78,7 @@ CREATE TABLE ItemCarrito(
 );
 go
 CREATE TABLE Imagenes (
+	ID INT PRIMARY KEY IDENTITY (1,1),
 	URI NVARCHAR(255),
 	Producto_ID INT,
 	FechaBaja DATETIME NULL,

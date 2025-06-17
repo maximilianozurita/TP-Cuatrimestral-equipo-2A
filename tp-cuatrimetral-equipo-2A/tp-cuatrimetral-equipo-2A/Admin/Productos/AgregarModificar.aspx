@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Agregar.aspx.cs" Inherits="tp_cuatrimetral_equipo_2A.Admin.Productos.Agregar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="AgregarModificar.aspx.cs" Inherits="tp_cuatrimetral_equipo_2A.Admin.Productos.Agregar" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -52,6 +52,17 @@
             <asp:Label runat="server" AssociatedControlID="fuImagenes" Text="Imágenes" />
             <asp:FileUpload ID="fuImagenes" runat="server" CssClass="form-control" AllowMultiple="true" />
         </div>
+
+        <asp:Repeater ID="rptImagenes" runat="server">
+            <ItemTemplate>
+                <div class="imagen-item mb-2">
+                    <img src='/Upload/Products/<%# Eval("ImagenUrl") %>' style="width: 100px; height: auto;" />
+                    <asp:CheckBox ID="chkEliminar" runat="server" Text="Eliminar" CssClass="ms-2" />
+                    <asp:HiddenField ID="hfIdImagen" runat="server" Value='<%# Eval("Id") %>' />
+                    <asp:HiddenField ID="hfUrlImagen" runat="server" Value='<%# Eval("ImagenUrl") %>' />
+                </div>
+            </ItemTemplate>
+        </asp:Repeater>
 
         <!-- Botón Guardar -->
         <div class="d-grid gap-2">

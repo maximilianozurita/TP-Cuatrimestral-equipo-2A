@@ -36,12 +36,12 @@ VALUES
 GO
 
 -- Insertar Productos
-INSERT INTO Productos (Nombre, Descripcion, Categoria_ID, Marca_ID, Precio, Descuento)
+INSERT INTO Productos (Nombre, Descripcion, Categoria_ID, Marca_ID, Precio, Descuento, Destacado)
 VALUES
-('Televisor 50"', 'TV LED 50 pulgadas 4K', 1, 1, 350000.00, 10.00),
-('Zapatillas Running', 'Zapatillas deportivas', 2, 3, 85000.00, 5.00),
-('iPhone 14', 'Último modelo de Apple', 1, 2, 900000.00, 15.00),
-('Silla Gamer', 'Silla ergonómica para juegos', 3, 4, 120000.00, 20.00);
+('Televisor 50"', 'TV LED 50 pulgadas 4K', 1, 1, 350000.00, 10.00, 1),
+('Zapatillas Running', 'Zapatillas deportivas', 2, 3, 85000.00, 5.00, 0),
+('iPhone 14', 'Último modelo de Apple', 1, 2, 900000.00, 15.00, 1),
+('Silla Gamer', 'Silla ergonómica para juegos', 3, 4, 120000.00, 20.00, 1);
 GO
 
 -- Insertar Ventas
@@ -78,10 +78,10 @@ GO
 -- Insertar Imágenes
 INSERT INTO Imagenes (URI, Producto_ID)
 VALUES
-('https://example.com/tv.jpg', 1),
-('https://example.com/zapatillas.jpg', 2),
-('https://example.com/iphone.jpg', 3),
-('https://example.com/silla.jpg', 4);
+('Upluad/Products/ImagenPrueba1.png', 1),
+('Upluad/Products/ImagenPrueba2.jpeg', 2),
+('Upluad/Products/ImagenPrueba3.jpg', 3),
+('Upluad/Products/ImagenPrueba3.jpg', 4);
 GO
 
 -- Insertar Favoritos

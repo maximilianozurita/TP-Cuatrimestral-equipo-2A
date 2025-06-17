@@ -16,7 +16,7 @@ namespace negocio
             try
             {
                 datos.SetearConsulta("select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
-                    "a.Marca_id , a.precio , a.descuento , " +
+                    "a.Marca_id , a.precio , a.descuento , a.Destacado, " +
                     "m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre " +
                     "from Productos as a " +
                     "inner join Categorias as c on c.ID = a.Categoria_ID " +
@@ -38,6 +38,36 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public Producto FindById(int id)
+        {
+            Producto producto = new Producto();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("Select p.ID, p.Nombre, p.Descripcion, p.Precio, p.Descuento, p. Destacado, p.Marca_ID, p.Categoria_ID, c.Nombre as CategoriaNombre, m.Nombre as MarcaNombre from Productos as p join CATEGORIAS c on (c.ID = p.Categoria_ID) join MARCAS m on (m.ID=p.Marca_ID) where p.ID = @id and p.FechaBaja is null");
+                datos.SetearParametros("@Id", id);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    producto = InicializarObjeto(datos);
+                }
+                else
+                {
+                    return null;
+                }
+                return producto;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         private Producto InicializarObjeto(AccesoDatos datos)
         {
             Producto producto = new Producto();
@@ -48,6 +78,7 @@ namespace negocio
             producto.Descripcion = datos.Lector["Descripcion"].ToString();
             producto.Categoria = new Categoria();
             producto.Marca = new Marca();
+            producto.Destacado = (bool)datos.Lector["Destacado"];
             producto.Imagenes = new List<Imagen>();
             if (datos.Lector["Categoria_ID"] != DBNull.Value)
             {
@@ -59,7 +90,7 @@ namespace negocio
                 producto.Marca.Id = (int)datos.Lector["Marca_ID"];
                 producto.Marca.Nombre = datos.Lector["MarcaNombre"].ToString();
             }
-            producto.Imagenes = new ImagenNegocio().ListarByArticuloId(producto.ID);
+            producto.Imagenes = new ImagenNegocio().ListarByProductoId(producto.ID);
             return producto;
         }
 
@@ -133,6 +164,36 @@ namespace negocio
                 accesoDatos.CerrarConexion();
             }
         }
+        public bool Modificar(Producto producto)
+        {
+            AccesoDatos accesoDatos = new AccesoDatos();
+            ImagenNegocio imgNegocio = new ImagenNegocio();
+            try
+            {
+                string query = "Update Productos set Nombre=@nombre, Descripcion=@descripcion, Categoria_ID=@Categoria_ID, Marca_ID=@Marca_ID, Precio=@precio, Descuento=@descuento, Destacado=@destacado where ID=@id";
+                accesoDatos.SetearConsulta(query);
+                accesoDatos.SetearParametros("@nombre", producto.Nombre);
+                accesoDatos.SetearParametros("@descripcion", producto.Descripcion);
+                accesoDatos.SetearParametros("@Categoria_ID", producto.Categoria.Id);
+                accesoDatos.SetearParametros("@Marca_ID", producto.Marca.Id);
+                accesoDatos.SetearParametros("@precio", producto.Precio);
+                accesoDatos.SetearParametros("@descuento", producto.Precio);
+                accesoDatos.SetearParametros("@destacado", producto.Destacado);
+                accesoDatos.SetearParametros("@id", producto.ID);
+                accesoDatos.EjecutarAccion();
+
+                imgNegocio.UpdateByArticulo(producto);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                accesoDatos.CerrarConexion();
+            }
+        }
         public void Eliminar(int producto_id)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -143,7 +204,7 @@ namespace negocio
                 if (imgNegocio.EliminarByProductoId(producto_id))
                 {
                     //Eliminar articulo
-                    datos.SetearConsulta("Delete from Productos WHERE Id=@Id");
+                    datos.SetearConsulta("Update Productos set FechaBaja = GETDATE() WHERE Id=@Id");
                     datos.SetearParametros("@Id", producto_id);
                     datos.EjecutarAccion();
                 }
