@@ -47,16 +47,44 @@ GO
 -- Insertar Ventas
 INSERT INTO Ventas (Usuario_id, SumaTotal, FechaVenta)
 VALUES
-(1, 435000.00, GETDATE()),
-(2, 900000.00, GETDATE());
+(1, 435000.00, DATEADD(DAY, -10, GETDATE())),
+(2, 900000.00, DATEADD(DAY, -9, GETDATE())),
+(3, 800000.00, DATEADD(DAY, -8, GETDATE())),
+(3, 700000.00, DATEADD(DAY, -7, GETDATE())),
+(3, 600000.00, DATEADD(DAY, -6, GETDATE())),
+(1, 150000.00, DATEADD(DAY, -5, GETDATE())),
+(2, 300000.00, DATEADD(DAY, -4, GETDATE())),
+(1, 500000.00, DATEADD(DAY, -3, GETDATE())),
+(2, 250000.00, DATEADD(DAY, -2, GETDATE())),
+(3, 900000.00, DATEADD(DAY, -1, GETDATE()));
 GO
 
 -- Insertar VentasProducto
 INSERT INTO VentasProducto (Venta_ID, Producto_id, Cantidad, PrecioUnitario)
 VALUES
 (1, 1, 1, 350000.00),
-(1, 2, 1, 85000.00),
-(2, 3, 1, 900000.00);
+(1, 2, 2, 42500.00),
+
+(2, 3, 1, 900000.00),
+
+(3, 2, 2, 200000.00),
+(3, 5, 1, 400000.00),
+
+(4, 1, 1, 350000.00),
+(4, 4, 2, 175000.00),
+
+(5, 2, 3, 200000.00),
+
+(6, 1, 1, 150000.00),
+
+(7, 3, 2, 150000.00),
+
+(8, 5, 1, 500000.00),
+
+(9, 1, 1, 250000.00),
+
+(10, 4, 1, 500000.00),
+(10, 5, 2, 200000.00);
 GO
 
 -- Insertar Carrito
@@ -78,10 +106,10 @@ GO
 -- Insertar Imágenes
 INSERT INTO Imagenes (URI, Producto_ID)
 VALUES
-('Upluad/Products/ImagenPrueba1.png', 1),
-('Upluad/Products/ImagenPrueba2.jpeg', 2),
-('Upluad/Products/ImagenPrueba3.jpg', 3),
-('Upluad/Products/ImagenPrueba3.jpg', 4);
+('ImagenPrueba1.png', 1),
+('ImagenPrueba2.jpeg', 2),
+('ImagenPrueba3.jpg', 3),
+('ImagenPrueba3.jpg', 4);
 GO
 
 -- Insertar Favoritos
