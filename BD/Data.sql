@@ -106,10 +106,10 @@ GO
 -- Insertar Imágenes
 INSERT INTO Imagenes (URI, Producto_ID)
 VALUES
-('Upluad/Products/ImagenPrueba1.png', 1),
-('Upluad/Products/ImagenPrueba2.jpeg', 2),
-('Upluad/Products/ImagenPrueba3.jpg', 3),
-('Upluad/Products/ImagenPrueba3.jpg', 4);
+('ImagenPrueba1.png', 1),
+('ImagenPrueba2.jpeg', 2),
+('ImagenPrueba3.jpg', 3),
+('ImagenPrueba3.jpg', 4);
 GO
 
 -- Insertar Favoritos

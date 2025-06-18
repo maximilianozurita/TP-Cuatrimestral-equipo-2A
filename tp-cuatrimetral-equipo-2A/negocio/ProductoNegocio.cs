@@ -8,20 +8,25 @@ namespace negocio
 {
     public class ProductoNegocio
     {
-        public List<Producto> Listar()
+        public List<Producto> Listar(bool? filtrarDestacados = null)
         {
             List<Producto> lista = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearConsulta("select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
+                string consulta = "select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
                     "a.Marca_id , a.precio , a.descuento , a.Destacado, " +
                     "m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre " +
                     "from Productos as a " +
                     "inner join Categorias as c on c.ID = a.Categoria_ID " +
                     "inner join Marcas as m on m.ID = a.Marca_ID " +
-                    "where a.FechaBaja is null");
+                    "where a.FechaBaja is null";
+                if (filtrarDestacados == true)
+                {
+                    consulta += " and a.Destacado = 1";
+                }
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
