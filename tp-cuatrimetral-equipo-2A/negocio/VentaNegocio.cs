@@ -1,0 +1,85 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using dominio;
+
+namespace negocio
+{
+    public class VentaNegocio
+    {
+        public List<Venta> Listar()
+        {
+            List<Venta> lista = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT v.ID, v.SumaTotal, v.FechaVenta, u.ID AS UsuarioID, u.Email FROM Ventas v JOIN Usuarios u ON (v.Usuario_ID = u.ID)");
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Venta venta = new Venta
+                    {
+                        ID = (int)datos.Lector["ID"],
+                        SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]),
+                        FechaVenta = (DateTime)datos.Lector["FechaVenta"],
+                        Usuario = new Usuario
+                        {
+                            ID = (int)datos.Lector["UsuarioID"],
+                            Email = datos.Lector["Email"].ToString()
+                        },
+                        VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"])
+                    };
+                    lista.Add(venta);
+                }
+
+                return lista;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public List<VentaProducto> CargarProductosDeVenta(int ventaId)
+        {
+            List<VentaProducto> lista = new List<VentaProducto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta("SELECT vp.Venta_ID, vp.Producto_ID, p.Nombre, vp.Cantidad, vp.PrecioUnitario FROM VentasProducto vp JOIN Productos p ON (vp.Producto_ID = p.ID) WHERE vp.Venta_ID = @ventaId");
+                datos.SetearParametros("@ventaId", ventaId);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    VentaProducto vp = new VentaProducto
+                    {
+                        Venta_ID = (int)datos.Lector["Venta_ID"],
+                        Producto = new Producto
+                        {
+                            ID = (int)datos.Lector["Producto_ID"],
+                            Nombre = datos.Lector["Nombre"].ToString()
+                        },
+                        Cantidad = (int)datos.Lector["Cantidad"],
+                        PrecioUnitario = (decimal)datos.Lector["PrecioUnitario"]
+                    };
+
+                    lista.Add(vp);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+    }
+}
