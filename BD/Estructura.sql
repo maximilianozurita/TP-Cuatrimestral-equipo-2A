@@ -73,7 +73,6 @@ CREATE TABLE ItemCarrito(
    Cantidad int,
 	Vendido BIT,
 	Cancelado BIT,
-	CONSTRAINT FK_ItemCarrito_Carrito FOREIGN KEY (Carrito_ID) REFERENCES Carrito(ID),
 	CONSTRAINT FK_ItemCarrito_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID)
 );
 go

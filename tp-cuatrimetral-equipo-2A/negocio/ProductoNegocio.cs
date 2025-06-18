@@ -78,6 +78,7 @@ namespace negocio
             producto.Descripcion = datos.Lector["Descripcion"].ToString();
             producto.Categoria = new Categoria();
             producto.Marca = new Marca();
+            var data = datos.Lector["Destacado"];
             producto.Destacado = (bool)datos.Lector["Destacado"];
             producto.Imagenes = new List<Imagen>();
             if (datos.Lector["Categoria_ID"] != DBNull.Value)

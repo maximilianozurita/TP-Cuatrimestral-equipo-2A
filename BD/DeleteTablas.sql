@@ -20,3 +20,5 @@ DROP TABLE Marcas;
 go
 DROP TABLE Categorias;
 go
+use master
+drop database eCommerce

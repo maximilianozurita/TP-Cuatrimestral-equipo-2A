@@ -1,5 +1,5 @@
 use eCommerce
-select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , a.Marca_id , a.precio , a.descuento ,
+select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , a.Marca_id , a.precio , a.descuento , a.Destacado,
 m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre
 from Productos as a
 inner join Categorias as c on c.ID = a.Categoria_ID
