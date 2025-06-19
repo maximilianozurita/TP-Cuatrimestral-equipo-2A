@@ -182,7 +182,7 @@ namespace negocio
                 accesoDatos.SetearParametros("@Categoria_ID", producto.Categoria.Id);
                 accesoDatos.SetearParametros("@Marca_ID", producto.Marca.Id);
                 accesoDatos.SetearParametros("@precio", producto.Precio);
-                accesoDatos.SetearParametros("@descuento", producto.Precio);
+                accesoDatos.SetearParametros("@descuento", producto.Descuento);
                 accesoDatos.SetearParametros("@destacado", producto.Destacado);
                 accesoDatos.SetearParametros("@id", producto.ID);
                 accesoDatos.EjecutarAccion();

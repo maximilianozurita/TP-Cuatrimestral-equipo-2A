@@ -68,13 +68,13 @@ GO
 CREATE TABLE ItemCarrito(
 	ID INT PRIMARY KEY IDENTITY (1,1),
 	Usuario_ID int FOREIGN KEY REFERENCES Usuarios(ID),
-   Producto_ID int FOREIGN KEY REFERENCES Productos(ID),
-   FechaAgregado DATETIME,
-   Cantidad int,
+	Producto_ID int FOREIGN KEY REFERENCES Productos(ID),
+	FechaAgregado DATETIME,
+   	Cantidad int,
 	Vendido BIT,
 	Cancelado BIT,
-	CONSTRAINT FK_ItemCarrito_Carrito FOREIGN KEY (Carrito_ID) REFERENCES Carrito(ID),
-	CONSTRAINT FK_ItemCarrito_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID)
+	CONSTRAINT FK_ItemCarrito_Productos FOREIGN KEY (Producto_ID) REFERENCES Productos(ID),
+	CONSTRAINT FK_ItemCarrito_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
 );
 go
 CREATE TABLE Imagenes (
