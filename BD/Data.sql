@@ -52,56 +52,50 @@ VALUES
 (3, 800000.00, DATEADD(DAY, -8, GETDATE())),
 (3, 700000.00, DATEADD(DAY, -7, GETDATE())),
 (3, 600000.00, DATEADD(DAY, -6, GETDATE())),
-(1, 150000.00, DATEADD(DAY, -5, GETDATE())),
-(2, 300000.00, DATEADD(DAY, -4, GETDATE())),
-(1, 500000.00, DATEADD(DAY, -3, GETDATE())),
-(2, 250000.00, DATEADD(DAY, -2, GETDATE())),
-(3, 900000.00, DATEADD(DAY, -1, GETDATE()));
+(5, 100000.00, DATEADD(DAY, -30, GETDATE())),
+(5, 180000.00, DATEADD(DAY, -25, GETDATE())),
+(5, 95000.00, DATEADD(DAY, -21, GETDATE())),
+(5, 230000.00, DATEADD(DAY, -18, GETDATE())),
+(5, 120000.00, DATEADD(DAY, -15, GETDATE())),
+(5, 175000.00, DATEADD(DAY, -10, GETDATE())),
+(5, 205000.00, DATEADD(DAY, -7, GETDATE())),
+(5, 99000.00, DATEADD(DAY, -4, GETDATE())),
+(5, 140000.00, DATEADD(DAY, -2, GETDATE())),
+(5, 185000.00, GETDATE());
 GO
 
 -- Insertar VentasProducto
 INSERT INTO VentasProducto (Venta_ID, Producto_id, Cantidad, PrecioUnitario)
 VALUES
-(1, 1, 1, 350000.00),
-(1, 2, 2, 42500.00),
-
+(1, 1, 1, 350000.00), (1, 2, 2, 42500.00),
 (2, 3, 1, 900000.00),
-
-(3, 2, 2, 200000.00),
-(3, 5, 1, 400000.00),
-
-(4, 1, 1, 350000.00),
-(4, 4, 2, 175000.00),
-
+(3, 2, 2, 200000.00), (3, 1, 1, 400000.00),
+(4, 1, 1, 350000.00), (4, 4, 2, 175000.00),
 (5, 2, 3, 200000.00),
-
-(6, 1, 1, 150000.00),
-
-(7, 3, 2, 150000.00),
-
-(8, 5, 1, 500000.00),
-
-(9, 1, 1, 250000.00),
-
-(10, 4, 1, 500000.00),
-(10, 5, 2, 200000.00);
-GO
-
--- Insertar Carrito
-INSERT INTO Carrito (Usuario_id, Precio)
-VALUES
-(1, 435000.00),
-(2, 900000.00);
+(6, 2, 1, 85000.00), (6, 4, 1, 15000.00),
+(7, 3, 1, 180000.00),
+(8, 2, 2, 47500.00),
+(9, 1, 1, 120000.00), (9, 4, 1, 110000.00),
+(10, 2, 1, 120000.00),
+(11, 3, 1, 95000.00), (11, 4, 1, 80000.00),
+(12, 1, 1, 175000.00),
+(13, 4, 1, 99000.00),
+(14, 3, 1, 140000.00),
+(15, 2, 1, 185000.00);
 GO
 
 -- Insertar ItemCarrito
-INSERT INTO ItemCarrito (Carrito_ID, Producto_ID, FechaAgregado, Cantidad, PrecioTotal, Vendido, Cancelado)
-VALUES
-(1, 1, GETDATE(), 1, 350000.00, 1, 0),
-(1, 2, GETDATE(), 1, 85000.00, 1, 0),
-(2, 3, GETDATE(), 1, 900000.00, 1, 0),
-(1, 4, GETDATE(), 1, 120000.00, 0, 0);  -- producto en carrito pero no vendido
-GO
+INSERT INTO ItemCarrito (Usuario_ID, Producto_ID, FechaAgregado, Cantidad, Vendido, Cancelado)
+VALUES 
+(1, 1, DATEADD(DAY, -10, GETDATE()), 1, 1, 0),
+(1, 2, DATEADD(DAY, -9, GETDATE()), 2, 0, 0),
+(1, 3, DATEADD(DAY, -8, GETDATE()), 1, 1, 0),
+(3, 4, DATEADD(DAY, -7, GETDATE()), 1, 0, 1),
+(3, 2, DATEADD(DAY, -6, GETDATE()), 1, 1, 0),
+(3, 2, DATEADD(DAY, -5, GETDATE()), 2, 1, 0),
+(5, 4, DATEADD(DAY, -4, GETDATE()), 1, 0, 0),
+(5, 1, DATEADD(DAY, -3, GETDATE()), 3, 1, 0),
+(5, 3, DATEADD(DAY, -2, GETDATE()), 1, 0, 1);
 
 -- Insertar Imágenes
 INSERT INTO Imagenes (URI, Producto_ID)
@@ -109,7 +103,11 @@ VALUES
 ('ImagenPrueba1.png', 1),
 ('ImagenPrueba2.jpeg', 2),
 ('ImagenPrueba3.jpg', 3),
-('ImagenPrueba3.jpg', 4);
+('ImagenPrueba3.jpg', 4),
+('ImagenPrueba4.jpg', 1),
+('ImagenPrueba5.jpg', 2),
+('ImagenPrueba1.jpg', 3),
+('ImagenPrueba2.jpg', 4)
 GO
 
 -- Insertar Favoritos
@@ -121,8 +119,21 @@ VALUES
 GO
 
 -- Insertar Envíos
-INSERT INTO Envios (Usuario_id, Venta_ID, Estado_envio_ID)
-VALUES
+INSERT INTO Envios (Usuario_ID, Venta_ID, Estado_envio_ID)
+VALUES 
 (1, 1, 2),
-(2, 2, 1);
+(2, 2, 3),
+(3, 3, 1),
+(3, 4, 3),
+(3, 5, 4),
+(5, 6, 2),
+(5, 7, 1),
+(5, 8, 3),
+(5, 9, 2),
+(5, 10, 1),
+(5, 11, 3),
+(5, 12, 2),
+(5, 13, 1),
+(5, 14, 4),
+(5, 15, 3);
 GO

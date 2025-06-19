@@ -15,6 +15,15 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Ventas
     {
 
         /// <summary>
+        /// ddlEstadoEnvio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstadoEnvio;
+
+        /// <summary>
         /// txtFiltroEmail control.
         /// </summary>
         /// <remarks>

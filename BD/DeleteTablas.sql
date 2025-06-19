@@ -6,7 +6,9 @@ DROP TABLE Favoritos;
 go
 DROP TABLE Imagenes;
 go
-DROP TABLE Carrito;
+DROP TABLE ItemCarrito;
+go
+DROP TABLE VentasProducto
 go
 DROP TABLE Ventas;
 go

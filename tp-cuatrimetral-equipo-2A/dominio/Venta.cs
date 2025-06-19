@@ -12,5 +12,6 @@ namespace dominio
         public float SumaTotal { get; set; }
         public DateTime FechaVenta { get; set; }
         public List<VentaProducto> VentaProducto { get; set; } = new List<VentaProducto>();
+        public Envio Envio { get; set; }
     }
 }

@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Default.aspx" />
+    <Content Include="Admin\Envios\Detalle.aspx" />
     <Content Include="Admin\Envios\List.aspx" />
     <Content Include="Admin\Productos\AgregarModificar.aspx" />
     <Content Include="Admin\Productos\List.aspx" />
@@ -98,6 +99,13 @@
     </Compile>
     <Compile Include="Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Envios\Detalle.aspx.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Envios\Detalle.aspx.designer.cs">
+      <DependentUpon>Detalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Envios\List.aspx.cs">
       <DependentUpon>List.aspx</DependentUpon>
