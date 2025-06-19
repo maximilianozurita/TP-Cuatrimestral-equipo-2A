@@ -8,14 +8,35 @@ namespace negocio
 {
     public class VentaNegocio
     {
-        public List<Venta> Listar()
+        public List<Venta> Listar(int? estadoEnvioId = null)
         {
             List<Venta> lista = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.SetearConsulta("SELECT v.ID, v.SumaTotal, v.FechaVenta, u.ID AS UsuarioID, u.Email FROM Ventas v JOIN Usuarios u ON (v.Usuario_ID = u.ID)");
+                string consulta = @"
+                    SELECT 
+                        v.ID, v.SumaTotal, v.FechaVenta,
+                        u.ID AS UsuarioID, u.Email,
+                        e.ID AS EnvioID, e.Estado_envio_ID,
+                        ee.Descripcion AS EstadoEnvioDescripcion,
+                        ee.FechaBaja AS EstadoEnvioFechaBaja
+                    FROM Ventas v
+                    JOIN Usuarios u ON (v.Usuario_ID = u.ID)
+                    LEFT JOIN Envios e ON (e.Venta_ID = v.ID)
+                    LEFT JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID)";
+                if (estadoEnvioId != null)
+                {
+                    consulta += " WHERE e.Estado_envio_ID = @estadoEnvioId";
+                }
+
+                datos.SetearConsulta(consulta);
+
+                if (estadoEnvioId != null)
+                {
+                    datos.SetearParametros("@estadoEnvioId", estadoEnvioId);
+                }
                 datos.EjecutarLectura();
 
                 while (datos.Lector.Read())
@@ -30,7 +51,17 @@ namespace negocio
                             ID = (int)datos.Lector["UsuarioID"],
                             Email = datos.Lector["Email"].ToString()
                         },
-                        VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"])
+                        VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"]),
+                        Envio = datos.Lector["EnvioID"] != DBNull.Value ? 
+                        new Envio {
+                            ID = (int)datos.Lector["EnvioID"],
+                            EstadoEnvio = new EstadoEnvio
+                            {
+                                ID = (int)datos.Lector["Estado_envio_ID"],
+                                Descripcion = datos.Lector["EstadoEnvioDescripcion"].ToString(),
+                                FechaBaja = datos.Lector["EstadoEnvioFechaBaja"] is DBNull ? null : (DateTime?)datos.Lector["EstadoEnvioFechaBaja"]
+                            }
+                        } : null
                     };
                     lista.Add(venta);
                 }

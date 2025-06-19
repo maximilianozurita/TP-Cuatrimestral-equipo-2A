@@ -13,7 +13,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Ventas
     public partial class List : System.Web.UI.Page
     {
         private VentaNegocio ventaNeg = new VentaNegocio();
-
+        private EnvioNegocio envioNeg = new EnvioNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -22,13 +22,24 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Ventas
                 {
                     return;
                 }
+                CargarListadoEstadoEnvio();
                 CargarVentas();
             }
         }
-
+        private void CargarListadoEstadoEnvio()
+        {
+            List<EstadoEnvio> estadoEnvio = envioNeg.ListarEstadoEnvios();
+            ddlEstadoEnvio.DataSource = estadoEnvio;
+            ddlEstadoEnvio.DataTextField = "Descripcion";
+            ddlEstadoEnvio.DataValueField = "ID";
+            ddlEstadoEnvio.DataBind();
+            ddlEstadoEnvio.Items.Insert(0, new ListItem("Todos", ""));
+        }
         private void CargarVentas(DateTime? fechaDesde = null, DateTime? fechaHasta = null, string email = "")
         {
-            List<Venta> ventas = ventaNeg.Listar();
+            int? estadoSeleccionado = string.IsNullOrEmpty(ddlEstadoEnvio.SelectedValue) ? null : (int?)int.Parse(ddlEstadoEnvio.SelectedValue);
+
+            List<Venta> ventas = ventaNeg.Listar(estadoSeleccionado);
 
             if (fechaDesde.HasValue)
             {

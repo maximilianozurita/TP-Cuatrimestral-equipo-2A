@@ -4,6 +4,14 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div class="container my-4">
     <div class="row gx-3 gy-2 align-items-center">
+        <div class="col-md-3">
+            <div class="d-flex align-items-center">
+                <label for="ddlEstadoEnvio" class="form-label me-2 mb-0" style="min-width: 100px;">Estado envío:</label>
+                <asp:DropDownList ID="ddlEstadoEnvio" runat="server" CssClass="form-select">
+                    <asp:ListItem Text="Todos" Value="" />
+                </asp:DropDownList>
+            </div>
+        </div>
 
         <div class="col-md-4">
             <div class="d-flex align-items-center">
@@ -41,6 +49,7 @@
                 </div>
                 <div class="card-body">
                     <strong>Fecha:</strong> <%# Eval("FechaVenta", "{0:dd/MM/yyyy}") %><br />
+                    <strong>Estado de Envío:</strong> <%# Eval("Envio.EstadoEnvio.Descripcion") ?? "Sin estado" %><br />
                     <asp:Repeater ID="rptProductos" runat="server" DataSource='<%# Eval("VentaProducto") %>'>
                         <HeaderTemplate>
                             <ul>
