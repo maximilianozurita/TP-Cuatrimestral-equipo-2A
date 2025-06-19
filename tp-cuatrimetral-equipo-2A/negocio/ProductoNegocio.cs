@@ -83,7 +83,6 @@ namespace negocio
             producto.Descripcion = datos.Lector["Descripcion"].ToString();
             producto.Categoria = new Categoria();
             producto.Marca = new Marca();
-            var data = datos.Lector["Destacado"];
             producto.Destacado = (bool)datos.Lector["Destacado"];
             producto.Imagenes = new List<Imagen>();
             if (datos.Lector["Categoria_ID"] != DBNull.Value)
@@ -107,7 +106,7 @@ namespace negocio
             try
             {
                 datos.SetearConsulta("select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
-                    "a.Marca_id , a.precio , a.descuento , " +
+                    "a.Marca_id , a.precio , a.descuento , a.Destacado, " +
                     "m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre " +
                     "from Productos as a " +
                     "inner join Categorias as c on c.ID = a.Categoria_ID " +

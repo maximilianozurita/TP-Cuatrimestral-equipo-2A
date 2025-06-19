@@ -1,4 +1,5 @@
-﻿using negocio;
+﻿using dominio;
+using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +16,31 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         {
             if (!IsPostBack)
             {
+                Usuario usuario = (Usuario)Session["Usuario"];
                 carrito = (dominio.Carrito)Session["Carrito"];
-                if (carrito is null)
+                if (carrito is null && usuario is null)
                 {
                     carrito = new dominio.Carrito();
                     Session.Add("Carrito", carrito);
                 }
-                else 
+                else if(usuario != null)
+                {
+
+                    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    carrito = carritoNegocio.CarritoPorUsuarioID(usuario.ID);
+                    if(carrito != null)
+                    {
+                        Session.Add("Carrito", carrito);
+                        rptItemCarrito.DataSource = carrito.Items;
+                        rptItemCarrito.DataBind();
+                    }
+                    else
+                    {
+                        carrito = new dominio.Carrito();
+                        Session.Add("Carrito", carrito);
+                    }
+                }
+                else
                 {
                     rptItemCarrito.DataSource = carrito.Items;
                     rptItemCarrito.DataBind();
@@ -33,6 +52,13 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
             carrito = (dominio.Carrito)Session["Carrito"];
+            Usuario usuario = (Usuario)Session["Usuario"];
+            if (usuario != null && carrito != null)
+            {
+                carrito.MarcarTodoEliminado();
+                CarritoNegocio carritoNegocio = new CarritoNegocio();
+                carritoNegocio.GuardarCarritoEnBd(carrito);
+            }
             if (carrito != null)
             {
                 carrito = new dominio.Carrito();

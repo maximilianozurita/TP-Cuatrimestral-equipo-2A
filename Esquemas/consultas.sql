@@ -20,31 +20,10 @@ where id=1
 use eCommerce
 select * from Usuarios
 
-INSERT INTO Usuarios (
-    Nombre,
-    Apellido,
-    Email,
-    Password,
-    Telefono,
-    Direccion,
-    Permisos,
-    Fecha_alta,
-    Fecha_baja
-)
-VALUES (
-    'Gabriel',
-    'Salas',
-    'gabriel.salas@example.com',
-    'hashed_password_123',  -- Reemplazá con la password hasheada real
-    '1161234567',
-    'El Talar, Buenos Aires',
-    1,                     -- Ejemplo: 1 = cliente
-    GETDATE(),
-    NULL
-);
-
 insert  into  ItemCarrito (Usuario_ID,Producto_ID,FechaAgregado,Cantidad,Vendido,Cancelado)
 VALUES
 (1,1,'2025-06-07',2,0,0)
 
 select ID,Usuario_ID,Producto_ID,FechaAgregado,Cantidad,Vendido,Cancelado from ItemCarrito
+select * from Usuarios
+select * from ItemCarrito

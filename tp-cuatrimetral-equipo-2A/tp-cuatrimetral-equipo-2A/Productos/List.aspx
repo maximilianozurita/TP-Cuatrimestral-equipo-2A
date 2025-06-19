@@ -36,7 +36,7 @@
                     <div class="col-md-4 mb-4 d-flex">
                         <div class="card text-center w-100">
                             <a href='/Productos/Detalle.aspx?id=<%#Eval("ID") %>'>
-                                <img src='<%# GetPrimeraImagen(Eval("Imagen")) %>' class="card-img-top">
+                                <img src='<%# GetPrimeraImagen(Eval("Imagenes")) %>' class="card-img-top">
                             </a>
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><%#Eval("Nombre") %></h5>

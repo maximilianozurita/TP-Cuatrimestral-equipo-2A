@@ -16,7 +16,10 @@ namespace negocio
             Carrito carrito = new Carrito();
             try
             {
-                datos.SetearConsulta("select ID,Usuario_ID,Producto_ID,FechaAgregado,Cantidad,Vendido,Cancelado from ItemCarrito where Usuario_ID = @UsuarioId");
+                datos.SetearConsulta("select ID,Usuario_ID,Producto_ID,FechaAgregado,Cantidad," +
+                    "Vendido,Cancelado " +
+                    "from ItemCarrito " +
+                    "where Usuario_ID = @UsuarioId and Cancelado = 0");
                 datos.SetearParametros("@UsuarioId", UsuarioId);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())

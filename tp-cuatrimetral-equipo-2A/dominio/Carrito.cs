@@ -65,6 +65,16 @@ namespace dominio
         {
             this.ModificarCantidad(productId, -1);
         }
+
+        public void MarcarTodoEliminado()
+        {
+            foreach (ItemCarrito item in Items)
+            {
+                item.flag_Eliminado = true;
+                item.Cantidad = 0;
+                item.PrecioTotal = 0;
+            }
+        }
     }
 
     public class ItemCarrito
