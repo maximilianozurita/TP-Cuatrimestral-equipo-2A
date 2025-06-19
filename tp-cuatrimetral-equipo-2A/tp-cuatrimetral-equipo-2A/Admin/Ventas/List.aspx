@@ -3,43 +3,46 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 <div class="container my-4">
-    <div class="row gx-3 gy-2 align-items-center">
-        <div class="col-md-3">
+    <div class="row gx-2 gy-2 align-items-center flex-wrap">
+
+        <div class="col-md-2">
             <div class="d-flex align-items-center">
-                <label for="ddlEstadoEnvio" class="form-label me-2 mb-0" style="min-width: 100px;">Estado envío:</label>
-                <asp:DropDownList ID="ddlEstadoEnvio" runat="server" CssClass="form-select">
+                <label for="ddlEstadoEnvio" class="form-label me-2 mb-0">Estado:</label>
+                <asp:DropDownList ID="ddlEstadoEnvio" runat="server" CssClass="form-select w-100">
                     <asp:ListItem Text="Todos" Value="" />
                 </asp:DropDownList>
             </div>
         </div>
 
-        <div class="col-md-4">
-            <div class="d-flex align-items-center">
-                <label for="txtFiltroEmail" class="form-label me-2 mb-0" style="min-width: 100px;">Email:</label>
-                <asp:TextBox ID="txtFiltroEmail" runat="server" CssClass="form-control" placeholder="usuario@mail.com" />
-            </div>
-        </div>
-
         <div class="col-md-3">
             <div class="d-flex align-items-center">
-                <label for="txtFechaDesde" class="form-label me-2 mb-0" style="min-width: 100px;">Desde:</label>
-                <asp:TextBox ID="txtFechaDesde" runat="server" CssClass="form-control" TextMode="Date" />
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="d-flex align-items-center">
-                <label for="txtFechaHasta" class="form-label me-2 mb-0" style="min-width: 100px;">Hasta:</label>
-                <asp:TextBox ID="txtFechaHasta" runat="server" CssClass="form-control" TextMode="Date" />
+                <label for="txtFiltroEmail" class="form-label me-2 mb-0">Email:</label>
+                <asp:TextBox ID="txtFiltroEmail" runat="server" CssClass="form-control w-100" placeholder="usuario@mail.com" />
             </div>
         </div>
 
         <div class="col-md-2">
+            <div class="d-flex align-items-center">
+                <label for="txtFechaDesde" class="form-label me-2 mb-0">Desde:</label>
+                <asp:TextBox ID="txtFechaDesde" runat="server" CssClass="form-control w-100" TextMode="Date" />
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="d-flex align-items-center">
+                <label for="txtFechaHasta" class="form-label me-2 mb-0">Hasta:</label>
+                <asp:TextBox ID="txtFechaHasta" runat="server" CssClass="form-control w-100" TextMode="Date" />
+            </div>
+        </div>
+
+        <div class="col-md-1">
             <asp:Button ID="btnFiltrar" runat="server" CssClass="btn btn-primary w-100" Text="Filtrar" OnClick="btnFiltrar_Click" />
         </div>
 
     </div>
 </div>
+
+
 
     <asp:Repeater ID="rptVentas" runat="server">
         <ItemTemplate>
@@ -50,6 +53,9 @@
                 <div class="card-body">
                     <strong>Fecha:</strong> <%# Eval("FechaVenta", "{0:dd/MM/yyyy}") %><br />
                     <strong>Estado de Envío:</strong> <%# Eval("Envio.EstadoEnvio.Descripcion") ?? "Sin estado" %><br />
+                    <a href='/Admin/Envios/Detalle.aspx?ventaId=<%# Eval("ID") %>' class="btn btn-sm btn-outline-primary mt-3">
+                        Ver detalle del envío
+                    </a>
                     <asp:Repeater ID="rptProductos" runat="server" DataSource='<%# Eval("VentaProducto") %>'>
                         <HeaderTemplate>
                             <ul>

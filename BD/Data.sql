@@ -119,8 +119,21 @@ VALUES
 GO
 
 -- Insertar Envíos
-INSERT INTO Envios (Usuario_id, Venta_ID, Estado_envio_ID)
-VALUES
+INSERT INTO Envios (Usuario_ID, Venta_ID, Estado_envio_ID)
+VALUES 
 (1, 1, 2),
-(2, 2, 1);
+(2, 2, 3),
+(3, 3, 1),
+(3, 4, 3),
+(3, 5, 4),
+(5, 6, 2),
+(5, 7, 1),
+(5, 8, 3),
+(5, 9, 2),
+(5, 10, 1),
+(5, 11, 3),
+(5, 12, 2),
+(5, 13, 1),
+(5, 14, 4),
+(5, 15, 3);
 GO
