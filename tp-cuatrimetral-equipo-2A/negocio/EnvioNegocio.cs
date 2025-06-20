@@ -34,5 +34,24 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public void ActualizarEstadoEnvio(int ventaId, int nuevoEstadoId)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Envios SET Estado_envio_ID = @idEstado WHERE Venta_ID = @idVenta");
+                datos.SetearParametros("@idEstado", nuevoEstadoId);
+                datos.SetearParametros("@idVenta", ventaId);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }
