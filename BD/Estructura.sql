@@ -97,7 +97,6 @@ CREATE TABLE Envios (
 	ID INT PRIMARY KEY IDENTITY (1,1),
 	Venta_ID INT,
 	Estado_envio_ID INT,
-	CONSTRAINT FK_Envios_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID),
 	CONSTRAINT FK_Envios_Ventas FOREIGN KEY (Venta_ID) REFERENCES Ventas(ID),
 	CONSTRAINT FK_Envios_EstadoEnvio FOREIGN KEY (Estado_envio_ID) REFERENCES Estado_envio(ID)
 );

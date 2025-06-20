@@ -23,5 +23,6 @@ go
 DROP TABLE Categorias;
 go
 use master
+go
 drop database eCommerce
 go

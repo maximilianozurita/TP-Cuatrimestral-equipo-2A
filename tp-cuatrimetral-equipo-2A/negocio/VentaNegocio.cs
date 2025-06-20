@@ -120,7 +120,7 @@ namespace negocio
                 datos.SetearConsulta(@"
                     SELECT 
                         v.ID, v.SumaTotal, v.FechaVenta,
-                        u.ID AS UsuarioID, u.Email,
+                        u.ID AS UsuarioID, u.Email, u.Nombre, u.Apellido, u.Direccion,
                         e.ID AS EnvioID, e.Estado_envio_ID,
                         ee.Descripcion AS EstadoEnvioDescripcion,
                         ee.FechaBaja AS EstadoEnvioFechaBaja
@@ -141,7 +141,10 @@ namespace negocio
                         Usuario = new Usuario
                         {
                             ID = (int)datos.Lector["UsuarioID"],
-                            Email = datos.Lector["Email"].ToString()
+                            Email = datos.Lector["Email"].ToString(),
+                            Direccion = datos.Lector["Direccion"].ToString(),
+                            Nombre = datos.Lector["Nombre"].ToString(),
+                            Apellido = datos.Lector["Apellido"].ToString(),
                         },
                         VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"]),
                         Envio = datos.Lector["EnvioID"] != DBNull.Value ?
