@@ -14,15 +14,43 @@
             { %>
         <h5 class="">Carrito vacio</h5>
         <% }
+
             else
             { %>
-        <asp:Repeater ID="rptItemCarrito" runat="server">
-            <ItemTemplate>
-                <p class="card-text"><%#Eval("Producto.Nombre") %></p>
-                <p class="card-text"><%#Eval("Cantidad") %></p>
-            </ItemTemplate>
-        </asp:Repeater>
-        <div class="w-100 d-flex justify-content-between align-items-center mt-4 px-4">
+        <div class="container">
+
+            <asp:Repeater ID="rptItemCarrito" runat="server">
+                <ItemTemplate>
+                    <div class="card mb-2" style="height: 10rem;">
+                        <div class="card-body d-flex gap-3">
+
+                            <div style="width: 8rem;">
+                                <img src='<%# GetPrimeraImagen(Eval("Producto.Imagenes")) %>'
+                                    class="rounded img-fluid"
+                                    style="height: 8rem; width: 8rem; object-fit: cover;">
+                            </div>
+
+                            <div class="d-flex align-items-center " style="width: 20rem;">
+                                <span><%# Eval("Producto.Nombre") %></span>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-center" style="width: 10rem;">
+                                <span>$<%# Eval("Producto.Precio") %></span>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-center" style="width: 5rem;">
+                                <button class="btn btn-sm btn-primary me-2">+</button>
+                                <span><%# Eval("Cantidad") %></span>
+                                <button class="btn btn-sm btn-primary ms-2">-</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+
+        </div>
+        <div class="w-100 d-flex justify-content-between align-items-center mt-4 px-4 mt-4">
             <a href="/Datos Personales.aspx" type="button" class="btn btn-outline-primary">Finalizar compra Compra</a>
             <asp:Button Text="Eliminar del carrito" CssClass="btn btn-primary me-md-2" ID="btnEliminar" OnClick="btnEliminar_Click" runat="server" AutoPostBack="false" />
         </div>
