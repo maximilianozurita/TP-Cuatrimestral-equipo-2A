@@ -30,7 +30,14 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     Session.Add("NombreUsuario", txtEmail.Text);
                     if ((Session["usuario"]) != null)
                     {
-                        Response.Redirect("/Default.aspx", false);
+                        if (usuario.TienePermiso(Permisos.Cliente))
+                        {
+                            Response.Redirect("/Default.aspx", false);
+                        }
+                        else
+                        {
+                            Response.Redirect("/Admin/Default.aspx", false);
+                        }
                     }
                 }
                 else

@@ -65,8 +65,14 @@
         </asp:Repeater>
 
         <!-- Botón Guardar -->
-        <div class="d-grid gap-2">
-            <asp:Button ID="btnGuardar" runat="server" Text="Guardar Producto" CssClass="btn btn-success" OnClick="btnGuardar_Click" />
+
+        <div class="row g-2 mt-4">
+            <div class="col">
+                <asp:Button ID="btnGuardar" runat="server" Text="Guardar Producto" CssClass="btn btn-success w-100" OnClick="btnGuardar_Click" />
+            </div>
+            <div class="col">
+                <asp:Button Text="Cancelar" CssClass="btn btn-primary w-100" ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" />
+            </div>
         </div>
 
         <!-- Mensaje -->

@@ -102,5 +102,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
                 item.Selected = (permisosUsuario & (Permisos)valor) == (Permisos)valor;
             }
         }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Admin/Usuarios/List.aspx");
+        }
     }
 }

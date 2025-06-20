@@ -24,6 +24,24 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
+        /// divPasswordActual control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPasswordActual;
+
+        /// <summary>
+        /// txtPasswordActual control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPasswordActual;
+
+        /// <summary>
         /// divPassword control.
         /// </summary>
         /// <remarks>
@@ -94,6 +112,24 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtDireccion;
+
+        /// <summary>
+        /// divCambiarPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divCambiarPassword;
+
+        /// <summary>
+        /// chkCambiarPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox chkCambiarPassword;
 
         /// <summary>
         /// lblMensajeError control.
