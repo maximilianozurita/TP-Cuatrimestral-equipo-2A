@@ -95,7 +95,6 @@ CREATE TABLE Favoritos (
 go
 CREATE TABLE Envios (
 	ID INT PRIMARY KEY IDENTITY (1,1),
-	Usuario_ID INT,
 	Venta_ID INT,
 	Estado_envio_ID INT,
 	CONSTRAINT FK_Envios_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID),
