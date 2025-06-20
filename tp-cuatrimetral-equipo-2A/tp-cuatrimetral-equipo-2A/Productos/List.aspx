@@ -41,7 +41,7 @@
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title"><%#Eval("Nombre") %></h5>
                                 <p class="card-text"><%#Eval("Descripcion") %></p>
-                                <h6 class="card-text">$ <%#Eval("Precio") %></h6>
+                                <h6 class="card-text">$ <%#Eval("PrecioConDescuento") %></h6>
                                 <asp:Button class="btn btn-primary mt-4" runat="server"
                                     Text="Agregar al Carrito"
                                     CommandArgument='<%#Eval("ID") %>'

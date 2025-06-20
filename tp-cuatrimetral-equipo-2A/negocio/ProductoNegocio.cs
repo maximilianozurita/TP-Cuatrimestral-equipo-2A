@@ -96,6 +96,7 @@ namespace negocio
                 producto.Marca.Nombre = datos.Lector["MarcaNombre"].ToString();
             }
             producto.Imagenes = new ImagenNegocio().ListarByProductoId(producto.ID);
+            producto.CalcularDescuento();
             return producto;
         }
 

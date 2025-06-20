@@ -67,6 +67,8 @@
             <a href="/Datos Personales.aspx" type="button" class="btn btn-outline-primary">Finalizar compra Compra</a>
             <asp:Button Text="Vaciar Carrito" CssClass="btn btn-primary me-md-2" ID="btnEliminar" OnClick="btnEliminar_Click" runat="server" AutoPostBack="false" />
         </div>
+
+
         <% } %>
     </div>
 </asp:Content>
