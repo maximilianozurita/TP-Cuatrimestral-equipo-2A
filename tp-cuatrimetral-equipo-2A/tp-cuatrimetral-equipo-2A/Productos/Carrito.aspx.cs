@@ -14,20 +14,20 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         public dominio.Carrito carrito = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+            carrito = (dominio.Carrito)Session["Carrito"];
             if (!IsPostBack)
             {
                 Usuario usuario = (Usuario)Session["Usuario"];
-                carrito = (dominio.Carrito)Session["Carrito"];
                 if (carrito is null && usuario is null)
                 {
                     carrito = new dominio.Carrito();
                     Session.Add("Carrito", carrito);
                 }
-                else if(usuario != null)
+                else if (usuario != null)
                 {
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
                     carrito = carritoNegocio.CarritoPorUsuarioID(usuario.ID);
-                    if(carrito != null)
+                    if (carrito != null)
                     {
                         Session.Add("Carrito", carrito);
                         rptItemCarrito.DataSource = carrito.Items;
@@ -39,13 +39,13 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                         Session.Add("Carrito", carrito);
                     }
                 }
-                else if(carrito != null && carrito.Items.Count>0)
+                else if (carrito != null && carrito.Items.Count > 0)
                 {
                     rptItemCarrito.DataSource = carrito.Items;
                     rptItemCarrito.DataBind();
                 }
             }
-            
+
         }
 
         protected string GetPrimeraImagen(object imagenesObj)
@@ -58,7 +58,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-            carrito = (dominio.Carrito)Session["Carrito"];
+
             Usuario usuario = (Usuario)Session["Usuario"];
             if (carrito is null) return;
             if (usuario != null)
@@ -71,30 +71,58 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             Session.Add("Carrito", carrito);
         }
 
-        protected void btnEliminarItem_Click(object sender,EventArgs e)
+        protected void btnEliminarItem_Click(object sender, EventArgs e)
         {
+            if (carrito == null) return;
             Button button = (Button)sender;
             int id = int.Parse(button.CommandArgument);
-            carrito = (dominio.Carrito)Session["Carrito"];
             Usuario usuario = (Usuario)Session["Usuario"];
-
-            if (carrito != null)
+            carrito.EliminarProducto(id);
+            if (usuario != null)
             {
-                carrito.EliminarProducto(id);
-                if(usuario != null)
-                {
-                    CarritoNegocio carritoNegocio = new CarritoNegocio();
-                    carritoNegocio.GuardarCarritoEnBd(carrito);
-                }
-                carrito.Items = carrito.Items.FindAll(item => item.flag_Eliminado == false);
-                Session.Add("Carrito", carrito);
-                if (carrito.Items.Count > 0)
-                {
-                    rptItemCarrito.DataSource = carrito.Items;
-                    rptItemCarrito.DataBind();
-                }
+                CarritoNegocio carritoNegocio = new CarritoNegocio();
+                carritoNegocio.GuardarCarritoEnBd(carrito);
             }
-            
+            carrito.Items = carrito.Items.FindAll(item => item.flag_Eliminado == false);
+            Session.Add("Carrito", carrito);
+            ActualizarVista();
+
         }
+
+        protected void btnRestarCantidad_Click(object sender, EventArgs e)
+        {
+            if (carrito == null) return;
+            Button button = (Button)sender;
+            int id = int.Parse(button.CommandArgument);
+            Usuario usuario = (Usuario)Session["Usuario"];
+            carrito.QuitarUnidad(id);
+            if (usuario != null)
+            {
+                CarritoNegocio carritoNegocio = new CarritoNegocio();
+                carritoNegocio.GuardarCarritoEnBd(carrito);
+            }
+            carrito.Items = carrito.Items.FindAll(item => item.flag_Eliminado == false);
+            Session.Add("Carrito", carrito);
+            ActualizarVista();
+        }
+
+        protected void btnSumarCantidad_Click(object sender, EventArgs e)
+        {
+            if (carrito == null) return;
+            Button button = (Button)sender;
+            int id = int.Parse(button.CommandArgument);
+            ActualizarVista();
+
+        }
+
+        private void ActualizarVista()
+        {
+            if (carrito.Items.Count > 0)
+            {
+                rptItemCarrito.DataSource = carrito.Items;
+                rptItemCarrito.DataBind();
+            }
+        }
+
     }
 }

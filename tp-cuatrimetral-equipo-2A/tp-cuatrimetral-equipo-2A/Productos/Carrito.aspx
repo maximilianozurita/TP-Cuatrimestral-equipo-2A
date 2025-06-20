@@ -34,21 +34,27 @@
                                 <span><%# Eval("Producto.Nombre") %></span>
                             </div>
                             <div class="d-flex align-items-center justify-content-center" style="width: 5rem;">
-                                <button class="btn btn-sm btn-primary me-2">-</button>
-                                <span><%# Eval("Cantidad") %></span>
-                                <button class="btn btn-sm btn-primary ms-2">+</button>
+                                <asp:Button Text="-"
+                                    CssClass="btn btn-sm btn-primary me-2"
+                                    runat="server"
+                                    OnClick="btnRestarCantidad_Click"
+                                    CommandArgument='<%#Eval("Producto.ID") %>' />
+                                <span class="ml-3 mr-3"><%# Eval("Cantidad") %></span>
+                                <asp:Button Text="+"
+                                    CssClass="btn btn-sm btn-primary me-2"
+                                    runat="server"
+                                    OnClick="btnSumarCantidad_Click"
+                                    CommandArgument='<%#Eval("Producto.ID") %>' />
                             </div>
                             <div class="d-flex align-items-center justify-content-center" style="width: 10rem;">
                                 <span>$<%# Eval("PrecioTotal") %></span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-end" style="width:10rem;" >
-                                <asp:Button Text="Eliminar" 
+                            <div class="d-flex align-items-center justify-content-end" style="width: 10rem;">
+                                <asp:Button Text="Eliminar"
                                     CssClass="btn btn-sm btn-danger me-2 ml-5"
                                     runat="server"
                                     OnClick="btnEliminarItem_Click"
-                                    ID="btnEliminarItem"
-                                    AutoPostBack="false" 
-                                    CommandArgument='<%#Eval("Producto.ID") %>'/>
+                                    CommandArgument='<%#Eval("Producto.ID") %>' />
                             </div>
 
                         </div>
@@ -57,10 +63,10 @@
             </asp:Repeater>
 
         </div>
-    <div class="w-100 d-flex justify-content-between align-items-center mt-4 px-4 mt-4">
-        <a href="/Datos Personales.aspx" type="button" class="btn btn-outline-primary">Finalizar compra Compra</a>
-        <asp:Button Text="Vaciar Carrito" CssClass="btn btn-primary me-md-2" ID="btnEliminar" OnClick="btnEliminar_Click" runat="server" AutoPostBack="false" />
-    </div>
-    <% } %>
+        <div class="w-100 d-flex justify-content-between align-items-center mt-4 px-4 mt-4">
+            <a href="/Datos Personales.aspx" type="button" class="btn btn-outline-primary">Finalizar compra Compra</a>
+            <asp:Button Text="Vaciar Carrito" CssClass="btn btn-primary me-md-2" ID="btnEliminar" OnClick="btnEliminar_Click" runat="server" AutoPostBack="false" />
+        </div>
+        <% } %>
     </div>
 </asp:Content>
