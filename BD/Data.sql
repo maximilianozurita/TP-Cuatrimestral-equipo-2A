@@ -28,11 +28,13 @@ GO
 -- Insertar Usuarios
 INSERT INTO Usuarios (Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta)
 VALUES
-('adminUsuario', 'admin', 'adminUsuario@example.com', '1234', '1234567890', 'Calle Falsa 1523', 4, GETDATE()),
-('adminProductos', 'admin', 'adminProductos@example.com', '1234', '0987654321', 'Av. Siempre Viva 742', 8, GETDATE()),
-('adminVentas', 'admin', 'adminVentas@example.com', '1234', '0987654321', 'Av. Siempre Viva 5642', 16, GETDATE()),
-('admin', 'admin', 'admin@example.com', '1234', '0987654321', 'Av. Siempre Viva 7492', 28, GETDATE()),
-('cliente', 'cliente', 'cliente@example.com', '1234', '0987654321', 'Av. Siempre Viva 74872', 2, GETDATE());
+('adminUsuario', 'admin', 'adminUsuario@example.com', '123', '1234567890', 'Calle Falsa 1523', 4, GETDATE()),
+('adminProductos', 'admin', 'adminProductos@example.com', '123', '0987654321', 'Av. Siempre Viva 742', 8, GETDATE()),
+('adminVentas', 'admin', 'adminVentas@example.com', '123', '0987654321', 'Av. Siempre Viva 5642', 16, GETDATE()),
+('admin', 'admin', 'admin@example.com', '123', '0987654321', 'Av. Siempre Viva 7492', 28, GETDATE()),
+('cliente1', 'cliente1', 'cliente1@example.com', '123', '0987654321', 'Av. Siempre Viva 74872', 2, GETDATE()),
+('cliente2', 'cliente2', 'cliente2@example.com', '123', '11556677', 'Av Siempre Viva 742', 2, GETDATE()),
+('cliente3', 'cliente3', 'cliente3@example.com', '123', '1155655', 'Av Siempre Viva 247', 2, GETDATE());
 GO
 
 -- Insertar Productos
@@ -47,18 +49,18 @@ GO
 -- Insertar Ventas
 INSERT INTO Ventas (Usuario_id, SumaTotal, FechaVenta)
 VALUES
-(1, 435000.00, DATEADD(DAY, -10, GETDATE())),
-(2, 900000.00, DATEADD(DAY, -9, GETDATE())),
-(3, 800000.00, DATEADD(DAY, -8, GETDATE())),
-(3, 700000.00, DATEADD(DAY, -7, GETDATE())),
-(3, 600000.00, DATEADD(DAY, -6, GETDATE())),
+(6, 435000.00, DATEADD(DAY, -10, GETDATE())),
+(6, 900000.00, DATEADD(DAY, -9, GETDATE())),
+(6, 800000.00, DATEADD(DAY, -8, GETDATE())),
+(6, 700000.00, DATEADD(DAY, -7, GETDATE())),
+(6, 600000.00, DATEADD(DAY, -6, GETDATE())),
 (5, 100000.00, DATEADD(DAY, -30, GETDATE())),
 (5, 180000.00, DATEADD(DAY, -25, GETDATE())),
 (5, 95000.00, DATEADD(DAY, -21, GETDATE())),
-(5, 230000.00, DATEADD(DAY, -18, GETDATE())),
-(5, 120000.00, DATEADD(DAY, -15, GETDATE())),
-(5, 175000.00, DATEADD(DAY, -10, GETDATE())),
-(5, 205000.00, DATEADD(DAY, -7, GETDATE())),
+(7, 230000.00, DATEADD(DAY, -18, GETDATE())),
+(7, 120000.00, DATEADD(DAY, -15, GETDATE())),
+(7, 175000.00, DATEADD(DAY, -10, GETDATE())),
+(7, 205000.00, DATEADD(DAY, -7, GETDATE())),
 (5, 99000.00, DATEADD(DAY, -4, GETDATE())),
 (5, 140000.00, DATEADD(DAY, -2, GETDATE())),
 (5, 185000.00, GETDATE());
@@ -87,12 +89,12 @@ GO
 -- Insertar ItemCarrito
 INSERT INTO ItemCarrito (Usuario_ID, Producto_ID, FechaAgregado, Cantidad, Vendido, Cancelado)
 VALUES 
-(1, 1, DATEADD(DAY, -10, GETDATE()), 1, 1, 0),
-(1, 2, DATEADD(DAY, -9, GETDATE()), 2, 0, 0),
-(1, 3, DATEADD(DAY, -8, GETDATE()), 1, 1, 0),
-(3, 4, DATEADD(DAY, -7, GETDATE()), 1, 0, 1),
-(3, 2, DATEADD(DAY, -6, GETDATE()), 1, 1, 0),
-(3, 2, DATEADD(DAY, -5, GETDATE()), 2, 1, 0),
+(7, 1, DATEADD(DAY, -10, GETDATE()), 1, 1, 0),
+(7, 2, DATEADD(DAY, -9, GETDATE()), 2, 0, 0),
+(7, 3, DATEADD(DAY, -8, GETDATE()), 1, 1, 0),
+(6, 4, DATEADD(DAY, -7, GETDATE()), 1, 0, 1),
+(6, 2, DATEADD(DAY, -6, GETDATE()), 1, 1, 0),
+(6, 2, DATEADD(DAY, -5, GETDATE()), 2, 1, 0),
 (5, 4, DATEADD(DAY, -4, GETDATE()), 1, 0, 0),
 (5, 1, DATEADD(DAY, -3, GETDATE()), 3, 1, 0),
 (5, 3, DATEADD(DAY, -2, GETDATE()), 1, 0, 1);
@@ -113,27 +115,27 @@ GO
 -- Insertar Favoritos
 INSERT INTO Favoritos (Producto_id, Usuario_id)
 VALUES
-(1, 1),
-(3, 1),
-(2, 2);
+(1, 5),
+(3, 6),
+(2, 7);
 GO
 
 -- Insertar Envíos
-INSERT INTO Envios (Usuario_ID, Venta_ID, Estado_envio_ID)
+INSERT INTO Envios (Venta_ID, Estado_envio_ID)
 VALUES 
-(1, 1, 2),
-(2, 2, 3),
-(3, 3, 1),
-(3, 4, 3),
-(3, 5, 4),
-(5, 6, 2),
-(5, 7, 1),
-(5, 8, 3),
-(5, 9, 2),
-(5, 10, 1),
-(5, 11, 3),
-(5, 12, 2),
-(5, 13, 1),
-(5, 14, 4),
-(5, 15, 3);
+(1, 2),
+(2, 3),
+(3, 1),
+(4, 3),
+(5, 4),
+(6, 2),
+(7, 1),
+(8, 3),
+(9, 2),
+(10, 1),
+(11, 3),
+(12, 2),
+(13, 1),
+(14, 4),
+(15, 3);
 GO
