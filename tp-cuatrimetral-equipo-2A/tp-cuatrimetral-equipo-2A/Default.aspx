@@ -24,24 +24,26 @@
             </button>
         </div>
 
-        <div class="row mx-4 mt-5">
-            <h2>Ofertas</h2>
-            <asp:Repeater ID="rptDestacados" runat="server">
-                <ItemTemplate>
-                    <div class="col-lg-4 d-flex align-items-stretch mb-4">
-                        <a href="/Productos/Detalle.aspx?id=<%# Eval("ID") %>" class="card w-100 text-decoration-none text-reset">
-                            <img src='/Upload/Products/<%# Eval("Imagenes[0].ImagenUrl") %>' class="card-img-top" alt="Producto" />
-                            <div class="card-body">
-                                <h5 class="card-title"><%# Eval("Nombre") %></h5>
-                                <p class="card-text"><%# Eval("Descripcion") %></p>
-                            </div>
-                            <div class="card-footer text-lg-center">
-                                <%# ObtenerPrecioConDescuento(Eval("Precio"), Eval("Descuento")) %>
-                            </div>
-                        </a>
-                    </div>
-                </ItemTemplate>
-            </asp:Repeater>
+        <div class="container mt-5">
+            <h2>Ofertas destacadas</h2>
+            <div class="row">
+                <asp:Repeater ID="rptDestacados" runat="server">
+                    <ItemTemplate>
+                        <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
+                            <a href="/Productos/Detalle.aspx?id=<%# Eval("ID") %>" class="card text-decoration-none text-reset w-100">
+                                <img src='/Upload/Products/<%# Eval("Imagenes[0].ImagenUrl") %>' class="card-img-top" alt="Producto" />
+                                <div class="card-body">
+                                    <h5 class="card-title"><%# Eval("Nombre") %></h5>
+                                    <p class="card-text"><%# Eval("Descripcion") %></p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <%# ObtenerPrecioConDescuento(Eval("Precio"), Eval("Descuento")) %>
+                                </div>
+                            </a>
+                        </div>
+                    </ItemTemplate>
+                </asp:Repeater>
+            </div>
         </div>
     </div>
 

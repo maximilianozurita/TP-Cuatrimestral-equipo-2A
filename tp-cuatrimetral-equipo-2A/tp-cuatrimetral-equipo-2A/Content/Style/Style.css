@@ -1,36 +1,60 @@
 ﻿body {
 }
 .carousel-inner img {
-    max-height: 400px;
+    max-height: 450px;
     object-fit: contain;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 10px;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: rgba(128, 128, 128, 0.7);
-    border: none;
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    background-size: 60% 60%;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-size: 70%;
 }
 
-.error-page-container {
-    max-width: 600px;
-    margin: 60px auto;
-    padding: 40px;
-    border: 1px solid #ccc;
+h2 {
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
     border-radius: 10px;
-    background-color: #f8d7da;
-    color: #721c24;
+    overflow: hidden;
 }
 
-.navbar-brand {
-    letter-spacing: 1px;
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-.navbar .btn {
-    white-space: nowrap;
+.card-img-top {
+    height: 220px;
+    object-fit: contain;
+    background-color: #fff;
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.card-text {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-size: 1.1rem;
 }
