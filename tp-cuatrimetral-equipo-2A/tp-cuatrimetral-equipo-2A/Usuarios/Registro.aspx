@@ -12,7 +12,7 @@
             </div>
 
             <!-- Password -->
-            <div class="form-floating mb-3">
+            <div class="form-floating mb-3" runat="server" id="divPassword" visible="false">
                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" placeholder="Password" TextMode="Password"></asp:TextBox>
                 <label for="txtPassword">Password (obligatorio)</label>
             </div>

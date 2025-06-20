@@ -73,7 +73,6 @@
     <Content Include="Admin\Productos\AgregarModificar.aspx" />
     <Content Include="Admin\Productos\List.aspx" />
     <Content Include="Admin\Productos\Modificar.aspx" />
-    <Content Include="Admin\Usuarios\Agregar.aspx" />
     <Content Include="Admin\Usuarios\List.aspx" />
     <Content Include="Admin\Usuarios\Modificar.aspx" />
     <Content Include="Admin\Ventas\Detalle.aspx" />
@@ -134,13 +133,6 @@
     </Compile>
     <Compile Include="Admin\Productos\Modificar.aspx.designer.cs">
       <DependentUpon>Modificar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Usuarios\Agregar.aspx.cs">
-      <DependentUpon>Agregar.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Usuarios\Agregar.aspx.designer.cs">
-      <DependentUpon>Agregar.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Usuarios\List.aspx.cs">
       <DependentUpon>List.aspx</DependentUpon>

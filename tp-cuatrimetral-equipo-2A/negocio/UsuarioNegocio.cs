@@ -13,7 +13,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT ID, Email, Password, Nombre, Apellido, Direccion, Telefono, Fecha_alta, Permisos FROM Usuarios WHERE Fecha_baja is null");
+                datos.SetearConsulta("SELECT ID, Email, Nombre, Apellido, Direccion, Telefono, Fecha_alta, Permisos FROM Usuarios WHERE Fecha_baja is null");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -75,7 +75,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email");
+                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email");
                 datos.SetearParametros("@email", emain);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -101,7 +101,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email and Fecha_baja is null");
+                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email and Fecha_baja is null");
                 datos.SetearParametros("@email", emain);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -127,7 +127,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where ID = @id and Fecha_baja is null");
+                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where ID = @id and Fecha_baja is null");
                 datos.SetearParametros("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -180,6 +180,26 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public void ModificarPassword(string email, string password)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Usuarios SET Password = @password, WHERE Email = @email");
+
+                datos.SetearParametros("@password", password);
+                datos.SetearParametros("@email", email);
+                datos.EjecutarLectura();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public void Modificar(Usuario usuario)
         {
             AccesoDatos datos = new AccesoDatos();
@@ -190,7 +210,6 @@ namespace negocio
                     UPDATE Usuarios
                     SET
                         Email = @email,
-                        Password = @password,
                         Nombre = @nombre,
                         Apellido = @apellido,
                         Telefono = @telefono,
@@ -200,7 +219,6 @@ namespace negocio
                 ");
 
                 datos.SetearParametros("@email", usuario.Email);
-                datos.SetearParametros("@password", usuario.Password);
                 datos.SetearParametros("@nombre", string.IsNullOrWhiteSpace(usuario.Nombre) ? (object)DBNull.Value : usuario.Nombre);
                 datos.SetearParametros("@apellido", string.IsNullOrWhiteSpace(usuario.Apellido) ? (object)DBNull.Value : usuario.Apellido);
                 datos.SetearParametros("@telefono", string.IsNullOrWhiteSpace(usuario.Telefono) ? (object)DBNull.Value : usuario.Telefono);
@@ -242,7 +260,6 @@ namespace negocio
             Usuario usuario = new Usuario();
             usuario.ID = (int)datos.Lector["ID"];
             usuario.Email = datos.Lector["Email"].ToString();
-            usuario.Password = datos.Lector["Password"].ToString();
             usuario.Nombre = datos.Lector["Nombre"].ToString();
             usuario.Telefono = datos.Lector["Telefono"].ToString();
             usuario.Apellido = datos.Lector["Apellido"].ToString();

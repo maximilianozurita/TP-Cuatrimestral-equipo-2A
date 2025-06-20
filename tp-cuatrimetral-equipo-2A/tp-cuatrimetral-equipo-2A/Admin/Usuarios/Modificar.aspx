@@ -11,12 +11,6 @@
             <label for="txtEmail">Email</label>
         </div>
 
-        <!-- Password -->
-        <div class="form-floating mb-3">
-            <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" placeholder="Password" TextMode="Password"></asp:TextBox>
-            <label for="txtPassword">Password</label>
-        </div>
-
         <!-- Nombre -->
         <div class="form-floating mb-3">
             <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Nombre"></asp:TextBox>

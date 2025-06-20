@@ -24,6 +24,15 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
 
         /// <summary>
+        /// divPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPassword;
+
+        /// <summary>
         /// txtPassword control.
         /// </summary>
         /// <remarks>
