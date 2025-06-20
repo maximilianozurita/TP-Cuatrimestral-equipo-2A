@@ -25,7 +25,7 @@
                         <div class="card-body d-flex gap-3">
 
                             <div style="width: 8rem;">
-                                <img src='<%# GetPrimeraImagen(Eval("Producto.Imagenes")) %>'
+                                <img src='/Upload/Products/<%# Eval("Producto.Imagenes[0].ImagenUrl") %>'
                                     class="rounded img-fluid"
                                     style="height: 8rem; width: 8rem; object-fit: cover;">
                             </div>
@@ -47,7 +47,7 @@
                                     CommandArgument='<%#Eval("Producto.ID") %>' />
                             </div>
                             <div class="d-flex align-items-center justify-content-center" style="width: 10rem;">
-                                <span class="ml-3 mr-3">$<%# Eval("PrecioTotal") %></span>
+                                <span class="ml-3 mr-3"><%# Eval("PrecioTotal","{0:C}") %></span>
                             </div>
                             <div class="d-flex align-items-center justify-content-end" style="width: 10rem;">
                                 <asp:Button Text="Eliminar"
