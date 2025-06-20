@@ -44,7 +44,7 @@
                         <a href="/Admin/Default.aspx" type="button" class="btn btn-outline-primary">Panel Administración</a>
                         <%} %>
                         <a href="/Usuarios/Registro.aspx" type="button" class="btn btn-outline-primary">Mi Cuenta</a>
-                        <asp:Button Text="Cerrar sesion" CssClass="btn btn-outline-primary" ID="Button_cerrar_sesion" OnClick="Button_cerrar_sesion_Click" runat="server" />
+                        <asp:Button Text="Cerrar sesion" CssClass="btn btn-outline-primary" ID="Button_cerrar_sesion" OnClick="Button_cerrar_sesion_Click" UseSubmitBehavior="false" runat="server" />
                         <%} %>
                     </div>
                 </div>

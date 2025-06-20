@@ -27,6 +27,11 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     txtApellido.Text = user.Apellido;
                     txtTelefono.Text = user.Telefono;
                     txtDireccion.Text = user.Direccion;
+                    divConfirmarPassword.Visible = false;
+                }
+                else
+                {
+                    divConfirmarPassword.Visible = true;
                 }
             }
         }
@@ -35,7 +40,7 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         {
             try
             {
-                if (txtPassword.Text == "" || txtEmail.Text == "")
+                if ((txtPassword.Text == "" && user == null) || txtEmail.Text == "")
                 {
                     lblMensajeError.Text = "Debe completar todos los campos obligatorios.";
                     lblMensajeError.Visible = true;
@@ -66,6 +71,12 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     }
                     else
                     {
+                        if (txtPassword.Text != txtConfirmarPassword.Text)
+                        {
+                            lblMensajeError.Text = "Las contraseñas no coinciden.";
+                            lblMensajeError.Visible = true;
+                            return;
+                        }
                         usuarioNeg.Agregar(user, Permisos.Cliente);
                         Response.Redirect("/Usuarios/Login.aspx", false);
                     }
@@ -82,7 +93,7 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         }
         protected bool PuedeGuardar(Usuario usuarioLogueado)
         {
-            Usuario userFinded = usuarioNeg.FindActivoByEmail(txtEmail.Text);
+            Usuario userFinded = usuarioNeg.FindAllByEmail(txtEmail.Text);
             if (usuarioLogueado != null)
             {
                 // Modificación de datos personales

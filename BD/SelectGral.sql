@@ -6,8 +6,6 @@ select * FROM Favoritos;
 go
 select * FROM Imagenes;
 go
-select * FROM Carrito;
-go
 select * FROM Ventas;
 go
 select * FROM Productos;
