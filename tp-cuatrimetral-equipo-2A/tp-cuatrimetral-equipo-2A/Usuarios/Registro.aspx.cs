@@ -22,25 +22,25 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                 {
                     user = usuarioNeg.FindActivoByEmail(usuarioLogueado.Email);
                     txtEmail.Text = user.Email;
-                    txtPassword.Text = user.Password;
                     txtNombre.Text = user.Nombre;
                     txtApellido.Text = user.Apellido;
                     txtTelefono.Text = user.Telefono;
                     txtDireccion.Text = user.Direccion;
                     divConfirmarPassword.Visible = false;
+                    divPassword.Visible = false;
                 }
                 else
                 {
                     divConfirmarPassword.Visible = true;
+                    divPassword.Visible = true;
                 }
             }
         }
-
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
             try
             {
-                if ((txtPassword.Text == "" && user == null) || txtEmail.Text == "")
+                if ((Session["usuario"] == null && txtPassword.Text == "") || txtEmail.Text == "")
                 {
                     lblMensajeError.Text = "Debe completar todos los campos obligatorios.";
                     lblMensajeError.Visible = true;
@@ -52,11 +52,9 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                 {
                     user = new Usuario();
                 }
-                //ToDo: Agregar a la hora de modificacion de password (verificar password anterior)
                 if (PuedeGuardar(usuarioLogueado))
                 {
                     user.Email = txtEmail.Text;
-                    user.Password = txtPassword.Text;
                     user.Nombre = txtNombre.Text;
                     user.Apellido = txtApellido.Text;
                     user.Telefono = txtTelefono.Text;
@@ -64,6 +62,7 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
 
                     if (usuarioLogueado != null)
                     {
+                        user.Permisos = usuarioLogueado.Permisos;
                         usuarioNeg.Modificar(user);
                         lblMensajeError.CssClass = "text-success";
                         lblMensajeError.Text = "Datos actualizados correctamente.";
@@ -77,6 +76,7 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                             lblMensajeError.Visible = true;
                             return;
                         }
+                        user.Password = txtPassword.Text;
                         usuarioNeg.Agregar(user, Permisos.Cliente);
                         Response.Redirect("/Usuarios/Login.aspx", false);
                     }

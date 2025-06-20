@@ -28,7 +28,6 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
                     {
                         Session.Add("idUsuario", idUsuario);
                         txtEmail.Text = usuario.Email;
-                        txtPassword.Text = usuario.Password;
                         txtNombre.Text = usuario.Nombre;
                         txtApellido.Text = usuario.Apellido;
                         txtTelefono.Text = usuario.Telefono;
@@ -55,10 +54,9 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
         }
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-        //ToDo: En lugar de modificar password, ver si agregar reestablecer contrasena
             try
             {
-                if (txtPassword.Text == "" || txtEmail.Text == "")
+                if (txtEmail.Text == "")
                 {
                     lblMensajeError.Text = "Debe completar todos los campos obligatorios.";
                     lblMensajeError.Visible = true;
@@ -68,7 +66,6 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
                 Usuario user = new Usuario();
                 user.ID = (int)Session["idUsuario"];
                 user.Email = txtEmail.Text;
-                user.Password = txtPassword.Text;
                 user.Nombre = txtNombre.Text;
                 user.Apellido = txtApellido.Text;
                 user.Telefono = txtTelefono.Text;
