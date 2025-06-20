@@ -25,7 +25,6 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 }
                 else if(usuario != null)
                 {
-
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
                     carrito = carritoNegocio.CarritoPorUsuarioID(usuario.ID);
                     if(carrito != null)
@@ -61,17 +60,41 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         {
             carrito = (dominio.Carrito)Session["Carrito"];
             Usuario usuario = (Usuario)Session["Usuario"];
-            if (usuario != null && carrito != null)
+            if (carrito is null) return;
+            if (usuario != null)
             {
                 carrito.MarcarTodoEliminado();
                 CarritoNegocio carritoNegocio = new CarritoNegocio();
                 carritoNegocio.GuardarCarritoEnBd(carrito);
             }
+            carrito = new dominio.Carrito();
+            Session.Add("Carrito", carrito);
+        }
+
+        protected void btnEliminarItem_Click(object sender,EventArgs e)
+        {
+            Button button = (Button)sender;
+            int id = int.Parse(button.CommandArgument);
+            carrito = (dominio.Carrito)Session["Carrito"];
+            Usuario usuario = (Usuario)Session["Usuario"];
+
             if (carrito != null)
             {
-                carrito = new dominio.Carrito();
+                carrito.EliminarProducto(id);
+                if(usuario != null)
+                {
+                    CarritoNegocio carritoNegocio = new CarritoNegocio();
+                    carritoNegocio.GuardarCarritoEnBd(carrito);
+                }
+                carrito.Items = carrito.Items.FindAll(item => item.flag_Eliminado == false);
                 Session.Add("Carrito", carrito);
+                if (carrito.Items.Count > 0)
+                {
+                    rptItemCarrito.DataSource = carrito.Items;
+                    rptItemCarrito.DataBind();
+                }
             }
+            
         }
     }
 }
