@@ -47,7 +47,7 @@ namespace dominio
                 if (itemCarrito.Cantidad > 0)
                 {
                     itemCarrito.flag_CantidadModificado = true; // Marca el producto como descontado
-                    itemCarrito.PrecioTotal = itemCarrito.Cantidad * itemCarrito.Producto.Precio * (1 - itemCarrito.Producto.Descuento / 100);
+                    itemCarrito.PrecioTotal = itemCarrito.Cantidad * itemCarrito.Producto.PrecioConDescuento;
                 }
                 else if (itemCarrito.Cantidad <= 0)
                 {

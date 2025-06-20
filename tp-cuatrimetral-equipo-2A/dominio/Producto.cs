@@ -17,5 +17,12 @@ namespace dominio
         public float Descuento { get; set; }
         public bool Destacado { get; set; }
         public DateTime? FechaBaja { get; set; }
+
+        public float PrecioConDescuento {get;private set;}
+        public float CalcularDescuento()
+        {
+            PrecioConDescuento = Precio * (1 - Descuento / 100);
+            return PrecioConDescuento;
+        }
     }
 }
