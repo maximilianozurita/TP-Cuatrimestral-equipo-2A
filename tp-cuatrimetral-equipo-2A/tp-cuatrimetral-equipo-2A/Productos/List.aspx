@@ -49,7 +49,8 @@
                                     AutoPostBack="false"/>
                                 <asp:Button class="btn btn-primary mt-4" runat="server"
                                     Text="Comprar"
-                                    OnClick="comprarClick" 
+                                    OnClick="comprarClick"
+                                    CommandArgument='<%#Eval("ID") %>'
                                     AutoPostBack="false"/>
                                 <div class="box-discount">
                                     <div class="discount-content">

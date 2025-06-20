@@ -10,6 +10,7 @@ namespace dominio
         public int? UsuarioID { get; set; }
         public float SumaTotal { get; private set; }
         public List<ItemCarrito> Items { get; set; } = new List<ItemCarrito>();
+        public bool CompraUnitaria { get; set; } = false; // Indica si la compra es unitaria o no
         public void AgregarProducto(Producto producto, int cantidad)
         {
             ItemCarrito itemCarrito = Items.Find(i => i.Producto.ID == producto.ID);
@@ -28,6 +29,7 @@ namespace dominio
                 };
                 Items.Add(itemCarrito);
             }
+            CalcularSumaTotal();
         }
         public void EliminarProducto(int productoId)
         {
@@ -37,6 +39,7 @@ namespace dominio
                 itemCarrito.Cantidad = 0;
                 itemCarrito.flag_Eliminado = true;
             }
+            CalcularSumaTotal();
         }
         public void ModificarCantidad(int productoId,int cantidad)
         {
@@ -56,16 +59,18 @@ namespace dominio
                     itemCarrito.PrecioTotal = 0;
                 }
             }
+            CalcularSumaTotal();
         }
         public void AgregarUnidad(int productId)
         {
             this.ModificarCantidad(productId, 1);
+            CalcularSumaTotal();
         }
         public void QuitarUnidad(int productId)
         {
             this.ModificarCantidad(productId, -1);
+            CalcularSumaTotal();
         }
-
         public void MarcarTodoEliminado()
         {
             foreach (ItemCarrito item in Items)
@@ -73,6 +78,18 @@ namespace dominio
                 item.flag_Eliminado = true;
                 item.Cantidad = 0;
                 item.PrecioTotal = 0;
+            }
+            CalcularSumaTotal();
+        }
+        private void CalcularSumaTotal()
+        {
+            this.SumaTotal = 0;
+            foreach (ItemCarrito item in Items)
+            {
+                if (!item.flag_Eliminado && !item.Cancelado)
+                {
+                    this.SumaTotal += item.PrecioTotal * item.Cantidad;
+                }
             }
         }
     }

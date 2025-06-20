@@ -63,7 +63,15 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         }
         protected void comprarClick(object sender, EventArgs e)
         {
-            Response.Redirect("FormularioCompra.aspx", false);
+            Button button = (Button)sender;
+            int id = int.Parse(button.CommandArgument);
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            Producto producto = productoNegocio.ProductoPorId(id);
+            carrito = new dominio.Carrito();
+            carrito.AgregarProducto(producto, 1);
+            carrito.CompraUnitaria = true;
+            Session.Add("Carrito", carrito);
+            Response.Redirect("./FormularioCompra.aspx", false);
         }
 
     }
