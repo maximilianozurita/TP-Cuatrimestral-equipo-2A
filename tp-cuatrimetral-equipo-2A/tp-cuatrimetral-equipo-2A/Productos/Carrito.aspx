@@ -35,7 +35,7 @@
                             </div>
                             <div class="d-flex align-items-center justify-content-center" style="width: 5rem;">
                                 <asp:Button Text="-"
-                                    CssClass="btn btn-sm btn-primary me-2"
+                                    CssClass="btn btn-sm btn-primary"
                                     runat="server"
                                     OnClick="btnRestarCantidad_Click"
                                     CommandArgument='<%#Eval("Producto.ID") %>' />
@@ -47,11 +47,11 @@
                                     CommandArgument='<%#Eval("Producto.ID") %>' />
                             </div>
                             <div class="d-flex align-items-center justify-content-center" style="width: 10rem;">
-                                <span>$<%# Eval("PrecioTotal") %></span>
+                                <span class="ml-3 mr-3">$<%# Eval("PrecioTotal") %></span>
                             </div>
                             <div class="d-flex align-items-center justify-content-end" style="width: 10rem;">
                                 <asp:Button Text="Eliminar"
-                                    CssClass="btn btn-sm btn-danger me-2 ml-5"
+                                    CssClass="btn btn-sm btn-danger"
                                     runat="server"
                                     OnClick="btnEliminarItem_Click"
                                     CommandArgument='<%#Eval("Producto.ID") %>' />

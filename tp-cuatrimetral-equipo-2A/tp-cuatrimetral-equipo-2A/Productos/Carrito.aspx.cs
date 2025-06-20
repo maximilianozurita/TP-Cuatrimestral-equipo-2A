@@ -111,6 +111,14 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             if (carrito == null) return;
             Button button = (Button)sender;
             int id = int.Parse(button.CommandArgument);
+            Usuario usuario = (Usuario)Session["Usuario"];
+            carrito.AgregarUnidad(id);
+            if (usuario != null)
+            {
+                CarritoNegocio carritoNegocio = new CarritoNegocio();
+                carritoNegocio.GuardarCarritoEnBd(carrito);
+            }
+            Session.Add("Carrito", carrito);
             ActualizarVista();
 
         }
