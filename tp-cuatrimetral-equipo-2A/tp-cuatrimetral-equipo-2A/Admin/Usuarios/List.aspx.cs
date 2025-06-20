@@ -22,19 +22,17 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 
             if (!IsPostBack)
             {
-                Usuario usuario = (Usuario)Session["usuario"];
-                List<Usuario> lista = usuarioNeg.Listar();
-                List<Usuario> filtrados = lista.Where(u => !u.Email.Equals(usuario.Email, StringComparison.OrdinalIgnoreCase)).ToList();
-                gvUsuarios.DataSource = filtrados;
+                gvUsuarios.DataSource = getListaSinUsuarioLogueado();
                 gvUsuarios.DataBind();
             }
-            else
-            {
-                Session.Add("Error", "Acceso denegado, loguear usuario");
-                Response.Redirect("/Error.aspx", false);
-            }
         }
-
+        protected List<Usuario> getListaSinUsuarioLogueado()
+        {
+            Usuario usuario = (Usuario)Session["usuario"];
+            List<Usuario> lista = usuarioNeg.Listar();
+            List<Usuario> filtrados = lista.Where(u => !u.Email.Equals(usuario.Email, StringComparison.OrdinalIgnoreCase)).ToList();
+            return filtrados;
+        }
         protected void gvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int index = Convert.ToInt32(e.CommandArgument);
@@ -47,9 +45,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
             if (e.CommandName == "Baja")
             {
                 usuarioNeg.Borrar(idUsuario);
-
-                List<Usuario> lista = usuarioNeg.Listar();
-                gvUsuarios.DataSource = lista;
+                gvUsuarios.DataSource = getListaSinUsuarioLogueado();
                 gvUsuarios.DataBind();
             }
         }

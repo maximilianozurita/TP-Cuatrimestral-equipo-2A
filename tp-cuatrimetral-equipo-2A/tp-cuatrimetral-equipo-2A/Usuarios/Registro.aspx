@@ -16,6 +16,11 @@
                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" placeholder="Password" TextMode="Password"></asp:TextBox>
                 <label for="txtPassword">Password (obligatorio)</label>
             </div>
+            <!-- Confirmar Password (solo registro) -->
+            <div class="form-floating mb-3" runat="server" id="divConfirmarPassword" visible="false">
+                <asp:TextBox ID="txtConfirmarPassword" runat="server" CssClass="form-control" placeholder="Confirmar Password" TextMode="Password"></asp:TextBox>
+                <label for="txtConfirmarPassword">Confirmar Password</label>
+            </div>
 
             <!-- Nombre (opcional) -->
             <div class="form-floating mb-3">

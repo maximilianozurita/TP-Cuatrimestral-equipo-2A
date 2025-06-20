@@ -36,7 +36,7 @@ namespace negocio
             try
             {
             //ToDo: Ver de agregar encriptado y desencriptado de password
-                datos.SetearConsulta("select ID, Permisos FROM Usuarios where email = @email AND password = @password");
+                datos.SetearConsulta("select ID, Permisos FROM Usuarios where email = @email AND password = @password and Fecha_baja is null");
                 datos.SetearParametros("@email", usuario.Email);
                 datos.SetearParametros("@password", usuario.Password);
 
@@ -63,6 +63,32 @@ namespace negocio
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public Usuario FindAllByEmail(string emain)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email");
+                datos.SetearParametros("@email", emain);
+                datos.EjecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return InicializarObjeto(datos);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
             finally
