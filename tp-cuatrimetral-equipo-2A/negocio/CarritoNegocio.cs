@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.UI.WebControls;
 
@@ -16,24 +17,29 @@ namespace negocio
             Carrito carrito = new Carrito();
             try
             {
-                datos.SetearConsulta("select ID,Usuario_ID,Producto_ID,FechaAgregado,Cantidad," +
-                    "Vendido,Cancelado " +
-                    "from ItemCarrito " +
-                    "where Usuario_ID = @UsuarioId and Cancelado = 0");
+                datos.SetearConsulta("select i.ID,i.Usuario_ID,Producto_ID,FechaAgregado,Cantidad, "+
+                    "Vendido, Cancelado, p.Precio as PrecioUnitario "+
+                    "from ItemCarrito as i "+
+                    "inner join Productos as p on p.ID = i.Producto_ID "+
+                    "where Usuario_ID = @UsuarioId and Cancelado = 0 ");
                 datos.SetearParametros("@UsuarioId", UsuarioId);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
+                    
+                    float precioUnitario = float.Parse(datos.Lector["PrecioUnitario"].ToString());
+                    int cantidad = (int)datos.Lector["Cantidad"];
                     ItemCarrito item = new ItemCarrito
                     {
                         Id = (int)datos.Lector["Id"],
-                        Producto = new Producto { ID = (int)datos.Lector["Producto_ID"] },
                         FechaAgregado = (DateTime)datos.Lector["FechaAgregado"],
-                        Cantidad = (int)datos.Lector["Cantidad"],
+                        Cantidad = cantidad,
                         Vendido = (bool)datos.Lector["Vendido"],
                         Cancelado = (bool)datos.Lector["Cancelado"],
-                        PrecioTotal = 0 // calc mas adelante -- ya me olvide de esto creo que lo resolvi, ver mas adelante
+                        PrecioTotal = precioUnitario*cantidad
                     };
+                    ProductoNegocio productoNegocio = new ProductoNegocio();
+                    item.Producto = productoNegocio.ProductoPorId((int)datos.Lector["Producto_ID"]);
                     lista.Add(item);
                 }
                 if (lista.Count > 0)
