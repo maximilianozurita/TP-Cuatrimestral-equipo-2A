@@ -9,11 +9,11 @@
         <div id="carouselproducto" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
               <% bool isFirstImage = true;
-                  foreach (dominio.Imagen imagen in producto.Imagen) {
+                  foreach (dominio.Imagen imagen in producto.Imagenes) {
                       string clase = isFirstImage ? "carousel-item active" : "carousel-item";
                       %>
                     <div class="<%= clase %>">
-                      <img src="<%= imagen.ImagenUrl %>" class="d-block w-100 img-class">
+                      <img src="/Upload/Products/<%= imagen.ImagenUrl %>" class="d-block w-100 img-class">
                     </div>
                 <%
                     isFirstImage = false; 
