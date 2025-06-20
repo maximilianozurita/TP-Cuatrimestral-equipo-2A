@@ -48,14 +48,6 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         }
 
-        protected string GetPrimeraImagen(object imagenesObj)
-        {
-            List<Imagen> lista = imagenesObj as List<Imagen>;
-            if (lista != null && lista.Count > 0)
-                return lista[0].ImagenUrl;
-            return "https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600nw-1037719192.jpg";
-        }
-
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
 

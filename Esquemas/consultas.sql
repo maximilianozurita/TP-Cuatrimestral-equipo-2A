@@ -26,4 +26,11 @@ VALUES
 
 select ID,Usuario_ID,Producto_ID,FechaAgregado,Cantidad,Vendido,Cancelado from ItemCarrito
 select * from Usuarios
-select * from ItemCarrito
+select * from ItemCarrito where Cancelado = 0
+
+select i.ID,i.Usuario_ID,Producto_ID,FechaAgregado,Cantidad,
+                    Vendido,Cancelado,p.Precio as PrecioUnitario 
+                    from ItemCarrito as i 
+                    inner join Productos as p on p.ID = i.Producto_ID
+                    where Usuario_ID = 2 and Cancelado = 0
+select * from Productos
