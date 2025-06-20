@@ -13,47 +13,49 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="col justify-content-start">
-                <a class="navbar-brand" href="/">HOME</a>
-            </div>
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Productos/List.aspx">Productos</a>
-                        </li>
-                    </ul>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom mb-3 sticky-top">
+                <div class="container">
+                    <!-- HOME -->
+                    <a class="navbar-brand fw-bold" href="/">Inicio</a>
 
-                    <div class="navbar-text">
-                        <%if (Session["usuario"] == null)
-                            { %>
-                        <a href="/Usuarios/Login.aspx" type="button" class="btn btn-outline-primary">Iniciar sesion</a>
-                        <a href="/Usuarios/Registro.aspx" type="button" class="btn btn-outline-primary">Registrarse</a>
-                        <a href="/Productos/Carrito.aspx" type="button" class="btn btn-outline-primary">Carrito de compras</a>
-                        <%}
-                        else
-                        { %>
-                        <%if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).IsCliente())
-                            { %>
-                        <a href="/Productos/Carrito.aspx" type="button" class="btn btn-outline-primary">Carrito de compras</a>
-                        <%} %>
+                    <!-- Botón para menú hamburguesa en móviles -->
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                        <%if (Session["usuario"] != null && ((dominio.Usuario)Session["usuario"]).IsAdmin())
-                            { %>
-                        <a href="/Admin/Default.aspx" type="button" class="btn btn-outline-primary">Panel Administración</a>
-                        <%} %>
-                        <a href="/Usuarios/Registro.aspx" type="button" class="btn btn-outline-primary">Mi Cuenta</a>
-                        <asp:Button Text="Cerrar sesion" CssClass="btn btn-outline-primary" ID="Button_cerrar_sesion" OnClick="Button_cerrar_sesion_Click" UseSubmitBehavior="false" runat="server" />
-                        <%} %>
+                    <!-- Menú colapsable -->
+                    <div class="collapse navbar-collapse" id="navbarMain">
+                        <!-- Enlaces a la izquierda -->
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Productos/List.aspx">Productos</a>
+                            </li>
+                        </ul>
+
+                        <!-- Botones a la derecha -->
+                        <div class="d-flex gap-2">
+                            <% if (Session["usuario"] == null) { %>
+                                <a href="/Usuarios/Login.aspx" class="btn btn-outline-primary btn-sm">Iniciar sesión</a>
+                                <a href="/Usuarios/Registro.aspx" class="btn btn-outline-primary btn-sm">Registrarse</a>
+                                <a href="/Productos/Carrito.aspx" class="btn btn-outline-primary btn-sm">Carrito</a>
+                            <% } else { %>
+                                <% if (((dominio.Usuario)Session["usuario"]).IsCliente()) { %>
+                                    <a href="/Productos/Carrito.aspx" class="btn btn-outline-primary btn-sm">Carrito</a>
+                                <% } %>
+                                <% if (((dominio.Usuario)Session["usuario"]).IsAdmin()) { %>
+                                    <a href="/Admin/Default.aspx" class="btn btn-outline-primary btn-sm">Panel Administración</a>
+                                <% } %>
+                                <a href="/Usuarios/Registro.aspx" class="btn btn-outline-primary btn-sm">Mi Cuenta</a>
+                                <asp:Button Text="Cerrar sesión" CssClass="btn btn-outline-danger btn-sm" ID="Button_cerrar_sesion" OnClick="Button_cerrar_sesion_Click" UseSubmitBehavior="false" runat="server" />
+                            <% } %>
+                        </div>
                     </div>
                 </div>
+            </nav>
+            <div>
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                </asp:ContentPlaceHolder>
             </div>
-        </nav>
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-        </div>
     </form>
 </body>
 </html>

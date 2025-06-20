@@ -11,9 +11,10 @@ namespace tp_cuatrimetral_equipo_2A
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["error"] != null)
+            if (!IsPostBack && Session["error"] != null)
             {
-                lblMensaje.Text = Session["error"].ToString();
+                lblMensaje.Text = Server.HtmlEncode(Session["error"].ToString());
+                Session.Remove("error");
             }
         }
     }

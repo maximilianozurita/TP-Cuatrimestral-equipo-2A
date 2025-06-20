@@ -16,3 +16,21 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.error-page-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.navbar-brand {
+    letter-spacing: 1px;
+}
+
+.navbar .btn {
+    white-space: nowrap;
+}

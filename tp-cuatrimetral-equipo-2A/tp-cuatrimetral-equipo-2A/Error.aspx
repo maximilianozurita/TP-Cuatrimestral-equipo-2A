@@ -2,7 +2,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Upss! Hubo un problema</h1>
-    <asp:Label Text="Hubo un error" ID="lblMensaje" runat="server" />
-    <a href="/Default.aspx" class="btn btn-primary">Volver a home</a>
+    <div class="error-page-container text-center">
+        <h2>¡Ups! Ocurrió un error</h2>
+        <p>Algo salió mal mientras procesábamos tu solicitud.</p>
+        <hr />
+        <p>
+            <strong>Detalle técnico:</strong><br />
+            <asp:Label ID="lblMensaje" runat="server" Text="Error desconocido"></asp:Label>
+        </p>
+        <a href="/Default.aspx" class="btn btn-outline-dark mt-3">Volver al inicio</a>
+    </div>
 </asp:Content>
