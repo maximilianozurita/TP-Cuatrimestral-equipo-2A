@@ -11,6 +11,12 @@
                 <label for="txtEmail">Email (obligatorio)</label>
             </div>
 
+            <!-- Contrasena actual -->
+            <div class="form-floating mb-3" runat="server" id="divPasswordActual" visible="false">
+                <asp:TextBox ID="txtPasswordActual" runat="server" CssClass="form-control" placeholder="Password actual" TextMode="Password"></asp:TextBox>
+                <label for="txtPasswordActual">Password actual</label>
+            </div>
+
             <!-- Password -->
             <div class="form-floating mb-3" runat="server" id="divPassword" visible="false">
                 <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" placeholder="Password" TextMode="Password"></asp:TextBox>
@@ -44,6 +50,11 @@
             <div class="form-floating mb-3">
                 <asp:TextBox ID="txtDireccion" runat="server" CssClass="form-control" placeholder="Dirección"></asp:TextBox>
                 <label for="txtDireccion">Dirección (opcional)</label>
+            </div>
+
+            <!-- Modificación password (solo si se esta modificando) -->
+            <div class="form-check mb-3" id="divCambiarPassword" runat="server" visible="false">
+                <asp:CheckBox ID="chkCambiarPassword" runat="server" Text="Cambiar contraseña" AutoPostBack="true" OnCheckedChanged="chkCambiarPassword_CheckedChanged" />
             </div>
 
             <!-- Mensaje de error -->

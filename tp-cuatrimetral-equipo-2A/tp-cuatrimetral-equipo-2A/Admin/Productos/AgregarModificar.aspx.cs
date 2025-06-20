@@ -192,5 +192,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
 
             ddlMarca.Items.Insert(0, new ListItem("-- Seleccionar --", ""));
         }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("/Admin/Productos/List.aspx");
+        }
     }
 }

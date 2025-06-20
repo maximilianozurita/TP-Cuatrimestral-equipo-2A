@@ -180,12 +180,33 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public bool VerificarPassword(string email, string password)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT 1 FROM Usuarios WHERE Email = @Email AND Password = @Password");
+                datos.SetearParametros("@Email", email);
+                datos.SetearParametros("@Password", password);
+                datos.EjecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al verificar la contraseña", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public void ModificarPassword(string email, string password)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("UPDATE Usuarios SET Password = @password, WHERE Email = @email");
+                datos.SetearConsulta("UPDATE Usuarios SET Password = @password WHERE Email = @email");
 
                 datos.SetearParametros("@password", password);
                 datos.SetearParametros("@email", email);

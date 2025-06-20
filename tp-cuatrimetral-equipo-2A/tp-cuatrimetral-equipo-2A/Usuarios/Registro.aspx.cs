@@ -26,13 +26,13 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     txtApellido.Text = user.Apellido;
                     txtTelefono.Text = user.Telefono;
                     txtDireccion.Text = user.Direccion;
-                    divConfirmarPassword.Visible = false;
-                    divPassword.Visible = false;
+                    divCambiarPassword.Visible = true;
                 }
                 else
                 {
-                    divConfirmarPassword.Visible = true;
+
                     divPassword.Visible = true;
+                    divConfirmarPassword.Visible = true;
                 }
             }
         }
@@ -40,13 +40,24 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         {
             try
             {
-                if ((Session["usuario"] == null && txtPassword.Text == "") || txtEmail.Text == "")
+                Usuario usuarioLogueado = (Usuario)Session["usuario"];
+
+                if (usuarioLogueado != null)
+                {
+                    // Para evitar problemas de persistencia con postBack
+                    user = usuarioNeg.FindActivoByEmail(usuarioLogueado.Email);
+                }
+                else if (user == null)
+                {
+                    user = new Usuario();
+                }
+
+                if ((usuarioLogueado == null && string.IsNullOrWhiteSpace(txtPassword.Text)) || string.IsNullOrWhiteSpace(txtEmail.Text))
                 {
                     lblMensajeError.Text = "Debe completar todos los campos obligatorios.";
                     lblMensajeError.Visible = true;
                     return;
                 }
-                Usuario usuarioLogueado = (Usuario)Session["usuario"];
 
                 if (user == null)
                 {
@@ -62,6 +73,10 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
 
                     if (usuarioLogueado != null)
                     {
+                        if (chkCambiarPassword.Checked)
+                        {
+                            if (!ModificarPassword(user.Email)) return;
+                        }
                         user.Permisos = usuarioLogueado.Permisos;
                         usuarioNeg.Modificar(user);
                         lblMensajeError.CssClass = "text-success";
@@ -124,6 +139,35 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     return false;
                 }
             }
+        }
+
+        protected void chkCambiarPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            divPassword.Visible = chkCambiarPassword.Checked;
+            divConfirmarPassword.Visible = chkCambiarPassword.Checked;
+            divPasswordActual.Visible = chkCambiarPassword.Checked;
+        }
+        protected bool ModificarPassword(string email)
+        {
+            if (!usuarioNeg.VerificarPassword(email, txtPasswordActual.Text))
+            {
+                lblMensajeError.Text = "Contraseña actual incorrecta.";
+                lblMensajeError.Visible = true;
+                return false;
+            }
+
+            string nuevaPass = txtPassword.Text;
+            string confirmarPass = txtConfirmarPassword.Text;
+
+            if (string.IsNullOrWhiteSpace(nuevaPass) || nuevaPass != confirmarPass)
+            {
+                lblMensajeError.Text = "Las contraseñas no coinciden o están vacías.";
+                lblMensajeError.Visible = true;
+                return false;
+            }
+
+            usuarioNeg.ModificarPassword(email, nuevaPass);
+            return true;
         }
     }
 }

@@ -42,8 +42,13 @@
         <asp:Label ID="lblMensajeError" runat="server" CssClass="text-danger" Visible="false" />
 
         <!-- Botón -->
-        <div class="d-grid mt-4">
-            <asp:Button ID="btnGuardar" runat="server" CssClass="btn btn-primary" Text="Guardar cambios" OnClick="btnGuardar_Click" />
+        <div class="row g-2 mt-4">
+            <div class="col">
+                <asp:Button ID="btnGuardar" runat="server" Text="Guardar" CssClass="btn btn-primary w-100" OnClick="btnGuardar_Click" />
+            </div>
+            <div class="col">
+               <asp:Button Text="Cancelar" CssClass="btn btn-primary w-100" ID="btnCancelar" OnClick="btnCancelar_Click" runat="server" />
+           </div>
         </div>
     </div>
 </asp:Content>
