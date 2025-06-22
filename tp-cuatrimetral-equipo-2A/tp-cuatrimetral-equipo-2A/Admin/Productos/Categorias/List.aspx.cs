@@ -15,6 +15,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos.Categorias
         CategoriaNegocio categoriaNeg = new CategoriaNegocio();
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Helper.VerificarUsuario(Session, Response, Permisos.AdminProducto))
+            {
+                return;
+            }
             if (!IsPostBack)
             {
                 ddlEstado.SelectedValue = (EstadoCategoria.Activos).ToString();
