@@ -13,7 +13,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Envios
     {
         private VentaNegocio ventaNeg = new VentaNegocio();
         private EnvioNegocio envioNeg = new EnvioNegocio();
-        private int ventaId;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

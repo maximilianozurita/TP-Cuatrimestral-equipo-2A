@@ -37,9 +37,9 @@
                                         <td><%# Eval("ID") %></td>
                                         <td><%# Eval("Nombre").ToString() %></td>
                                         <td>
-                                            <a href='Form.aspx?id={Eval("ID")}' class='btn btn-sm btn-warning me-1'>Editar</a>
-                                            <asp:Button runat="server" ID="btnEliminar" CommandArgument='<%# Eval("ID") %>' Text="Eliminar" CssClass="btn btn-sm btn-danger me-1" OnClick="btnEliminar_Click" Visible='<%# Eval("FechaBaja") == DBNull.Value || Eval("FechaBaja") == null %>' />
-                                            <asp:Button runat="server" ID="btnRestaurar" CommandArgument='<%# Eval("ID") %>' Text="Dar de Alta" CssClass="btn btn-sm btn-success" OnClick="btnRestaurar_Click" Visible='<%# Eval("FechaBaja") != DBNull.Value && Eval("FechaBaja") != null %>' />
+                                            <a href='/Admin/Productos/Categorias/Form.aspx?id=<%# Eval("Id") %>' class='btn btn-sm btn-warning me-1'>Editar</a>
+                                            <asp:Button runat="server" ID="btnEliminar" CommandArgument='<%# Eval("Id") %>' Text="Eliminar" CssClass="btn btn-sm btn-danger me-1" OnClick="btnEliminar_Click" Visible='<%# Eval("FechaBaja") == DBNull.Value || Eval("FechaBaja") == null %>' />
+                                            <asp:Button runat="server" ID="btnRestaurar" CommandArgument='<%# Eval("Id") %>' Text="Dar de Alta" CssClass="btn btn-sm btn-success" OnClick="btnRestaurar_Click" Visible='<%# Eval("FechaBaja") != DBNull.Value && Eval("FechaBaja") != null %>' />
                                         </td>
                                     </tr>
                                 </ItemTemplate>

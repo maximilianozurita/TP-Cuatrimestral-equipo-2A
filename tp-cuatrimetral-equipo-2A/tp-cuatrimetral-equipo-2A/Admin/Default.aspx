@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Marcas</h5>
                             <p class="card-text">Gestionar marcas</p>
-                            <a href="/Admin/Marcas/List.aspx" class="btn btn-primary">Ir a Marcas</a>
+                            <a href="/Admin/Productos/Marcas/List.aspx" class="btn btn-primary">Ir a Marcas</a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Categorías</h5>
                             <p class="card-text">Gestionar categorías</p>
-                            <a href="/Admin/Categorias/List.aspx" class="btn btn-primary">Ir a Categorías</a>
+                            <a href="/Admin/Productos/Categorias/List.aspx" class="btn btn-primary">Ir a Categorías</a>
                         </div>
                     </div>
                 </div>
