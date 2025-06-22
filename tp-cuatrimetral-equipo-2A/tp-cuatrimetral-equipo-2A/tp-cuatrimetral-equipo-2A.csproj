@@ -70,7 +70,11 @@
     <Content Include="Admin\Default.aspx" />
     <Content Include="Admin\Envios\Detalle.aspx" />
     <Content Include="Admin\Productos\AgregarModificar.aspx" />
+    <Content Include="Admin\Productos\Categorias\Form.aspx" />
+    <Content Include="Admin\Productos\Categorias\List.aspx" />
     <Content Include="Admin\Productos\List.aspx" />
+    <Content Include="Admin\Productos\Marcas\Form.aspx" />
+    <Content Include="Admin\Productos\Marcas\List.aspx" />
     <Content Include="Admin\Usuarios\List.aspx" />
     <Content Include="Admin\Usuarios\Modificar.aspx" />
     <Content Include="Admin\Ventas\Detalle.aspx" />
@@ -111,11 +115,39 @@
     <Compile Include="Admin\Productos\AgregarModificar.aspx.designer.cs">
       <DependentUpon>AgregarModificar.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\Productos\Categorias\Form.aspx.cs">
+      <DependentUpon>Form.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\Categorias\Form.aspx.designer.cs">
+      <DependentUpon>Form.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Productos\Categorias\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\Categorias\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\Productos\List.aspx.cs">
       <DependentUpon>List.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\Productos\List.aspx.designer.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Productos\Marcas\Form.aspx.cs">
+      <DependentUpon>Form.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\Marcas\Form.aspx.designer.cs">
+      <DependentUpon>Form.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Productos\Marcas\List.aspx.cs">
+      <DependentUpon>List.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Productos\Marcas\List.aspx.designer.cs">
       <DependentUpon>List.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Usuarios\List.aspx.cs">
