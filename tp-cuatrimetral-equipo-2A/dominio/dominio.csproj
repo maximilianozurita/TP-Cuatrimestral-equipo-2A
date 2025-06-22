@@ -82,7 +82,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Venta.cs" />
-    <Compile Include="VentaProducto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

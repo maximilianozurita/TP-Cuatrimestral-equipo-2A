@@ -37,5 +37,18 @@ namespace dominio
         public bool AdminProductos() { return TienePermiso(Permisos.AdminProducto); }
         public bool AdminVentas() { return TienePermiso(Permisos.AdminVenta); }
         public bool IsCliente() { return TienePermiso(Permisos.Cliente); }
+        public static string Columnas(string alias = "u")
+        {
+            return $@",
+            {alias}.ID AS UsuarioID,
+            {alias}.Nombre AS UsuarioNombre,
+            {alias}.Apellido AS UsuarioApellido,
+            {alias}.Email AS UsuarioEmail,
+            {alias}.Telefono AS UsuarioTelefono,
+            {alias}.Direccion AS UsuarioDireccion,
+            {alias}.Fecha_alta AS UsuarioFechaAlta,
+            {alias}.Fecha_baja AS UsuarioFechaBaja,
+            {alias}.Permisos AS UsuarioPermisos";
+        }
     }
 }

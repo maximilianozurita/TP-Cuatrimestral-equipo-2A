@@ -58,3 +58,67 @@ h2 {
     font-weight: bold;
     font-size: 1.1rem;
 }
+
+.card-header .badge {
+    font-size: 0.95rem;
+}
+
+.card-body .badge {
+    font-size: 0.85rem;
+}
+.stepper {
+    margin: 20px 0;
+    gap: 10px;
+}
+
+.stepper .step {
+    flex: 1;
+}
+
+.stepper .circle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: white;
+    line-height: 30px;
+    font-weight: bold;
+    margin: 0 auto;
+    transition: background-color 0.3s;
+}
+
+.stepper .label {
+    font-size: 0.9rem;
+    margin-top: 5px;
+    color: #666;
+}
+
+.stepper .step-completed .circle,
+.stepper .step-active .circle {
+    background-color: #198754;
+}
+
+.stepper .step-completed .label,
+.stepper .step-active .label {
+    color: #198754;
+}
+
+.stepper .line {
+    flex: 1;
+    height: 3px;
+    background-color: #ccc;
+    margin: 0 5px;
+    position: relative;
+    top: -15px;
+}
+
+.stepper .step-completed + .line {
+    background-color: #198754;
+}
+.stepper .step-cancelled .circle {
+    background-color: #dc3545;
+}
+
+.stepper .step-cancelled .label {
+    color: #dc3545;
+}

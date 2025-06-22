@@ -13,7 +13,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT ID, Email, Nombre, Apellido, Direccion, Telefono, Fecha_alta, Permisos FROM Usuarios WHERE Fecha_baja is null");
+                datos.SetearConsulta("SELECT " + Usuario.Columnas("u") + " FROM Usuarios WHERE Fecha_baja is null");
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -75,7 +75,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios where Email = @email");
                 datos.SetearParametros("@email", emain);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -101,7 +101,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where Email = @email and Fecha_baja is null");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios where Email = @email and Fecha_baja is null");
                 datos.SetearParametros("@email", emain);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -127,7 +127,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select ID, Nombre, Apellido, Email, Telefono, Direccion, Permisos, Fecha_alta from Usuarios where ID = @id and Fecha_baja is null");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios where ID = @id and Fecha_baja is null");
                 datos.SetearParametros("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -276,17 +276,25 @@ namespace negocio
             }
         }
 
-        private Usuario InicializarObjeto(AccesoDatos datos)
+        public Usuario InicializarObjeto(AccesoDatos datos)
         {
             Usuario usuario = new Usuario();
-            usuario.ID = (int)datos.Lector["ID"];
-            usuario.Email = datos.Lector["Email"].ToString();
-            usuario.Nombre = datos.Lector["Nombre"].ToString();
-            usuario.Telefono = datos.Lector["Telefono"].ToString();
-            usuario.Apellido = datos.Lector["Apellido"].ToString();
-            usuario.Direccion = datos.Lector["Direccion"].ToString();
-            usuario.Permisos = (Permisos)(int)datos.Lector["Permisos"];
-            usuario.FechaAlta = (DateTime)datos.Lector["Fecha_alta"];
+            usuario.ID = (int)datos.Lector["UsuarioID"];
+            usuario.Email = datos.Lector["UsuarioEmail"].ToString();
+            usuario.Nombre = datos.Lector["UsuarioNombre"].ToString();
+            usuario.Telefono = datos.Lector["UsuarioTelefono"].ToString();
+            usuario.Apellido = datos.Lector["UsuarioApellido"].ToString();
+            usuario.Direccion = datos.Lector["UsuarioDireccion"].ToString();
+            usuario.Permisos = (Permisos)(int)datos.Lector["UsuarioPermisos"];
+            usuario.FechaAlta = (DateTime)datos.Lector["UsuarioFechaAlta"];
+            if (datos.Lector["UsuarioFechaBaja"] == DBNull.Value)
+            {
+                usuario.FechaBaja = null;
+            }
+            else
+            {
+                usuario.FechaBaja = (DateTime)datos.Lector["UsuarioFechaBaja"];
+            }
             return usuario;
         }
     }

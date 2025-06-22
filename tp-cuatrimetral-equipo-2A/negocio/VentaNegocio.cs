@@ -18,7 +18,7 @@ namespace negocio
                 string consulta = @"
                     SELECT 
                         v.ID, v.SumaTotal, v.FechaVenta,
-                        u.ID AS UsuarioID, u.Email,
+                        " + Usuario.Columnas("u") + @"
                         e.ID AS EnvioID, e.Estado_envio_ID,
                         ee.Descripcion AS EstadoEnvioDescripcion,
                         ee.FechaBaja AS EstadoEnvioFechaBaja
@@ -59,7 +59,7 @@ namespace negocio
                 datos.SetearConsulta(@"
                     SELECT 
                         v.ID, v.SumaTotal, v.FechaVenta,
-                        u.ID AS UsuarioID, u.Email, u.Nombre, u.Apellido, u.Direccion,
+                        " + Usuario.Columnas("u") + @"
                         e.ID AS EnvioID, e.Estado_envio_ID,
                         ee.Descripcion AS EstadoEnvioDescripcion,
                         ee.FechaBaja AS EstadoEnvioFechaBaja
@@ -88,36 +88,65 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public List<Venta> ListarComprasPorUsuario(int usuarioId)
+        {
+            List<Venta> lista = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta(@"
+                    SELECT v.ID, v.SumaTotal, v.FechaVenta,
+                           e.ID AS Estado_envio_ID, e.Descripcion AS EstadoEnvioDescripcion, e.FechaBaja as EstadoEnvioFechaBaja,
+                           en.ID AS EnvioID
+                          " + Usuario.Columnas("u") + @"
+                    FROM Ventas v
+                    JOIN Usuarios u ON (u.ID = V.Usuario_ID) 
+                    JOIN Envios en ON (en.Venta_ID = v.ID)
+                    JOIN Estado_envio e ON (e.ID = en.Estado_envio_ID)
+                    WHERE v.Usuario_ID = @usuarioId
+                    ORDER BY v.FechaVenta DESC
+                ");
+                datos.SetearParametros("@usuarioId", usuarioId);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(InicializarObjeto(datos));
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public Venta InicializarObjeto(AccesoDatos datos)
         {
-            Venta venta = new Venta
-            {
-                SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]),
-                FechaVenta = (DateTime)datos.Lector["FechaVenta"],
-                Usuario = new Usuario
-                {
-                    ID = (int)datos.Lector["UsuarioID"],
-                    Email = datos.Lector["Email"].ToString(),
-                    Direccion = datos.Lector["Direccion"].ToString(),
-                    Nombre = datos.Lector["Nombre"].ToString(),
-                    Apellido = datos.Lector["Apellido"].ToString(),
-                },
-                VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"]),
-                Envio = datos.Lector["EnvioID"] != DBNull.Value ?
-                new Envio
-                {
-                    ID = (int)datos.Lector["EnvioID"],
-                    EstadoEnvio = new EstadoEnvio
-                    {
-                        ID = (int)datos.Lector["Estado_envio_ID"],
-                        Descripcion = datos.Lector["EstadoEnvioDescripcion"].ToString(),
-                        FechaBaja = datos.Lector["EstadoEnvioFechaBaja"] is DBNull ? null : (DateTime?)datos.Lector["EstadoEnvioFechaBaja"]
-                    }
-                } : null
-            };
+            UsuarioNegocio userNeg = new UsuarioNegocio();
+            Venta venta = new Venta();
+            venta.SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]);
+            venta.FechaVenta = (DateTime)datos.Lector["FechaVenta"];
+            venta.Usuario = datos.Lector["usuarioID"] != DBNull.Value ? userNeg.InicializarObjeto(datos) : null;
+            venta.VentaProducto = ListarProductosDeVenta((int)datos.Lector["ID"]);
+
+            Envio envio = new Envio();
+            envio.ID = (int)datos.Lector["EnvioID"];
+
+            EstadoEnvio estadoEnvio = new EstadoEnvio();
+            estadoEnvio.ID = (int)datos.Lector["Estado_envio_ID"];
+            estadoEnvio.Descripcion = datos.Lector["EstadoEnvioDescripcion"].ToString();
+            estadoEnvio.FechaBaja = datos.Lector["EstadoEnvioFechaBaja"] is DBNull ? null : (DateTime?)datos.Lector["EstadoEnvioFechaBaja"];
+
+            envio.EstadoEnvio = estadoEnvio;
+            venta.Envio = envio;
             return venta;
         }
-        public List<VentaProducto> CargarProductosDeVenta(int ventaId)
+        public List<VentaProducto> ListarProductosDeVenta(int ventaId)
         {
             List<VentaProducto> lista = new List<VentaProducto>();
             AccesoDatos datos = new AccesoDatos();
