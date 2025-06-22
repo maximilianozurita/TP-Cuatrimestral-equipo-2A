@@ -14,4 +14,13 @@ namespace dominio
         public List<VentaProducto> VentaProducto { get; set; } = new List<VentaProducto>();
         public Envio Envio { get; set; }
     }
+
+    public class VentaProducto
+    {
+        public int Venta_ID { get; set; }
+        public Producto Producto { get; set; }
+        public int Cantidad { get; set; }
+        public decimal PrecioUnitario { get; set; }
+    }
+
 }

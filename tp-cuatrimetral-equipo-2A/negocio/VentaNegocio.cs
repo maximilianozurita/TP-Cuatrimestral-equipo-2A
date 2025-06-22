@@ -41,29 +41,7 @@ namespace negocio
 
                 while (datos.Lector.Read())
                 {
-                    Venta venta = new Venta
-                    {
-                        ID = (int)datos.Lector["ID"],
-                        SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]),
-                        FechaVenta = (DateTime)datos.Lector["FechaVenta"],
-                        Usuario = new Usuario
-                        {
-                            ID = (int)datos.Lector["UsuarioID"],
-                            Email = datos.Lector["Email"].ToString()
-                        },
-                        VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"]),
-                        Envio = datos.Lector["EnvioID"] != DBNull.Value ? 
-                        new Envio {
-                            ID = (int)datos.Lector["EnvioID"],
-                            EstadoEnvio = new EstadoEnvio
-                            {
-                                ID = (int)datos.Lector["Estado_envio_ID"],
-                                Descripcion = datos.Lector["EstadoEnvioDescripcion"].ToString(),
-                                FechaBaja = datos.Lector["EstadoEnvioFechaBaja"] is DBNull ? null : (DateTime?)datos.Lector["EstadoEnvioFechaBaja"]
-                            }
-                        } : null
-                    };
-                    lista.Add(venta);
+                    lista.Add(InicializarObjeto(datos));
                 }
 
                 return lista;
@@ -72,6 +50,72 @@ namespace negocio
             {
                 datos.CerrarConexion();
             }
+        }
+        public Venta FindByVentaId(int ventaId)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta(@"
+                    SELECT 
+                        v.ID, v.SumaTotal, v.FechaVenta,
+                        u.ID AS UsuarioID, u.Email, u.Nombre, u.Apellido, u.Direccion,
+                        e.ID AS EnvioID, e.Estado_envio_ID,
+                        ee.Descripcion AS EstadoEnvioDescripcion,
+                        ee.FechaBaja AS EstadoEnvioFechaBaja
+                    FROM Ventas v
+                    JOIN Usuarios u ON (v.Usuario_ID = u.ID)
+                    LEFT JOIN Envios e ON (e.Venta_ID = v.ID)
+                    LEFT JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID) where v.ID = @ventaId");
+                datos.SetearParametros("@ventaId", ventaId);
+                datos.EjecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return InicializarObjeto(datos);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public Venta InicializarObjeto(AccesoDatos datos)
+        {
+            Venta venta = new Venta
+            {
+                SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]),
+                FechaVenta = (DateTime)datos.Lector["FechaVenta"],
+                Usuario = new Usuario
+                {
+                    ID = (int)datos.Lector["UsuarioID"],
+                    Email = datos.Lector["Email"].ToString(),
+                    Direccion = datos.Lector["Direccion"].ToString(),
+                    Nombre = datos.Lector["Nombre"].ToString(),
+                    Apellido = datos.Lector["Apellido"].ToString(),
+                },
+                VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"]),
+                Envio = datos.Lector["EnvioID"] != DBNull.Value ?
+                new Envio
+                {
+                    ID = (int)datos.Lector["EnvioID"],
+                    EstadoEnvio = new EstadoEnvio
+                    {
+                        ID = (int)datos.Lector["Estado_envio_ID"],
+                        Descripcion = datos.Lector["EstadoEnvioDescripcion"].ToString(),
+                        FechaBaja = datos.Lector["EstadoEnvioFechaBaja"] is DBNull ? null : (DateTime?)datos.Lector["EstadoEnvioFechaBaja"]
+                    }
+                } : null
+            };
+            return venta;
         }
         public List<VentaProducto> CargarProductosDeVenta(int ventaId)
         {
@@ -100,71 +144,7 @@ namespace negocio
 
                     lista.Add(vp);
                 }
-
                 return lista;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.CerrarConexion();
-            }
-        }
-        public Venta FindByVentaId(int ventaId)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.SetearConsulta(@"
-                    SELECT 
-                        v.ID, v.SumaTotal, v.FechaVenta,
-                        u.ID AS UsuarioID, u.Email, u.Nombre, u.Apellido, u.Direccion,
-                        e.ID AS EnvioID, e.Estado_envio_ID,
-                        ee.Descripcion AS EstadoEnvioDescripcion,
-                        ee.FechaBaja AS EstadoEnvioFechaBaja
-                    FROM Ventas v
-                    JOIN Usuarios u ON (v.Usuario_ID = u.ID)
-                    LEFT JOIN Envios e ON (e.Venta_ID = v.ID)
-                    LEFT JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID) where v.ID = @ventaId");
-                datos.SetearParametros("@ventaId", ventaId);
-                datos.EjecutarLectura();
-
-                if (datos.Lector.Read())
-                {
-                    Venta venta = new Venta
-                    {
-                        ID = (int)datos.Lector["ID"],
-                        SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]),
-                        FechaVenta = (DateTime)datos.Lector["FechaVenta"],
-                        Usuario = new Usuario
-                        {
-                            ID = (int)datos.Lector["UsuarioID"],
-                            Email = datos.Lector["Email"].ToString(),
-                            Direccion = datos.Lector["Direccion"].ToString(),
-                            Nombre = datos.Lector["Nombre"].ToString(),
-                            Apellido = datos.Lector["Apellido"].ToString(),
-                        },
-                        VentaProducto = CargarProductosDeVenta((int)datos.Lector["ID"]),
-                        Envio = datos.Lector["EnvioID"] != DBNull.Value ?
-                        new Envio
-                        {
-                            ID = (int)datos.Lector["EnvioID"],
-                            EstadoEnvio = new EstadoEnvio
-                            {
-                                ID = (int)datos.Lector["Estado_envio_ID"],
-                                Descripcion = datos.Lector["EstadoEnvioDescripcion"].ToString(),
-                                FechaBaja = datos.Lector["EstadoEnvioFechaBaja"] is DBNull ? null : (DateTime?)datos.Lector["EstadoEnvioFechaBaja"]
-                            }
-                        } : null
-                    };
-                    return venta;
-                }
-                else
-                {
-                    return null;
-                }
             }
             catch (Exception ex)
             {
