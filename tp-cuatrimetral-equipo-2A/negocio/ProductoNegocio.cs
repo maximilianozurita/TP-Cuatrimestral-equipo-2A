@@ -1,6 +1,7 @@
 ﻿using dominio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -33,6 +34,92 @@ namespace negocio
                     lista.Add(InicializarObjeto(datos));
                 }
                 return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public List<Producto> ListarFavoritos(int usuarioId)
+        {
+            List<Producto> lista = new List<Producto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.SetearConsulta(@"Select p.ID, p.Nombre, p.Descripcion, p.Precio, p.Descuento, p. Destacado, p.Marca_ID, p.Categoria_ID, 
+                    c.Nombre as CategoriaNombre, 
+                    m.Nombre as MarcaNombre 
+                    from Productos as p 
+                    join Favoritos f ON (f.Producto_ID = p.ID) 
+                    join CATEGORIAS c on (c.ID = p.Categoria_ID) 
+                    join MARCAS m on (m.ID=p.Marca_ID) 
+                    where f.Usuario_ID = @usuarioId and p.FechaBaja is null
+                ");
+                datos.SetearParametros("@usuarioId", usuarioId);
+                datos.EjecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    lista.Add(InicializarObjeto(datos));
+                }
+
+                return lista;
+            }
+            finally { datos.CerrarConexion(); }
+        }
+        public void EliminarFavorito(int usuario_id, int producto_id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("Delete from Favoritos where Usuario_ID = @usuario_id and Producto_ID = @producto_id");
+                datos.SetearParametros("@usuario_id", usuario_id);
+                datos.SetearParametros("@producto_id", producto_id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public void AgregarFavorito(int usuario_id, int producto_id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("INSERT INTO Favoritos (Usuario_ID, Producto_ID) VALUES (@usuario_id, @producto_id)");
+                datos.SetearParametros("@usuario_id", usuario_id);
+                datos.SetearParametros("@producto_id", producto_id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public bool EsFavorito(int usuario_id, int producto_id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("Select 1 from Favoritos where Usuario_ID = @usuario_id and Producto_ID = @producto_id");
+                datos.SetearParametros("@usuario_id", usuario_id);
+                datos.SetearParametros("@producto_id", producto_id);
+                datos.EjecutarLectura();
+                return datos.Lector.Read();
             }
             catch (Exception ex)
             {

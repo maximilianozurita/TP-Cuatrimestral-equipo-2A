@@ -37,6 +37,7 @@
                                 <% if (((dominio.Usuario)Session["usuario"]).IsCliente()) { %>
                                     <a href="/Productos/Carrito.aspx" class="btn btn-outline-primary btn-sm">Carrito</a>
                                     <a href="/Productos/MisCompras.aspx" class="btn btn-outline-primary btn-sm">Mis Compras</a>
+                                    <a href="/Productos/Favoritos.aspx" class="btn btn-outline-primary btn-sm">Favoritos</a>
                                 <% } %>
                                 <% if (((dominio.Usuario)Session["usuario"]).IsAdmin()) { %>
                                     <a href="/Admin/Default.aspx" class="btn btn-outline-primary btn-sm">Panel Administración</a>

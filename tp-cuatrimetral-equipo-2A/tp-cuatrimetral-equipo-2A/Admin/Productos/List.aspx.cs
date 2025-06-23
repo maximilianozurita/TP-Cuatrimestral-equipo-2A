@@ -40,7 +40,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         }
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            Response.Redirect("/Admin/Productos/AgregarModificar.aspx");
+            Response.Redirect("/Admin/Productos/Form.aspx");
         }
 
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -49,7 +49,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
 
             if (e.CommandName == "Editar")
             {
-                Response.Redirect("/Admin/Productos/AgregarModificar.aspx?id=" + id);
+                Response.Redirect("/Admin/Productos/Form.aspx?id=" + id);
             }
             else if (e.CommandName == "Eliminar")
             {

@@ -13,8 +13,7 @@ namespace dominio
         {
             if (Session["usuario"] == null)
             {
-                Session.Add("Error", "Acceso denegado, loguear usuario");
-                Response.Redirect("/Error.aspx", false);
+                Response.Redirect("/Usuarios/Login.aspx", false);
                 return false;
             }
             Usuario usuario = (Usuario)Session["usuario"];

@@ -25,6 +25,17 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 producto = productos.First(producto => producto.ID == id);
                 if (!IsPostBack)
                 {
+
+                    Usuario user = (Usuario)Session["usuario"];
+                    if (user != null)
+                    {
+                        if (productoNegocio.EsFavorito(user.ID, producto.ID))
+                        {
+                            btnFavorito.Text = "❤️ En Favoritos";
+                            btnFavorito.CssClass = "btn btn-danger";
+                        }
+                    }
+
                     carrito = (dominio.Carrito)Session["Carrito"];
                     if (carrito is null)
                     {
@@ -37,7 +48,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             catch (Exception ex)
             {
                 Session.Add("error", ex.Message);
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("/Error.aspx", false);
             }
         }
 
@@ -50,7 +61,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             catch (Exception ex)
             {
                 Session.Add("error", ex.Message);
-                Response.Redirect("Error.aspx", false);
+                Response.Redirect("/Error.aspx", false);
             }
         }
 
@@ -72,7 +83,31 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             catch (Exception ex)
             {
                 Session.Add("error", ex.Message);
-                Response.Redirect("../Error.aspx", false);
+                Response.Redirect("/Error.aspx", false);
+            }
+        }
+        protected void btnFavorito_Click(object sender, EventArgs e)
+        {
+            Usuario user = (Usuario)Session["usuario"];
+            if (user != null && producto != null)
+            {
+                ProductoNegocio productoNegocio = new ProductoNegocio();
+                if (!productoNegocio.EsFavorito(user.ID, producto.ID))
+                {
+                    productoNegocio.AgregarFavorito(user.ID, producto.ID);
+                    btnFavorito.Text = "❤️ En Favoritos";
+                    btnFavorito.CssClass = "btn btn-danger";
+                }
+                else
+                {
+                    productoNegocio.EliminarFavorito(user.ID, producto.ID);
+                    btnFavorito.Text = "❤️ Agregar a Favoritos";
+                    btnFavorito.CssClass = "btn btn-outline-danger";
+                }
+            }
+            else
+            {
+                Response.Redirect("/Usuarios/Login.aspx");
             }
         }
     }

@@ -73,7 +73,6 @@
     <Compile Include="Carrito.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="Envio.cs" />
-    <Compile Include="Favoritos.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Imagen.cs" />
     <Compile Include="Marca.cs" />
