@@ -1,33 +1,38 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="List.aspx.cs" Inherits="tp_cuatrimetral_equipo_2A.Productos.List" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <style>
-        .box-discount {
-            width: 150px;
-            height: 150px;
-            overflow: hidden;
-            position: absolute;
-            top: -10px;
-            left: -10px;
-        }
-
-        .discount-content {
-            width: 225px;
-            font-size: 1.2rem;
-            font-weight: 800;
-            text-align: center;
-            padding: 8px 0;
-            background: #46464a;
-            color: #f70b52;
-            position: absolute;
-            transform: rotate(-45deg);
-            padding-left: 5px;
-            left: -40%;
-            top: 25%;
-        }
-    </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
+
+    <div class="card mb-4 p-3 shadow-sm">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label for="txtNombre" class="form-label">Nombre:</label>
+                <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" placeholder="Buscar por nombre" />
+            </div>
+            <div class="col-md-3">
+                <label for="ddlMarca" class="form-label">Marca:</label>
+                <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />
+            </div>
+            <div class="col-md-3">
+                <label for="ddlCategoria" class="form-label">Categoría:</label>
+                <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" />
+            </div>
+            <div class="col-md-3">
+                <label for="ddlOrden" class="form-label">Ordenar por:</label>
+                <asp:DropDownList ID="ddlOrden" runat="server" CssClass="form-select">
+                    <asp:ListItem Text="Precio (menor a mayor)" Value="precio_asc" />
+                    <asp:ListItem Text="Precio (mayor a menor)" Value="precio_desc" />
+                    <asp:ListItem Text="Descuento (mayor primero)" Value="descuento_desc" />
+                </asp:DropDownList>
+            </div>
+        </div>
+        <div class="mt-3 text-end">
+            <asp:Button ID="btnFiltrar" runat="server" CssClass="btn btn-primary" Text="Filtrar" OnClick="btnFiltrar_Click" />
+        </div>
+    </div>
+
     <div class="container mt-5">
         <h2 class="text-center mb-4">Lista de articulos</h2>
         <div class="row justify-content-center">
