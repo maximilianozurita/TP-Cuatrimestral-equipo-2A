@@ -23,7 +23,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
                 if (Request.QueryString["id"] != null)
                 {
                     int idUsuario = int.Parse(Request.QueryString["id"]);
-                    Usuario usuario = usuarioNeg.FindActivoById(idUsuario);
+                    Usuario usuario = usuarioNeg.FindById(idUsuario);
                     if (usuario != null)
                     {
                         Session.Add("idUsuario", idUsuario);

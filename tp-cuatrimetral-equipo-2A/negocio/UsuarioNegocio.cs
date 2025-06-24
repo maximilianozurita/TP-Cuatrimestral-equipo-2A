@@ -7,13 +7,22 @@ namespace negocio
 {
     public class UsuarioNegocio
     {
-        public List<Usuario> Listar()
+        public enum EstadoUsuario { Activos, DadosDeBaja, Todos }
+        public List<Usuario> Listar(EstadoUsuario estado = EstadoUsuario.Activos)
         {
             List<Usuario> lista = new List<Usuario>();
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                string consulta = "SELECT " + Usuario.Columnas("u") + " FROM Usuarios u WHERE Fecha_baja is null";
+                string consulta = "SELECT " + Usuario.Columnas("u") + " FROM Usuarios u";
+                if (estado == EstadoUsuario.DadosDeBaja)
+                {
+                    consulta += " WHERE u.Fecha_baja is not null";
+                }
+                else if (estado == EstadoUsuario.Activos)
+                {
+                    consulta += " WHERE u.Fecha_baja is null";
+                }
                 datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
@@ -123,12 +132,12 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-        public Usuario FindActivoById(int id)
+        public Usuario FindById(int id)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios u where ID = @id and Fecha_baja is null");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios u where ID = @id");
                 datos.SetearParametros("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -276,7 +285,25 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public void DarAlta(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
 
+            try
+            {
+                datos.SetearConsulta("UPDATE Usuarios SET Fecha_baja = null WHERE ID = @id");
+                datos.SetearParametros("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public Usuario InicializarObjeto(AccesoDatos datos)
         {
             Usuario usuario = new Usuario();

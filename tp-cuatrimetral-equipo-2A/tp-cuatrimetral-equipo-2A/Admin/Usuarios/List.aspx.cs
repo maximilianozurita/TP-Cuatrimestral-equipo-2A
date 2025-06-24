@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
 using negocio;
+using static negocio.CategoriaNegocio;
+using static negocio.UsuarioNegocio;
 
 namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 {
@@ -22,32 +24,42 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 
             if (!IsPostBack)
             {
-                gvUsuarios.DataSource = getListaSinUsuarioLogueado();
-                gvUsuarios.DataBind();
+                CargarUsuarios();
             }
         }
-        protected List<Usuario> getListaSinUsuarioLogueado()
+        private void CargarUsuarios()
         {
-            Usuario usuario = (Usuario)Session["usuario"];
-            List<Usuario> lista = usuarioNeg.Listar();
-            List<Usuario> filtrados = lista.Where(u => !u.Email.Equals(usuario.Email, StringComparison.OrdinalIgnoreCase)).ToList();
-            return filtrados;
+            var estado = (EstadoUsuario)int.Parse(ddlEstado.SelectedValue);
+            List<Usuario> lista = usuarioNeg.Listar(estado);
+
+            Usuario usuarioLogueado = (Usuario)Session["usuario"];
+            lista = lista.Where(u => u.Email != usuarioLogueado.Email).ToList();
+
+            gvUsuarios.DataSource = lista;
+            gvUsuarios.DataBind();
         }
         protected void gvUsuarios_RowCommand(object sender, GridViewCommandEventArgs e)
         {
             int index = Convert.ToInt32(e.CommandArgument);
             int idUsuario = Convert.ToInt32(gvUsuarios.DataKeys[index].Value);
-            if (e.CommandName == "Modificar")
-            {
-                Response.Redirect("Modificar.aspx?id=" + idUsuario);
-            }
 
-            if (e.CommandName == "Baja")
+            switch (e.CommandName)
             {
-                usuarioNeg.Borrar(idUsuario);
-                gvUsuarios.DataSource = getListaSinUsuarioLogueado();
-                gvUsuarios.DataBind();
+                case "Modificar":
+                    Response.Redirect("Modificar.aspx?id=" + idUsuario);
+                    break;
+                case "Baja":
+                    usuarioNeg.Borrar(idUsuario);
+                    break;
+                case "Alta":
+                    usuarioNeg.DarAlta(idUsuario);
+                    break;
             }
+            CargarUsuarios();
+        }
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarUsuarios();
         }
     }
 }
