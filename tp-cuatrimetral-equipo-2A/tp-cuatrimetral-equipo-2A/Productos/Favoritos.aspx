@@ -5,6 +5,36 @@
     <div class="container my-5">
         <h2 class="mb-4 text-center">Mis Productos Favoritos</h2>
 
+
+        <asp:Panel ID="pnlFiltros" runat="server" CssClass="mb-4">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label for="txtNombre" class="form-label">Buscar por nombre</label>
+                    <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label for="ddlMarca" class="form-label">Marca</label>
+                    <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />
+                </div>
+                <div class="col-md-3">
+                    <label for="ddlCategoria" class="form-label">Categoría</label>
+                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" />
+                </div>
+                <div class="col-md-3">
+                    <label for="ddlOrden" class="form-label">Ordenar por</label>
+                    <asp:DropDownList ID="ddlOrden" runat="server" CssClass="form-select">
+                        <asp:ListItem Text="Precio ascendente" Value="PrecioAsc" />
+                        <asp:ListItem Text="Precio descendente" Value="PrecioDesc" />
+                        <asp:ListItem Text="Descuento" Value="Descuento" />
+                    </asp:DropDownList>
+                </div>
+            </div>
+            <div class="mt-3 text-end">
+                <asp:Button ID="btnFiltrar" runat="server" CssClass="btn btn-primary" Text="Aplicar filtros" OnClick="btnFiltrar_Click" />
+            </div>
+        </asp:Panel>
+
+
         <asp:Repeater ID="rptFavoritos" runat="server">
             <ItemTemplate>
                 <div class="card mb-4 shadow-sm">
