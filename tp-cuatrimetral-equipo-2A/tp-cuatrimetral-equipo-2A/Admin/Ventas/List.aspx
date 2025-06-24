@@ -52,10 +52,9 @@
                             <strong>Estado de Envío:</strong> <%# Eval("Envio.EstadoEnvio.Descripcion") ?? "Sin estado" %>
                         </div>
 
-                        <a href='/Admin/Envios/Detalle.aspx?ventaId=<%# Eval("ID") %>' class="btn btn-outline-secondary btn-sm mb-3">
-                            Ver detalle del envío
+                        <a href='/Admin/Ventas/Detalle.aspx?ventaId=<%# Eval("ID") %>' class="btn btn-outline-secondary btn-sm mb-3">
+                            Ver detalle
                         </a>
-
                         <asp:Repeater ID="rptProductos" runat="server" DataSource='<%# Eval("VentaProducto") %>'>
                             <HeaderTemplate>
                                 <ul class="list-group list-group-flush">

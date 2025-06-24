@@ -13,7 +13,8 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("SELECT " + Usuario.Columnas("u") + " FROM Usuarios WHERE Fecha_baja is null");
+                string consulta = "SELECT " + Usuario.Columnas("u") + " FROM Usuarios u WHERE Fecha_baja is null";
+                datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
                 while (datos.Lector.Read())
                 {
@@ -75,7 +76,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios where Email = @email");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios u where Email = @email");
                 datos.SetearParametros("@email", emain);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -101,7 +102,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios where Email = @email and Fecha_baja is null");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios u where Email = @email and Fecha_baja is null");
                 datos.SetearParametros("@email", emain);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())
@@ -127,7 +128,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios where ID = @id and Fecha_baja is null");
+                datos.SetearConsulta("select " + Usuario.Columnas("u") + " from Usuarios u where ID = @id and Fecha_baja is null");
                 datos.SetearParametros("@id", id);
                 datos.EjecutarLectura();
                 if (datos.Lector.Read())

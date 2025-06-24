@@ -68,7 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Admin\Default.aspx" />
-    <Content Include="Admin\Envios\Detalle.aspx" />
+    <Content Include="Admin\Ventas\Detalle.aspx" />
     <Content Include="Admin\Productos\Form.aspx" />
     <Content Include="Admin\Productos\Categorias\Form.aspx" />
     <Content Include="Admin\Productos\Categorias\List.aspx" />
@@ -77,7 +77,6 @@
     <Content Include="Admin\Productos\Marcas\List.aspx" />
     <Content Include="Admin\Usuarios\List.aspx" />
     <Content Include="Admin\Usuarios\Modificar.aspx" />
-    <Content Include="Admin\Ventas\Detalle.aspx" />
     <Content Include="Admin\Ventas\List.aspx" />
     <Content Include="Content\Style\Style.css" />
     <Content Include="Default.aspx" />
@@ -101,11 +100,11 @@
     <Compile Include="Admin\Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Envios\Detalle.aspx.cs">
+    <Compile Include="Admin\Ventas\Detalle.aspx.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Envios\Detalle.aspx.designer.cs">
+    <Compile Include="Admin\Ventas\Detalle.aspx.designer.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Productos\Form.aspx.cs">
@@ -163,13 +162,6 @@
     </Compile>
     <Compile Include="Admin\Usuarios\Modificar.aspx.designer.cs">
       <DependentUpon>Modificar.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Admin\Ventas\Detalle.aspx.cs">
-      <DependentUpon>Detalle.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Admin\Ventas\Detalle.aspx.designer.cs">
-      <DependentUpon>Detalle.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Ventas\List.aspx.cs">
       <DependentUpon>List.aspx</DependentUpon>

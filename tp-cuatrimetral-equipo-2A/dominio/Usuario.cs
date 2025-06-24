@@ -39,8 +39,7 @@ namespace dominio
         public bool IsCliente() { return TienePermiso(Permisos.Cliente); }
         public static string Columnas(string alias = "u")
         {
-            return $@",
-            {alias}.ID AS UsuarioID,
+            return $@"{alias}.ID AS UsuarioID,
             {alias}.Nombre AS UsuarioNombre,
             {alias}.Apellido AS UsuarioApellido,
             {alias}.Email AS UsuarioEmail,

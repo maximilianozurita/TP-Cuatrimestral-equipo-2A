@@ -16,16 +16,14 @@ namespace negocio
             try
             {
                 string consulta = @"
-                    SELECT 
-                        v.ID, v.SumaTotal, v.FechaVenta,
+                    SELECT v.ID, v.SumaTotal, v.FechaVenta,
                         " + Usuario.Columnas("u") + @"
-                        e.ID AS EnvioID, e.Estado_envio_ID,
-                        ee.Descripcion AS EstadoEnvioDescripcion,
-                        ee.FechaBaja AS EstadoEnvioFechaBaja
+                        , e.ID AS EnvioID, e.Estado_envio_ID,
+                        ee.Descripcion AS EstadoEnvioDescripcion, ee.FechaBaja AS EstadoEnvioFechaBaja
                     FROM Ventas v
                     JOIN Usuarios u ON (v.Usuario_ID = u.ID)
-                    LEFT JOIN Envios e ON (e.Venta_ID = v.ID)
-                    LEFT JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID)";
+                    JOIN Envios e ON (e.Venta_ID = v.ID)
+                    JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID)";
                 if (estadoEnvioId != null)
                 {
                     consulta += " WHERE e.Estado_envio_ID = @estadoEnvioId";
@@ -57,16 +55,15 @@ namespace negocio
             try
             {
                 datos.SetearConsulta(@"
-                    SELECT 
-                        v.ID, v.SumaTotal, v.FechaVenta,
+                    SELECT v.ID, v.SumaTotal, v.FechaVenta,
                         " + Usuario.Columnas("u") + @"
-                        e.ID AS EnvioID, e.Estado_envio_ID,
+                        , e.ID AS EnvioID, e.Estado_envio_ID,
                         ee.Descripcion AS EstadoEnvioDescripcion,
                         ee.FechaBaja AS EstadoEnvioFechaBaja
                     FROM Ventas v
                     JOIN Usuarios u ON (v.Usuario_ID = u.ID)
-                    LEFT JOIN Envios e ON (e.Venta_ID = v.ID)
-                    LEFT JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID) where v.ID = @ventaId");
+                    JOIN Envios e ON (e.Venta_ID = v.ID)
+                    JOIN Estado_envio ee ON (ee.ID = e.Estado_envio_ID) where v.ID = @ventaId");
                 datos.SetearParametros("@ventaId", ventaId);
                 datos.EjecutarLectura();
 
@@ -97,7 +94,7 @@ namespace negocio
                 datos.SetearConsulta(@"
                     SELECT v.ID, v.SumaTotal, v.FechaVenta,
                            e.ID AS Estado_envio_ID, e.Descripcion AS EstadoEnvioDescripcion, e.FechaBaja as EstadoEnvioFechaBaja,
-                           en.ID AS EnvioID
+                           en.ID AS EnvioID, 
                           " + Usuario.Columnas("u") + @"
                     FROM Ventas v
                     JOIN Usuarios u ON (u.ID = V.Usuario_ID) 
@@ -129,6 +126,7 @@ namespace negocio
         {
             UsuarioNegocio userNeg = new UsuarioNegocio();
             Venta venta = new Venta();
+            venta.ID = (int)datos.Lector["ID"];
             venta.SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]);
             venta.FechaVenta = (DateTime)datos.Lector["FechaVenta"];
             venta.Usuario = datos.Lector["usuarioID"] != DBNull.Value ? userNeg.InicializarObjeto(datos) : null;
