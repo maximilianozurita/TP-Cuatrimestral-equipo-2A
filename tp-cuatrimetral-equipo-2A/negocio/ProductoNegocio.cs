@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using static negocio.UsuarioNegocio;
 
 namespace negocio
 {
     public class ProductoNegocio
     {
-        public List<Producto> Listar(bool? filtrarDestacados = null)
+        public enum EstadoProducto { Activos, DadosDeBaja, Todos }
+        public List<Producto> Listar(bool? filtrarDestacados = null, EstadoProducto estado = EstadoProducto.Activos)
         {
             List<Producto> lista = new List<Producto>();
             AccesoDatos datos = new AccesoDatos();
@@ -17,15 +19,31 @@ namespace negocio
             try
             {
                 string consulta = "select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
-                    "a.Marca_id , a.precio , a.descuento , a.Destacado, " +
+                    "a.Marca_id , a.precio , a.descuento , a.Destacado, a.FechaBaja, " +
                     "m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre " +
                     "from Productos as a " +
-                    "inner join Categorias as c on c.ID = a.Categoria_ID " +
-                    "inner join Marcas as m on m.ID = a.Marca_ID " +
-                    "where a.FechaBaja is null";
+                    "join Categorias as c on c.ID = a.Categoria_ID " +
+                    "join Marcas as m on m.ID = a.Marca_ID ";
+                if (estado == EstadoProducto.DadosDeBaja)
+                {
+                    consulta += " WHERE a.FechaBaja is not null";
+                }
+                else if (estado == EstadoProducto.Activos)
+                {
+                    consulta += " WHERE a.FechaBaja is null";
+                }
+
                 if (filtrarDestacados == true)
                 {
-                    consulta += " and a.Destacado = 1";
+                    if(estado == EstadoProducto.Todos)
+                    {
+                        consulta += " WHERE ";
+                    }
+                    else
+                    {
+                        consulta += " and ";
+                    }
+                        consulta += " a.Destacado = 1";
                 }
                 datos.SetearConsulta(consulta);
                 datos.EjecutarLectura();
@@ -51,7 +69,7 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta(@"Select p.ID, p.Nombre, p.Descripcion, p.Precio, p.Descuento, p. Destacado, p.Marca_ID, p.Categoria_ID, 
+                datos.SetearConsulta(@"Select p.ID, p.Nombre, p.Descripcion, p.Precio, p.Descuento, p. Destacado, p.Marca_ID, p.Categoria_ID, p.FechaBaja, 
                     c.Nombre as CategoriaNombre, 
                     m.Nombre as MarcaNombre 
                     from Productos as p 
@@ -137,7 +155,7 @@ namespace negocio
 
             try
             {
-                datos.SetearConsulta("Select p.ID, p.Nombre, p.Descripcion, p.Precio, p.Descuento, p. Destacado, p.Marca_ID, p.Categoria_ID, c.Nombre as CategoriaNombre, m.Nombre as MarcaNombre from Productos as p join CATEGORIAS c on (c.ID = p.Categoria_ID) join MARCAS m on (m.ID=p.Marca_ID) where p.ID = @id and p.FechaBaja is null");
+                datos.SetearConsulta("Select p.ID, p.Nombre, p.Descripcion, p.Precio, p.Descuento, p. Destacado, p.Marca_ID, p.Categoria_ID, p.FechaBaja, c.Nombre as CategoriaNombre, m.Nombre as MarcaNombre from Productos as p join CATEGORIAS c on (c.ID = p.Categoria_ID) join MARCAS m on (m.ID=p.Marca_ID) where p.ID = @id");
                 datos.SetearParametros("@Id", id);
                 datos.EjecutarLectura();
 
@@ -171,6 +189,14 @@ namespace negocio
             producto.Categoria = new Categoria();
             producto.Marca = new Marca();
             producto.Destacado = (bool)datos.Lector["Destacado"];
+            if (datos.Lector["FechaBaja"] == DBNull.Value)
+            {
+                producto.FechaBaja = null;
+            }
+            else
+            {
+                producto.FechaBaja = (DateTime)datos.Lector["FechaBaja"];
+            }
             producto.Imagenes = new List<Imagen>();
             if (datos.Lector["Categoria_ID"] != DBNull.Value)
             {
@@ -194,7 +220,7 @@ namespace negocio
             try
             {
                 datos.SetearConsulta("select a.id , a.Nombre , a.Descripcion , a.Categoria_ID , " +
-                    "a.Marca_id , a.precio , a.descuento , a.Destacado, " +
+                    "a.Marca_id , a.precio , a.descuento , a.Destacado, a.FechaBaja, " +
                     "m.Nombre as MarcaNombre , c.Nombre as CategoriaNombre " +
                     "from Productos as a " +
                     "inner join Categorias as c on c.ID = a.Categoria_ID " +
@@ -298,6 +324,30 @@ namespace negocio
                 {
                     //Eliminar articulo
                     datos.SetearConsulta("Update Productos set FechaBaja = GETDATE() WHERE Id=@Id");
+                    datos.SetearParametros("@Id", producto_id);
+                    datos.EjecutarAccion();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public void DarAlta(int producto_id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Dar alta imagenes del producto
+                ImagenNegocio imgNegocio = new ImagenNegocio();
+                if (imgNegocio.DarAltaByProductoId(producto_id))
+                {
+                    //Dar de alta producto
+                    datos.SetearConsulta("Update Productos set FechaBaja = null WHERE Id=@Id");
                     datos.SetearParametros("@Id", producto_id);
                     datos.EjecutarAccion();
                 }

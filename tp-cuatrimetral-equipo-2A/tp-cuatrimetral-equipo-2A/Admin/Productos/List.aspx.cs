@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
 using negocio;
+using static negocio.ProductoNegocio;
+using static negocio.UsuarioNegocio;
 
 namespace tp_cuatrimetral_equipo_2A.Admin.Productos
 {
@@ -22,6 +24,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
             {
                 if (!IsPostBack)
                 {
+                    ddlEstado.SelectedValue = "0";
                     CargarListado();
                 }
             }
@@ -33,8 +36,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         }
         private void CargarListado()
         {
+
+            var estado = (EstadoProducto)int.Parse(ddlEstado.SelectedValue);
             ProductoNegocio productoNeg = new ProductoNegocio();
-            ListaProductos = productoNeg.Listar();
+            ListaProductos = productoNeg.Listar(false, estado);
             gvProductos.DataSource = ListaProductos;
             gvProductos.DataBind();
         }
@@ -43,20 +48,31 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
             Response.Redirect("/Admin/Productos/Form.aspx");
         }
 
+
+        protected void ddlEstado_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarListado();
+        }
         protected void gvProductos_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            int id = Convert.ToInt32(e.CommandArgument);
+            int index = Convert.ToInt32(e.CommandArgument);
+            int id = Convert.ToInt32(gvProductos.DataKeys[index].Value);
+            ProductoNegocio productoNeg = new ProductoNegocio();
+            switch (e.CommandName)
+            {
+                case "Editar":
+                    Response.Redirect("/Admin/Productos/Form.aspx?id=" + id);
+                    break;
 
-            if (e.CommandName == "Editar")
-            {
-                Response.Redirect("/Admin/Productos/Form.aspx?id=" + id);
+                case "Eliminar":
+                    productoNeg.Eliminar(id);
+                    break;
+
+                case "Alta":
+                    productoNeg.DarAlta(id);
+                    break;
             }
-            else if (e.CommandName == "Eliminar")
-            {
-                ProductoNegocio productoNeg = new ProductoNegocio();
-                productoNeg.Eliminar(id);
-                CargarListado();
-            }
+            CargarListado();
         }
     }
 }

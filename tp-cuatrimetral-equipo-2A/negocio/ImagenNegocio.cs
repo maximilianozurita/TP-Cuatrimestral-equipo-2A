@@ -79,6 +79,25 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+        public bool DarAltaByProductoId(int producto_id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("Update Imagenes set FechaBaja = null WHERE Producto_ID=@id");
+                datos.SetearParametros("@id", producto_id);
+                datos.EjecutarAccion();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
         public void UpdateByArticulo(Producto producto)
         {
             List<Imagen> imagenesPreCargadas = ListarByProductoId(producto.ID);
