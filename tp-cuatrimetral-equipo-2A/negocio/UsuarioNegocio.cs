@@ -45,10 +45,9 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-            //ToDo: Ver de agregar encriptado y desencriptado de password
                 datos.SetearConsulta("select ID, Permisos FROM Usuarios where email = @email AND password = @password and Fecha_baja is null");
                 datos.SetearParametros("@email", usuario.Email);
-                datos.SetearParametros("@password", usuario.Password);
+                datos.SetearParametros("@password", Helper.HashPassword(usuario.Password));
 
                 datos.EjecutarLectura();
 
@@ -170,7 +169,7 @@ namespace negocio
                 ");
                 //datos obligatorios
                 datos.SetearParametros("@email", usuario.Email);
-                datos.SetearParametros("@password", usuario.Password);
+                datos.SetearParametros("@password", Helper.HashPassword(usuario.Password));
                 datos.SetearParametros("@permisos", (int)permisos);
 
 
@@ -197,7 +196,7 @@ namespace negocio
             {
                 datos.SetearConsulta("SELECT 1 FROM Usuarios WHERE Email = @Email AND Password = @Password");
                 datos.SetearParametros("@Email", email);
-                datos.SetearParametros("@Password", password);
+                datos.SetearParametros("@Password", Helper.HashPassword(password));
                 datos.EjecutarLectura();
 
                 return datos.Lector.Read();
@@ -218,7 +217,7 @@ namespace negocio
             {
                 datos.SetearConsulta("UPDATE Usuarios SET Password = @password WHERE Email = @email");
 
-                datos.SetearParametros("@password", password);
+                datos.SetearParametros("@password", Helper.HashPassword(password));
                 datos.SetearParametros("@email", email);
                 datos.EjecutarLectura();
             }

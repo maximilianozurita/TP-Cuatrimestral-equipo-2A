@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.SessionState;
 using static System.Collections.Specialized.BitVector32;
@@ -34,6 +36,20 @@ namespace dominio
                 return false;
             }
             return true;
+        }
+        public static string HashPassword(string password)
+        {
+            using (SHA256 sha = SHA256.Create())
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(password);
+                byte[] hash = sha.ComputeHash(bytes);
+                StringBuilder sb = new StringBuilder();
+                foreach (var b in hash)
+                {
+                    sb.Append(b.ToString("x2"));
+                }
+                return sb.ToString();
+            }
         }
     }
 }

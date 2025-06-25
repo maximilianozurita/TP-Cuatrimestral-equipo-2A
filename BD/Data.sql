@@ -28,13 +28,13 @@ GO
 -- Insertar Usuarios
 INSERT INTO Usuarios (Nombre, Apellido, Email, Password, Telefono, Direccion, Permisos, Fecha_alta)
 VALUES
-('adminUsuario', 'admin', 'adminUsuario@example.com', '123', '1234567890', 'Calle Falsa 1523', 4, GETDATE()),
-('adminProductos', 'admin', 'adminProductos@example.com', '123', '0987654321', 'Av. Siempre Viva 742', 8, GETDATE()),
-('adminVentas', 'admin', 'adminVentas@example.com', '123', '0987654321', 'Av. Siempre Viva 5642', 16, GETDATE()),
-('admin', 'admin', 'admin@example.com', '123', '0987654321', 'Av. Siempre Viva 7492', 28, GETDATE()),
-('cliente1', 'cliente1', 'cliente1@example.com', '123', '0987654321', 'Av. Siempre Viva 74872', 2, GETDATE()),
-('cliente2', 'cliente2', 'cliente2@example.com', '123', '11556677', 'Av Siempre Viva 742', 2, GETDATE()),
-('cliente3', 'cliente3', 'cliente3@example.com', '123', '1155655', 'Av Siempre Viva 247', 2, GETDATE());
+('adminUsuario', 'admin', 'adminUsuario@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '1234567890', 'Calle Falsa 1523', 4, GETDATE()),
+('adminProductos', 'admin', 'adminProductos@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '0987654321', 'Av. Siempre Viva 742', 8, GETDATE()),
+('adminVentas', 'admin', 'adminVentas@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '0987654321', 'Av. Siempre Viva 5642', 16, GETDATE()),
+('admin', 'admin', 'admin@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '0987654321', 'Av. Siempre Viva 7492', 28, GETDATE()),
+('cliente1', 'cliente1', 'cliente1@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '0987654321', 'Av. Siempre Viva 74872', 2, GETDATE()),
+('cliente2', 'cliente2', 'cliente2@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '11556677', 'Av Siempre Viva 742', 2, GETDATE()),
+('cliente3', 'cliente3', 'cliente3@example.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', '1155655', 'Av Siempre Viva 247', 2, GETDATE());
 GO
 
 -- Insertar Productos
