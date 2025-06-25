@@ -15,6 +15,51 @@ namespace tp_cuatrimetral_equipo_2A.Productos
     {
 
         /// <summary>
+        /// pnlFiltros control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlFiltros;
+
+        /// <summary>
+        /// txtFechaDesde control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaDesde;
+
+        /// <summary>
+        /// txtFechaHasta control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtFechaHasta;
+
+        /// <summary>
+        /// ddlEstadoEnvio control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlEstadoEnvio;
+
+        /// <summary>
+        /// btnFiltrar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnFiltrar;
+
+        /// <summary>
         /// rptCompras control.
         /// </summary>
         /// <remarks>

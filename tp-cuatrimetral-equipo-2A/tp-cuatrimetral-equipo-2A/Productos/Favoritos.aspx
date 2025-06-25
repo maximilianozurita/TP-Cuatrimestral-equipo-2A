@@ -37,7 +37,7 @@
 
         <asp:Repeater ID="rptFavoritos" runat="server">
             <ItemTemplate>
-                <div class="card mb-4 shadow-sm">
+                <div class="card card-with-hover mb-4 shadow-sm">
                     <div class="row g-0">
                         <div class="col-md-4">
                             <img src="/Upload/Products/<%# Eval("Imagenes[0].ImagenUrl") %>" class="img-fluid rounded-start" alt="<%# Eval("Nombre") %>" />

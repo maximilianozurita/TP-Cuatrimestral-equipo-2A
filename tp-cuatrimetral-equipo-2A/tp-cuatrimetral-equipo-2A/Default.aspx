@@ -30,7 +30,7 @@
                 <asp:Repeater ID="rptDestacados" runat="server">
                     <ItemTemplate>
                         <div class="col-lg-4 col-md-6 mb-4 d-flex align-items-stretch">
-                            <a href="/Productos/Detalle.aspx?id=<%# Eval("ID") %>" class="card text-decoration-none text-reset w-100">
+                            <a href="/Productos/Detalle.aspx?id=<%# Eval("ID") %>" class="card card-with-hover text-decoration-none text-reset w-100">
                                 <img src='/Upload/Products/<%# Eval("Imagenes[0].ImagenUrl") %>' class="card-img-top" alt="Producto" />
                                 <div class="card-body">
                                     <h5 class="card-title"><%# Eval("Nombre") %></h5>

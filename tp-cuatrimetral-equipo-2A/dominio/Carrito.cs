@@ -11,6 +11,11 @@ namespace dominio
         public float SumaTotal { get; private set; }
         public List<ItemCarrito> Items { get; set; } = new List<ItemCarrito>();
         public bool CompraUnitaria { get; set; } = false; // Indica si la compra es unitaria o no
+        public float Total ()
+        {
+            CalcularSumaTotal();
+            return this.SumaTotal;
+        }
         public void AgregarProducto(Producto producto, int cantidad)
         {
             ItemCarrito itemCarrito = Items.Find(i => i.Producto.ID == producto.ID);
