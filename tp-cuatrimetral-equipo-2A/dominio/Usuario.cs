@@ -14,6 +14,8 @@ namespace dominio
         public string Password { get; set; }
         public string Telefono { get; set; } = string.Empty;
         public string Direccion { get; set; } = string.Empty;
+        public string ResetToken { get; set; } = string.Empty;
+        public DateTime? ResetTokenFecha { get; set; }
         public DateTime FechaAlta { get; set; }
         public DateTime? FechaBaja { get; set; }
         public Permisos Permisos { get; set; } = Permisos.Ninguno;

@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="Carrito.cs" />
     <Compile Include="Categoria.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="Envio.cs" />
     <Compile Include="Helper.cs" />
     <Compile Include="Imagen.cs" />

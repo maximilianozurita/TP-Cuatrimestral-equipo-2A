@@ -79,7 +79,7 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
-        public Usuario FindAllByEmail(string emain)
+        public Usuario FindByEmail(string emain)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -292,6 +292,75 @@ namespace negocio
             {
                 datos.SetearConsulta("UPDATE Usuarios SET Fecha_baja = null WHERE ID = @id");
                 datos.SetearParametros("@id", id);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public void GenerarToken(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                string token = Guid.NewGuid().ToString();
+                usuario.ResetToken = token;
+                usuario.ResetTokenFecha = DateTime.Now;
+
+                datos.SetearConsulta("UPDATE Usuarios SET ResetToken = @token, ResetTokenFecha = @tokenFecha WHERE ID = @id");
+                datos.SetearParametros("@id", usuario.ID);
+                datos.SetearParametros("@token", usuario.ResetToken);
+                datos.SetearParametros("@tokenFecha", usuario.ResetTokenFecha);
+                datos.EjecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public bool AutentificarToken(string email, string token)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                DateTime fecha = DateTime.Now.AddHours(-1);
+                datos.SetearConsulta("SELECT 1 FROM Usuarios WHERE Email = @Email AND ResetToken = @token AND ResetTokenFecha IS NOT NULL AND ResetTokenFecha >= @fecha");
+                datos.SetearParametros("@Email", email);
+                datos.SetearParametros("@token", token);
+                datos.SetearParametros("@fecha", fecha);
+                datos.EjecutarLectura();
+
+                return datos.Lector.Read();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al verificar token", ex);
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+        public void BorrarToken(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+
+                datos.SetearConsulta("UPDATE Usuarios SET ResetToken = null, ResetTokenFecha = null WHERE Email = @email");
+                datos.SetearParametros("@email", email);
                 datos.EjecutarAccion();
             }
             catch (Exception ex)

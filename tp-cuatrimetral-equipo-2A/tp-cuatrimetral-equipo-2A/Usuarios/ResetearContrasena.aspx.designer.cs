@@ -11,26 +11,35 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
 {
 
 
-    public partial class RecuperarContrasena
+    public partial class ResetearContrasena
     {
 
         /// <summary>
-        /// txtEmailRecuperar control.
+        /// txtNuevaPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtEmailRecuperar;
+        protected global::System.Web.UI.WebControls.TextBox txtNuevaPass;
 
         /// <summary>
-        /// btnRecuperar control.
+        /// TextVerificarPass control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnRecuperar;
+        protected global::System.Web.UI.WebControls.TextBox TextVerificarPass;
+
+        /// <summary>
+        /// btnCambiar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCambiar;
 
         /// <summary>
         /// lblMensaje control.

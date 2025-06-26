@@ -90,6 +90,7 @@
     <Content Include="Usuarios\Login.aspx" />
     <Content Include="Usuarios\RecuperarContrasena.aspx" />
     <Content Include="Usuarios\Registro.aspx" />
+    <Content Include="Usuarios\ResetearContrasena.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +255,13 @@
     </Compile>
     <Compile Include="Usuarios\Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Usuarios\ResetearContrasena.aspx.cs">
+      <DependentUpon>ResetearContrasena.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\ResetearContrasena.aspx.designer.cs">
+      <DependentUpon>ResetearContrasena.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

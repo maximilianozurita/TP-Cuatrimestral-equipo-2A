@@ -108,7 +108,7 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         }
         protected bool PuedeGuardar(Usuario usuarioLogueado)
         {
-            Usuario userFinded = usuarioNeg.FindAllByEmail(txtEmail.Text);
+            Usuario userFinded = usuarioNeg.FindByEmail(txtEmail.Text);
             if (usuarioLogueado != null)
             {
                 // Modificación de datos personales

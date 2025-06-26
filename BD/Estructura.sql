@@ -26,6 +26,8 @@ CREATE TABLE Usuarios (
 	Apellido NVARCHAR(50),
 	Email NVARCHAR(100) UNIQUE NOT NULL,
 	Password NVARCHAR(255) NOT NULL,
+	ResetToken VARCHAR(100) NULL,
+	ResetTokenFecha DATETIME NULL,
 	Telefono NVARCHAR(20),
 	Direccion NVARCHAR(255),
 	Permisos INT NOT NULL,

@@ -14,7 +14,8 @@
             <div class="d-grid">
                 <asp:Button ID="btnRecuperar" runat="server" Text="Enviar mail" CssClass="btn btn-primary" OnClick="btnRecuperar_Click" />
             </div>
-
+            <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" />
+            <asp:Label ID="lblMensajeError" runat="server" ForeColor="Red" />
         </div>
     </div>
 </asp:Content>
