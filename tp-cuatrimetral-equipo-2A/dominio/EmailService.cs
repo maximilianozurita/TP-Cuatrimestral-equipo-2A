@@ -72,5 +72,24 @@ namespace dominio
             SetMail(correoDestino, asunto, cuerpo);
             SendMail();
         }
+        public void EnviarMailBienvenida(string email)
+        {
+            try
+            {
+                string asunto = "¡Bienvenido a Nuestra Plataforma!";
+                string cuerpo = $@"
+                    <p>¡Gracias por registrarte en nuestra plataforma!.</p>
+                    <p>Ahora puedes explorar nuestros productos, realizar compras y aprovechar todas las funcionalidades que ofrecemos.</p>
+                    <p>Si tienes alguna duda o necesitas ayuda, no dudes en contactarnos.</p>
+                    <br />
+                    <p>Saludos,<br />El equipo de soporte</p>";
+                SetMail(email, asunto, cuerpo);
+                SendMail();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error enviando mail de bienvenida: {ex.Message}");
+            }
+        }
     }
 }
