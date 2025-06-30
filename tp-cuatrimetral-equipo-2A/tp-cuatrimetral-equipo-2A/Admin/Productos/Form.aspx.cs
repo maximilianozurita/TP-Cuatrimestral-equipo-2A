@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -87,6 +88,12 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
                 };
 
                 List<Imagen> imagenes = CargarImagenes();
+                if (imagenes.Count == 0)
+                {
+                    lblMensaje.Text = "Se requiere agregar al menos 1 imagen.";
+                    lblMensaje.Visible = true;
+                    return;
+                }
                 producto.Imagenes = imagenes;
 
                 if (Session["producto_id"] != null)
@@ -130,12 +137,13 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
                 HttpPostedFile archivo = Request.Files[i];
                 if (archivo != null && archivo.ContentLength > 0 && archivo.ContentLength < 3932160)
                 {
-                    if (archivo.ContentType == "image/jpeg" || archivo.ContentType == "image/jpg" || archivo.ContentType == "image/png")
+                    string extension = Path.GetExtension(archivo.FileName).ToLower();
+                    string contentType = archivo.ContentType;
+                    if ((extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".webp") &&
+                    (contentType == "image/jpeg" || contentType == "image/jpg" || contentType == "image/png" || contentType == "image/webp"))
                     {
                         string filename = Path.GetRandomFileName();
-                        string extension = Path.GetExtension(archivo.FileName);
                         archivo.SaveAs(Server.MapPath("~/Upload/Products/") + filename + extension);
-
                         Imagen imagen = new Imagen();
                         imagen.ImagenUrl = filename + extension;
                         imagenes.Add(imagen);

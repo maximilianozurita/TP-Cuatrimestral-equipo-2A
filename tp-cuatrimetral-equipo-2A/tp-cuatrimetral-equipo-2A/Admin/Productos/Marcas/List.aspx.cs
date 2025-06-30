@@ -21,11 +21,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos.Marcas
             }
             if (!IsPostBack)
             {
-                ddlEstado.SelectedValue = (EstadoMarca.Activos).ToString();
+                ddlEstado.SelectedValue = ((int)EstadoMarca.Todos).ToString();
                 CargarMarcas();
             }
         }
-
         protected void CargarMarcas()
         {
             var estado = (EstadoMarca)int.Parse(ddlEstado.SelectedValue);

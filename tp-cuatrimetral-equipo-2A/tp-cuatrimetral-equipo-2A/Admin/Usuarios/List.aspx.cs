@@ -24,6 +24,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Usuarios
 
             if (!IsPostBack)
             {
+                ddlEstado.SelectedValue = ((int)EstadoUsuario.Todos).ToString();
                 CargarUsuarios();
             }
         }
