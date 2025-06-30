@@ -6,6 +6,8 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using dominio;
 using negocio;
+using static negocio.CategoriaNegocio;
+using static negocio.MarcaNegocio;
 using static negocio.ProductoNegocio;
 using static negocio.UsuarioNegocio;
 
@@ -24,7 +26,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
             {
                 if (!IsPostBack)
                 {
-                    ddlEstado.SelectedValue = "0";
+                    ddlEstado.SelectedValue = ((int)EstadoProducto.Todos).ToString();
                     CargarListado();
                 }
             }

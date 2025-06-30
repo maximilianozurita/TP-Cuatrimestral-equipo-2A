@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using dominio;
 using negocio;
 using static negocio.CategoriaNegocio;
+using static negocio.ProductoNegocio;
 
 namespace tp_cuatrimetral_equipo_2A.Admin.Productos.Categorias
 {
@@ -21,7 +22,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos.Categorias
             }
             if (!IsPostBack)
             {
-                ddlEstado.SelectedValue = (EstadoCategoria.Activos).ToString();
+                ddlEstado.SelectedValue = ((int)EstadoCategoria.Todos).ToString();
                 CargarCategorias();
             }
         }

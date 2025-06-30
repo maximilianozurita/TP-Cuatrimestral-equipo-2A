@@ -12,8 +12,10 @@ GO
 -- Insertar Marcas
 INSERT INTO Marcas (Nombre) VALUES
 ('Sony'),
-('Apple'),
-('Nike'),
+('Intel'),
+('Jaguar'),
+('Atma'),
+('Gadnit'),
 ('Samsung');
 GO
 
@@ -38,13 +40,31 @@ VALUES
 GO
 
 -- Insertar Productos
-INSERT INTO Productos (Nombre, Descripcion, Categoria_ID, Marca_ID, Precio, Descuento, Destacado)
+INSERT INTO Productos (Nombre, Descripcion, Precio, Marca_ID, Categoria_ID, Destacado, Descuento)
 VALUES
-('Televisor 50"', 'TV LED 50 pulgadas 4K', 1, 1, 350000.00, 10.00, 1),
-('Zapatillas Running', 'Zapatillas deportivas', 2, 3, 85000.00, 5.00, 0),
-('iPhone 14', 'Último modelo de Apple', 1, 2, 900000.00, 15.00, 1),
-('Silla Gamer', 'Silla ergonómica para juegos', 3, 4, 120000.00, 20.00, 1);
-GO
+-- Procesador Intel
+('Intel Core i7 12700K', 'Procesador Intel de 12va generación con 12 núcleos y 20 hilos. Ideal para gaming, diseño 3D y edición de video de alto rendimiento.', 220000,
+(SELECT ID FROM Marcas WHERE Nombre = 'Intel'), (SELECT ID FROM Categorias WHERE Nombre = 'Electrónica'), 1, 10),
+
+-- Zapatillas Jaguar
+('Zapatillas Jaguar Urban Run', 'Zapatillas urbanas deportivas con diseño moderno, suela flexible y tela transpirable. Perfectas para uso diario o entrenamiento.', 35000,
+(SELECT ID FROM Marcas WHERE Nombre = 'Jaguar'), (SELECT ID FROM Categorias WHERE Nombre = 'Ropa'), 1, 15),
+
+-- Aspiradora Atma
+('Aspiradora Atma MaxClean 2000W', 'Aspiradora ciclónica sin bolsa con sistema de filtros HEPA, potencia regulable y diseño compacto.', 58000,
+(SELECT ID FROM Marcas WHERE Nombre = 'Atma'), (SELECT ID FROM Categorias WHERE Nombre = 'Hogar'), 0, 0),
+
+-- Silla Gadnit
+('Silla Gamer Gadnit Pro X500', 'Silla ergonómica con respaldo reclinable, soporte lumbar, y estructura robusta para sesiones largas frente al escritorio.', 120000,
+(SELECT ID FROM Marcas WHERE Nombre = 'Gadnit'), (SELECT ID FROM Categorias WHERE Nombre = 'Hogar'), 1, 20),
+
+-- Consola PlayStation 5 Sony
+('Sony PlayStation 5 1TB', 'Consola de nueva generación con SSD ultra rápido, gráficos 4K, y control DualSense con respuesta háptica avanzada.', 750000,
+(SELECT ID FROM Marcas WHERE Nombre = 'Sony'), (SELECT ID FROM Categorias WHERE Nombre = 'Electrónica'), 1, 5),
+
+--TV
+('Smart TV Samsung 55" UHD 4K', 'Televisor inteligente de 55 pulgadas con resolución UHD 4K, tecnología Crystal Display, HDR10+, control por voz y acceso a apps como Netflix, YouTube y Disney+.', 1000000,
+(SELECT ID FROM Marcas WHERE Nombre = 'Samsung'), (SELECT ID FROM Categorias WHERE Nombre = 'Electrónica'), 1, 5);
 
 -- Insertar Ventas
 INSERT INTO Ventas (Usuario_id, SumaTotal, FechaVenta)
@@ -102,14 +122,31 @@ VALUES
 -- Insertar Imágenes
 INSERT INTO Imagenes (URI, Producto_ID)
 VALUES
-('ImagenPrueba1.png', 1),
-('ImagenPrueba2.jpeg', 2),
-('ImagenPrueba3.jpg', 3),
-('ImagenPrueba3.jpg', 4),
-('ImagenPrueba4.jpg', 1),
-('ImagenPrueba5.jpg', 2),
-('ImagenPrueba1.jpg', 3),
-('ImagenPrueba2.jpg', 4)
+('Procesador1.webp', 1),
+('Procesador2.webp', 1),
+('Procesador3.jpg', 1),
+('Zapatilla1.webp', 2),
+('Zapatilla2.webp', 2),
+('Zapatilla3.webp', 2),
+('Zapatilla4.webp', 2),
+('Aspiradora1.webp', 3),
+('Aspiradora2.webp', 3),
+('Aspiradora3.webp', 3),
+('Silla1.webp', 4),
+('Silla2.webp', 4),
+('Silla3.webp', 4),
+('Silla4.webp', 4),
+('Silla5.webp', 4),
+('Silla6.webp', 4),
+('ps51.jpeg', 5),
+('ps52.webp', 5),
+('ps53.webp', 5),
+('ps54.webp', 5),
+('ps55.webp', 5),
+('TV1.webp', 6),
+('TV2.webp', 6),
+('TV3.webp', 6),
+('TV4.webp', 6);
 GO
 
 -- Insertar Favoritos

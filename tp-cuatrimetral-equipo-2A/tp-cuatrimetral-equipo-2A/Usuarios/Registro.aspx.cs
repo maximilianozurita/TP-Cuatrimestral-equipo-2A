@@ -94,6 +94,8 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                         user.Password = txtPassword.Text;
                         usuarioNeg.Agregar(user, Permisos.Cliente);
                         Response.Redirect("/Usuarios/Login.aspx", false);
+                        EmailService emailService = new EmailService();
+                        emailService.EnviarMailBienvenida(user.Email);
                     }
                 } else
                 {
