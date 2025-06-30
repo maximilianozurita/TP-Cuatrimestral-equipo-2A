@@ -72,5 +72,6 @@ namespace dominio
             SetMail(correoDestino, asunto, cuerpo);
             SendMail();
         }
+
     }
 }

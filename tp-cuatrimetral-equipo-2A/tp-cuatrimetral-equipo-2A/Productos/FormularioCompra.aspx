@@ -8,35 +8,77 @@
 
         <asp:Panel ID="pnlResumen" runat="server" Visible="true">
             <div class="card p-4">
+
                 <h4>Resumen del Pedido</h4>
 
-                <asp:Repeater ID="rptResumenCompra" runat="server">
-                    <ItemTemplate>
-                        <div class="d-flex justify-content-between mb-2 border-bottom pb-1">
-                            <span><%# Eval("Producto.Nombre") %></span>
-                            <span>Cantidad: <%# Eval("Cantidad") %></span>
-                            <span>Precio Unitario: <%# Eval("Producto.Precio","{0:C}") %></span>
-                        </div>
-                    </ItemTemplate>
-                </asp:Repeater>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <asp:Repeater ID="rptResumenCompra" runat="server">
+                            <ItemTemplate>
+                                <tr>
+                                    <td><%# Eval("Producto.Nombre") %></td>
+                                    <td><%# Eval("Cantidad") %></td>
+                                    <td><%# Eval("Producto.PrecioConDescuento", "{0:C}") %></td>
+                                    <td><%# (Convert.ToDecimal(Eval("Cantidad")) * 
+                                                Convert.ToDecimal(Eval("Producto.PrecioConDescuento"))).ToString("C") %></td>
+                                </tr>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                            <td>
+                                <strong>
+                                    <asp:Label runat="server" Text="0" ID="lblPrecioTotal" /></strong>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
 
-                <div class="d-flex justify-content-between mt-3">
-                    <strong>Total: <asp:label runat="server" Text="0" ID="lblPrecioTotal"/></strong>
-                </div>
+                <asp:Panel ID="pnlFormaPago" runat="server" Visible="true">
+                    <div class="form-check mt-4 mb-2">
+                        <asp:RadioButton ID="RadioButton1" runat="server" GroupName="FormaPago"
+                            CssClass="form-check-input"
+                            Checked="true" />
+                        <asp:Label runat="server" CssClass="form-check-label"
+                            for="RadioButton1">Transferencia Bancaria</asp:Label>
+                    </div>
+                    <div class="form-check mb-4">
+                        <asp:RadioButton ID="RadioButton2" runat="server" GroupName="FormaPago"
+                            CssClass="form-check-input" />
+                        <asp:Label runat="server"
+                            CssClass="form-check-label" for="RadioButton2">Mercadopago</asp:Label>
+                    </div>
+                </asp:Panel>
 
                 <asp:Button ID="btnConfirmarCompra" runat="server" CssClass="btn btn-success mt-2" Text="Confirmar y Pagar"
                     OnClick="btnConfirmarCompra_Click" />
+
                 <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-outline-danger mt-2" Text="Cancelar"
                     OnClick="btnVolver_Click" />
             </div>
+        </asp:Panel>
+
+        <asp:Panel runat="server" ID="pnlEnvio"></asp:Panel>
+        <asp:Panel runat="server" ID="PnlMercadopago" Visible="false"></asp:Panel>
+        <asp:Panel runat="server" ID="pnlTransferencia" Visible="false">
         </asp:Panel>
 
         <asp:Panel ID="pnlConfirmado" runat="server" Visible="false">
             <div class="alert alert-success text-center">
                 <h4>¡Gracias por tu compra!</h4>
                 <p>Tu pedido fue procesado con éxito.</p>
-                <asp:Button ID="Button1" runat="server" 
-                    CssClass="btn  btn-success mt-2" 
+                <asp:Button ID="Button1" runat="server"
+                    CssClass="btn  btn-success mt-2"
                     Text="Volver al inicio"
                     OnClick="btnVolver_Click" />
             </div>

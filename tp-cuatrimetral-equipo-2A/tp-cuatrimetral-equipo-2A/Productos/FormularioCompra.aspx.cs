@@ -1,8 +1,14 @@
 ﻿using dominio;
+using MercadoPago.Client.Payment;
+using MercadoPago.Client.Preference;
+using MercadoPago.Config;
+using MercadoPago.Resource.Payment;
+using MercadoPago.Resource.Preference;
 using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -26,6 +32,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                     if (carrito != null)
                     {
                         Session.Add("Carrito", carrito);
+                        lblPrecioTotal.Text = carrito.SumaTotal.ToString("C2");
                         rptResumenCompra.DataSource = carrito.Items;
                         rptResumenCompra.DataBind();
                     }
@@ -46,11 +53,58 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         public void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
+            MercadoPagoConfig.AccessToken = UsuarioNegocio.TokkenMercadopago(1) ;
+            var lista = new List<PreferenceItemRequest>();
+            carrito = (dominio.Carrito)Session["Carrito"];
+            carrito.Items.ForEach(item =>
+            {
+                lista.Add(new PreferenceItemRequest
+                {
+                    Title = item.Producto.Nombre,
+                    Quantity = item.Cantidad,
+                    CurrencyId = "ARS",
+                    UnitPrice = (Decimal)item.Producto.PrecioConDescuento
+                });
+            });
+            Venta venta = new Venta
+            {
+                SumaTotal = carrito.SumaTotal,
+                FechaVenta = DateTime.Now,
+                Usuario = (Usuario)Session["Usuario"],
+                VentaProducto = carrito.Items.Select(item => new VentaProducto
+                {
+                    Producto = item.Producto,
+                    Cantidad = item.Cantidad,
+                    PrecioUnitario = (decimal)item.Producto.PrecioConDescuento
+                }).ToList()
+            };
+            VentaNegocio ventaNegocio = new VentaNegocio();
+            int idVenta = ventaNegocio.CrearVenta(venta);
+
+            var request = new PreferenceRequest
+            {
+                Items = lista,
+                BackUrls = new PreferenceBackUrlsRequest
+                {
+                    Success = "https://localhost:44324/Mercadopago/Aprobado.aspx",
+                    Failure = "https://localhost:44324/Mercadopago/Rechazado.aspx",
+                    Pending = "https://localhost:44324/Mercadopago/Pendiente.aspx"
+                },
+                AutoReturn = "approved",
+                ExternalReference = idVenta.ToString()
+
+            };
+            
+            var client = new PreferenceClient();
+            Preference preference = client.CreateAsync(request).Result;
+            Response.Redirect($"{preference.InitPoint}");
+
 
         }
         public void btnVolver_Click(object sender, EventArgs e)
         {
             Response.Redirect("../Default.aspx");
         }
+
     }
 }

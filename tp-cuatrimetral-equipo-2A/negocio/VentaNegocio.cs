@@ -182,5 +182,26 @@ namespace negocio
                 datos.CerrarConexion();
             }
         }
+
+        public int CrearVenta(Venta venta)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("INSERT INTO Ventas (Usuario_ID, SumaTotal, FechaVenta) OUTPUT INSERTED.ID VALUES (@usuarioId, @sumaTotal, @fechaVenta)");
+                datos.SetearParametros("@usuarioId", venta.Usuario.ID);
+                datos.SetearParametros("@sumaTotal", venta.SumaTotal);
+                datos.SetearParametros("@fechaVenta", venta.FechaVenta);
+                return datos.EjecutarAccionAndReturnId();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
     }
 }

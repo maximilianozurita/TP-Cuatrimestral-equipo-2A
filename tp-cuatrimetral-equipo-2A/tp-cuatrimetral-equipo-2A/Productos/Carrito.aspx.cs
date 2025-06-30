@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
+
 namespace tp_cuatrimetral_equipo_2A.Productos
 {
     public partial class Carrito : System.Web.UI.Page
@@ -178,6 +179,12 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 rptItemCarrito.DataSource = carrito.Items;
                 rptItemCarrito.DataBind();
             }
+        }
+
+        public void btnFinalizarCompra_Click(object sender, EventArgs e)
+        {
+            Session.Add("Carrito", carrito);
+            Response.Redirect("./FormularioCompra.aspx", false);
         }
 
     }

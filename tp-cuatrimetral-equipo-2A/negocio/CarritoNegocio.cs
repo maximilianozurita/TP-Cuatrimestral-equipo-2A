@@ -44,6 +44,7 @@ namespace negocio
                 }
                 if (lista.Count > 0)
                 {
+                    carrito.Total();
                     carrito.Items = lista;
                     carrito.UsuarioID = UsuarioId;
                 }

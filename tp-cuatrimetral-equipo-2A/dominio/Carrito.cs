@@ -91,9 +91,9 @@ namespace dominio
             this.SumaTotal = 0;
             foreach (ItemCarrito item in Items)
             {
-                if (!item.flag_Eliminado && !item.Cancelado)
+                if (!item.flag_Eliminado || !item.Cancelado)
                 {
-                    this.SumaTotal += item.PrecioTotal * item.Cantidad;
+                    this.SumaTotal += item.PrecioTotal;
                 }
             }
         }
