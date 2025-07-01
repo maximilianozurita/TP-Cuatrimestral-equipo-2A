@@ -47,6 +47,7 @@ CREATE TABLE Productos (
 	FechaBaja DATETIME NULL,
 	CONSTRAINT FK_Productos_Categorias FOREIGN KEY (Categoria_ID) REFERENCES Categorias(ID),
 	CONSTRAINT FK_Productos_Marcas FOREIGN KEY (Marca_ID) REFERENCES Marcas(ID)
+
 );
 go
 CREATE TABLE Ventas (
@@ -54,6 +55,7 @@ CREATE TABLE Ventas (
 	Usuario_ID INT,
 	SumaTotal DECIMAL(18, 2),
 	FechaVenta DATETIME,
+	Confirmado Bit Default 0,
 	CONSTRAINT FK_Ventas_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
 );
 go
@@ -101,5 +103,13 @@ CREATE TABLE Envios (
 	Estado_envio_ID INT,
 	CONSTRAINT FK_Envios_Ventas FOREIGN KEY (Venta_ID) REFERENCES Ventas(ID),
 	CONSTRAINT FK_Envios_EstadoEnvio FOREIGN KEY (Estado_envio_ID) REFERENCES Estado_envio(ID)
+);
+GO
+CREATE TABLE MercadoToken(
+	Token NVARCHAR(255) PRIMARY KEY,
+	Usuario_ID INT,
+	Activo bit DEFAULT 1,
+	CONSTRAINT FK_Token_Usuario FOREIGN key (Usuario_ID) REFERENCES Usuarios(ID)
+
 );
 GO

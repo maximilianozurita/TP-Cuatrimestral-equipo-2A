@@ -34,3 +34,4 @@ select i.ID,i.Usuario_ID,Producto_ID,FechaAgregado,Cantidad,
                     inner join Productos as p on p.ID = i.Producto_ID
                     where Usuario_ID = 2 and Cancelado = 0
 select * from Productos
+
