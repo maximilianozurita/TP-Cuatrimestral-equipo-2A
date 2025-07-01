@@ -46,14 +46,14 @@
 
                 <asp:Panel ID="pnlFormaPago" runat="server" Visible="true">
                     <div class="form-check mt-4 mb-2">
-                        <asp:RadioButton ID="RadioButton1" runat="server" GroupName="FormaPago"
+                        <asp:RadioButton ID="RadioButtonTransferencia" runat="server" GroupName="FormaPago"
                             CssClass="form-check-input"
                             Checked="true" />
                         <asp:Label runat="server" CssClass="form-check-label"
                             for="RadioButton1">Transferencia Bancaria</asp:Label>
                     </div>
                     <div class="form-check mb-4">
-                        <asp:RadioButton ID="RadioButton2" runat="server" GroupName="FormaPago"
+                        <asp:RadioButton ID="RadioButtonMercadopago" runat="server" GroupName="FormaPago"
                             CssClass="form-check-input" />
                         <asp:Label runat="server"
                             CssClass="form-check-label" for="RadioButton2">Mercadopago</asp:Label>
@@ -64,22 +64,6 @@
                     OnClick="btnConfirmarCompra_Click" />
 
                 <asp:Button ID="btnCancelar" runat="server" CssClass="btn btn-outline-danger mt-2" Text="Cancelar"
-                    OnClick="btnVolver_Click" />
-            </div>
-        </asp:Panel>
-
-        <asp:Panel runat="server" ID="pnlEnvio"></asp:Panel>
-        <asp:Panel runat="server" ID="PnlMercadopago" Visible="false"></asp:Panel>
-        <asp:Panel runat="server" ID="pnlTransferencia" Visible="false">
-        </asp:Panel>
-
-        <asp:Panel ID="pnlConfirmado" runat="server" Visible="false">
-            <div class="alert alert-success text-center">
-                <h4>¡Gracias por tu compra!</h4>
-                <p>Tu pedido fue procesado con éxito.</p>
-                <asp:Button ID="Button1" runat="server"
-                    CssClass="btn  btn-success mt-2"
-                    Text="Volver al inicio"
                     OnClick="btnVolver_Click" />
             </div>
         </asp:Panel>

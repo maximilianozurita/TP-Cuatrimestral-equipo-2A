@@ -53,51 +53,59 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         public void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
-            MercadoPagoConfig.AccessToken = UsuarioNegocio.TokkenMercadopago(1) ;
-            var lista = new List<PreferenceItemRequest>();
-            carrito = (dominio.Carrito)Session["Carrito"];
-            carrito.Items.ForEach(item =>
+            if (RadioButtonMercadopago.Checked)
             {
-                lista.Add(new PreferenceItemRequest
+
+                MercadoPagoConfig.AccessToken = PagoNegocio.ObtenerTokenMercadopago();
+                var lista = new List<PreferenceItemRequest>();
+                carrito = (dominio.Carrito)Session["Carrito"];
+                carrito.Items.ForEach(item =>
                 {
-                    Title = item.Producto.Nombre,
-                    Quantity = item.Cantidad,
-                    CurrencyId = "ARS",
-                    UnitPrice = (Decimal)item.Producto.PrecioConDescuento
+                    lista.Add(new PreferenceItemRequest
+                    {
+                        Title = item.Producto.Nombre,
+                        Quantity = item.Cantidad,
+                        CurrencyId = "ARS",
+                        UnitPrice = (Decimal)item.Producto.PrecioConDescuento
+                    });
                 });
-            });
-            Venta venta = new Venta
-            {
-                SumaTotal = carrito.SumaTotal,
-                FechaVenta = DateTime.Now,
-                Usuario = (Usuario)Session["Usuario"],
-                VentaProducto = carrito.Items.Select(item => new VentaProducto
+                Venta venta = new Venta
                 {
-                    Producto = item.Producto,
-                    Cantidad = item.Cantidad,
-                    PrecioUnitario = (decimal)item.Producto.PrecioConDescuento
-                }).ToList()
-            };
-            VentaNegocio ventaNegocio = new VentaNegocio();
-            int idVenta = ventaNegocio.CrearVenta(venta);
+                    SumaTotal = carrito.SumaTotal,
+                    FechaVenta = DateTime.Now,
+                    Usuario = (Usuario)Session["Usuario"],
+                    VentaProducto = carrito.Items.Select(item => new VentaProducto
+                    {
+                        Producto = item.Producto,
+                        Cantidad = item.Cantidad,
+                        PrecioUnitario = (decimal)item.Producto.PrecioConDescuento
+                    }).ToList()
+                };
+                VentaNegocio ventaNegocio = new VentaNegocio();
+                int idVenta = ventaNegocio.CrearVenta(venta);
 
-            var request = new PreferenceRequest
-            {
-                Items = lista,
-                BackUrls = new PreferenceBackUrlsRequest
+                var request = new PreferenceRequest
                 {
-                    Success = "https://localhost:44324/Mercadopago/Aprobado.aspx",
-                    Failure = "https://localhost:44324/Mercadopago/Rechazado.aspx",
-                    Pending = "https://localhost:44324/Mercadopago/Pendiente.aspx"
-                },
-                AutoReturn = "approved",
-                ExternalReference = idVenta.ToString()
+                    Items = lista,
+                    BackUrls = new PreferenceBackUrlsRequest
+                    {
+                        Success = "https://localhost:44324/Mercadopago/Aprobado.aspx",
+                        Failure = "https://localhost:44324/Mercadopago/Rechazado.aspx",
+                        Pending = "https://localhost:44324/Mercadopago/Pendiente.aspx"
+                    },
+                    AutoReturn = "approved",
+                    ExternalReference = idVenta.ToString()
 
-            };
-            
-            var client = new PreferenceClient();
-            Preference preference = client.CreateAsync(request).Result;
-            Response.Redirect($"{preference.InitPoint}");
+                };
+
+                var client = new PreferenceClient();
+                Preference preference = client.CreateAsync(request).Result;
+                Response.Redirect($"{preference.InitPoint}");
+            }
+            else
+            {
+
+            }
 
 
         }
