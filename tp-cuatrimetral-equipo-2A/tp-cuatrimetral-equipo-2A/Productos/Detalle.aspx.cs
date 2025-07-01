@@ -78,6 +78,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 Usuario usuarioId = (Usuario)Session["Usuario"];
                 if (usuarioId != null)
                 {
+                    carrito.UsuarioID = usuarioId.ID;
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
                     carritoNegocio.GuardarCarritoEnBd(carrito);
                 }
