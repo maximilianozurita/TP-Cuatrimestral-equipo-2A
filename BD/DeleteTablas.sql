@@ -22,6 +22,8 @@ DROP TABLE Marcas;
 go
 DROP TABLE Categorias;
 go
+DROP TABLE MediosDePago;
+go
 use master
 go
 drop database eCommerce
