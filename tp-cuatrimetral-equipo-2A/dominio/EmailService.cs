@@ -72,9 +72,6 @@ namespace dominio
             SetMail(correoDestino, asunto, cuerpo);
             SendMail();
         }
-<<<<<<< HEAD
-
-=======
         public void EnviarMailBienvenida(string email)
         {
             try
@@ -94,6 +91,5 @@ namespace dominio
                 System.Diagnostics.Debug.WriteLine($"Error enviando mail de bienvenida: {ex.Message}");
             }
         }
->>>>>>> 613dd9628ca5c2bbe51c700ab870a507d3bdb3de
     }
 }
