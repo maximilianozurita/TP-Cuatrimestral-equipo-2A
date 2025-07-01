@@ -11,7 +11,6 @@ Configurar connectionString con la cadena de conexión correspondiente
        providerName="System.Data.SqlClient" />
 </connectionStrings>
 ```
-
 ## 2. Definir en el mismo archivo la cadena para configurar envios de mails (appSetting) con sus keys correspondientes.
 ```
 	<appSettings>
@@ -21,4 +20,12 @@ Configurar connectionString con la cadena de conexión correspondiente
 		<add key="SMTP_Password" value="TUPASSWORD" />
 		<add key="SMTP_FromEmail" value="FROMEXAMPLE@example.com" />
 	</appSettings>
+```
+## 2. Definir config para poder usar extension webp.
+```
+	<system.webServer>
+		<staticContent>
+			<mimeMap fileExtension=".webp" mimeType="image/webp" />
+		</staticContent>
+	</system.webServer>
 ```
