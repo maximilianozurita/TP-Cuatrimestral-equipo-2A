@@ -105,11 +105,12 @@ CREATE TABLE Envios (
 	CONSTRAINT FK_Envios_EstadoEnvio FOREIGN KEY (Estado_envio_ID) REFERENCES Estado_envio(ID)
 );
 GO
-CREATE TABLE MercadoToken(
-	Token NVARCHAR(255) PRIMARY KEY,
-	Usuario_ID INT,
-	Activo bit DEFAULT 1,
+CREATE TABLE MediosDePago(
+	ID INT PRIMARY KEY IDENTITY (1,1),
+	MercadoToken NVARCHAR(255),
+	Usuario_ID INT UNIQUE,
+	CBU NVARCHAR(255),
+	Alias NVARCHAR(255),
 	CONSTRAINT FK_Token_Usuario FOREIGN key (Usuario_ID) REFERENCES Usuarios(ID)
-
 );
 GO
