@@ -125,6 +125,12 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         protected void comprarClick(object sender, EventArgs e)
         {
+            Usuario usuario = (Usuario)Session["Usuario"];
+            if(usuario == null)
+            {
+                Response.Redirect("../Usuarios/Login.aspx", false);
+                return;
+            }
             Button button = (Button)sender;
             int id = int.Parse(button.CommandArgument);
             Producto producto = productoNegocio.ProductoPorId(id);
