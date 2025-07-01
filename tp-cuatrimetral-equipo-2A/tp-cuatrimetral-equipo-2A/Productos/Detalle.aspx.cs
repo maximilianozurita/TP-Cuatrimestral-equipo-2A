@@ -55,7 +55,14 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             Usuario usuario = (Usuario)Session["Usuario"];
             if (usuario == null)
             {
-                Response.Redirect("../Usuarios/Login.aspx", false);
+                string script = "showToastLogin()";
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    this.GetType(),
+                    "toastLoginDetail",
+                    script,
+                    true
+                );
                 return;
             }
             Button button = (Button)sender;

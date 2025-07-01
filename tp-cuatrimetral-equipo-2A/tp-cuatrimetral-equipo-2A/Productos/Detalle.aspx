@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPage.Master" AutoEventWireup="true" CodeBehind="Detalle.aspx.cs" Inherits="tp_cuatrimetral_equipo_2A.Productos.Detalle" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -9,13 +10,15 @@
                 <div id="carouselProducto" class="carousel slide shadow-sm" data-bs-ride="carousel">
                     <div class="carousel-inner rounded">
                         <% bool isFirstImage = true;
-                            foreach (dominio.Imagen imagen in producto.Imagenes) {
+                            foreach (dominio.Imagen imagen in producto.Imagenes)
+                            {
                                 string clase = isFirstImage ? "carousel-item active" : "carousel-item";
                         %>
-                            <div class="<%= clase %>">
-                                <img src="/Upload/Products/<%= imagen.ImagenUrl %>" class="d-block w-100" alt="Imagen del producto">
-                            </div>
-                        <% isFirstImage = false; } %>
+                        <div class="<%= clase %>">
+                            <img src="/Upload/Products/<%= imagen.ImagenUrl %>" class="d-block w-100" alt="Imagen del producto">
+                        </div>
+                        <% isFirstImage = false;
+                        } %>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -34,14 +37,17 @@
                 <p class="mb-3"><strong>Categoría:</strong> <%= producto.Categoria?.Nombre %></p>
 
                 <div class="mb-4">
-                    <% if (producto.Descuento > 0) { %>
-                        <div>
-                            <span class="producto-precio-original me-2">$<%= producto.Precio.ToString("N2") %></span>
-                            <span class="producto-precio-descuento">$<%= producto.PrecioConDescuento.ToString("N2") %></span>
-                        </div>
-                        <span class="badge bg-success mt-1">Descuento <%= producto.Descuento %>%</span>
-                    <% } else { %>
-                        <div class="producto-precio-descuento">$<%= producto.Precio.ToString("N2") %></div>
+                    <% if (producto.Descuento > 0)
+                        { %>
+                    <div>
+                        <span class="producto-precio-original me-2">$<%= producto.Precio.ToString("N2") %></span>
+                        <span class="producto-precio-descuento">$<%= producto.PrecioConDescuento.ToString("N2") %></span>
+                    </div>
+                    <span class="badge bg-success mt-1">Descuento <%= producto.Descuento %>%</span>
+                    <% }
+                    else
+                    { %>
+                    <div class="producto-precio-descuento">$<%= producto.Precio.ToString("N2") %></div>
                     <% } %>
                 </div>
 
@@ -57,5 +63,24 @@
             </div>
         </div>
     </div>
+    <asp:ScriptManager ID="ScriptToast" runat="server" />
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toastLoginDetail" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Inicie sesión o regístrese para realizar la compra.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function showToastLogin() {
+            var toastElement = document.getElementById('toastLoginDetail');
+            var bsToast = new bootstrap.Toast(toastElement);
+            bsToast.show();
+        }
+    </script>
 </asp:Content>
 

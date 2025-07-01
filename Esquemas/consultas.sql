@@ -33,6 +33,6 @@ select i.ID,i.Usuario_ID,Producto_ID,FechaAgregado,Cantidad,
                     from ItemCarrito as i 
                     inner join Productos as p on p.ID = i.Producto_ID
                     where Usuario_ID = 2 and Cancelado = 0
-select * from Productos
-delete from Usuarios where [Password] like '1234'
+select * from imagenes
+
 

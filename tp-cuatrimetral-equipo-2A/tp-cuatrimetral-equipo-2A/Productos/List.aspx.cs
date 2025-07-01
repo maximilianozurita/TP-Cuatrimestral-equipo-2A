@@ -90,13 +90,6 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             }
         }
 
-        protected string GetPrimeraImagen(object imagenesObj)
-        {
-            List<Imagen> lista = imagenesObj as List<Imagen>;
-            if (lista != null && lista.Count > 0)
-                return lista[0].ImagenUrl;
-            return "../ImagenDefault.jpg";
-        }
 
         protected void carritoClick(object sender, EventArgs e)
         {
