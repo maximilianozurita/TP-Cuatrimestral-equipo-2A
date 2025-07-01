@@ -72,9 +72,6 @@ namespace dominio
             SetMail(correoDestino, asunto, cuerpo);
             SendMail();
         }
-<<<<<<< HEAD
-
-=======
         public void EnviarMailBienvenida(string email)
         {
             try
@@ -94,6 +91,28 @@ namespace dominio
                 System.Diagnostics.Debug.WriteLine($"Error enviando mail de bienvenida: {ex.Message}");
             }
         }
->>>>>>> 613dd9628ca5c2bbe51c700ab870a507d3bdb3de
+
+        public void EnviarMailCompra(string email, string cbu, string monto, string orden)
+        {
+            try
+            {
+                string asunto = "¡Tu compra ha sido confirmada! Completa tu pago.";
+                string cuerpo = $@"
+                    <p>¡Hola!</p>
+                    <p>Gracias por tu compra en nuestra plataforma. Tu orden <strong>#{orden}</strong> ha sido confirmada.</p>
+                    <p>Para finalizar tu compra, por favor, realiza una transferencia bancaria por el monto de <strong>${monto}</strong> a los siguientes datos:</p>
+                    <p><strong>CBU:</strong> {cbu}</p>
+                    <p>Una vez que hayas realizado la transferencia, ¡listo! Te enviaremos un correo de confirmación de pago y procederemos con tu pedido.</p>
+                    <p>Si tienes alguna duda o necesitas ayuda, no dudes en contactarnos. Estamos aquí para asistirte.</p>
+                    <br />
+                    <p>Saludos cordiales,<br />El equipo de soporte</p>";
+                SetMail(email, asunto, cuerpo);
+                SendMail();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error enviando mail de compra: {ex.Message}");
+            }
+        }
     }
 }

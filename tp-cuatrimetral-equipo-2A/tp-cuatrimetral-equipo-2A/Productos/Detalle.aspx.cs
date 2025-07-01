@@ -15,8 +15,6 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         public dominio.Carrito carrito = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
             try
             {
                 int id = int.Parse(Request.QueryString["id"]);
@@ -54,15 +52,21 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         protected void button_aceptar_Click(object sender, EventArgs e)
         {
-            try
+            Usuario usuario = (Usuario)Session["Usuario"];
+            if (usuario == null)
             {
-                Response.Redirect("list.aspx", false);
+                Response.Redirect("../Usuarios/Login.aspx", false);
+                return;
             }
-            catch (Exception ex)
-            {
-                Session.Add("error", ex.Message);
-                Response.Redirect("/Error.aspx", false);
-            }
+            Button button = (Button)sender;
+            int id = int.Parse(button.CommandArgument);
+            ProductoNegocio productoNegocio = new ProductoNegocio();
+            Producto producto = productoNegocio.ProductoPorId(id);
+            carrito = new dominio.Carrito();
+            carrito.AgregarProducto(producto, 1);
+            carrito.CompraUnitaria = true;
+            Session.Add("Carrito", carrito);
+            Response.Redirect("./FormularioCompra.aspx", false);
         }
 
         protected void button_agregar_click(object sender, EventArgs e)
@@ -77,8 +81,6 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                     CarritoNegocio carritoNegocio = new CarritoNegocio();
                     carritoNegocio.GuardarCarritoEnBd(carrito);
                 }
-
-
             }
             catch (Exception ex)
             {
