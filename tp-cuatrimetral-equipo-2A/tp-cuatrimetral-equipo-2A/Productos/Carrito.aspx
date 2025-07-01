@@ -52,7 +52,7 @@
 
                             <div style="width: 100px;">
                                 <img src='/Upload/Products/<%# Eval("Producto.Imagenes[0].ImagenUrl") %>'
-                                    class="img-fluid rounded" style="object-fit: cover; height: 80px; width: 100%;">
+                                    class="img-fluid rounded" style="object-fit: contain; height: 80px; width: 100px;">
                             </div>
 
                             <div class="flex-grow-1">

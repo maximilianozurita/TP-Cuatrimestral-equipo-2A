@@ -67,6 +67,10 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         {
             try
             {
+                if (!Validar())
+                {
+                    return;
+                }
                 Producto producto = new Producto();
                 ProductoNegocio productoNeg = new ProductoNegocio();
 
@@ -204,6 +208,48 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Productos
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Admin/Productos/List.aspx");
+        }
+        private bool Validar()
+        {
+            string mensajeError = "";
+
+            if (string.IsNullOrWhiteSpace(txtNombre.Text) || txtNombre.Text.Length < 3)
+            {
+                mensajeError += "El nombre es obligatorio y debe tener al menos 3 caracteres.<br/>";
+            }
+
+            if (string.IsNullOrWhiteSpace(txtDescripcion.Text) || txtDescripcion.Text.Length < 10)
+            {
+                mensajeError += "La descripción es obligatoria y debe tener al menos 10 caracteres.<br/>";
+            }
+
+            if (string.IsNullOrWhiteSpace(txtPrecio.Text) || !decimal.TryParse(txtPrecio.Text, out decimal precio) || precio <= 0)
+            {
+                mensajeError += "El precio es obligatorio y debe ser mayor a 0.<br/>";
+            }
+
+            if (string.IsNullOrWhiteSpace(txtDescuento.Text) || !int.TryParse(txtDescuento.Text, out int descuento) || descuento < 0 || descuento > 100)
+            {
+                mensajeError += "El descuento debe ser un número entre 0 y 100.<br/>";
+            }
+
+            if (string.IsNullOrEmpty(ddlCategoria.SelectedValue))
+            {
+                mensajeError += "Debe seleccionar una categoría.<br/>";
+            }
+
+            if (string.IsNullOrEmpty(ddlMarca.SelectedValue))
+            {
+                mensajeError += "Debe seleccionar una marca.<br/>";
+            }
+            if (!string.IsNullOrEmpty(mensajeError))
+            {
+                lblMensaje.Text = mensajeError;
+                lblMensaje.CssClass = "text-danger";
+                lblMensaje.Visible = true;
+                return false;
+            }
+            return true;
         }
     }
 }
