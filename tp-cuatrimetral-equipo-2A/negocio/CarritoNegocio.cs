@@ -52,6 +52,7 @@ namespace negocio
                 {
                     carrito = null;
                 }
+                carrito.Total();
                 return carrito;
             }
             catch (Exception ex)

@@ -20,6 +20,8 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
         {
             Usuario usuario;
             UsuarioNegocio usuarioNeg = new UsuarioNegocio();
+            Carrito carrito;
+            CarritoNegocio carritoNegocio = new CarritoNegocio();
 
             try
             {
@@ -32,7 +34,24 @@ namespace tp_cuatrimetral_equipo_2A.Usuarios
                     {
                         if (usuario.TienePermiso(Permisos.Cliente))
                         {
-                            Response.Redirect("/Default.aspx", false);
+                            carrito = Session["carrito"] as Carrito;
+                            if (carrito != null && carrito.Items.Count > 0)
+                            {
+                                Carrito carritoBd = carritoNegocio.CarritoPorUsuarioID(usuario.ID);
+                                if(carritoBd == null || carritoBd.Items.Count == 0)
+                                {
+                                    carrito.UsuarioID = usuario.ID;
+                                    carritoNegocio.GuardarCarritoEnBd(carrito);
+                                }
+                                else
+                                {
+                                    carritoBd.UnificarCarritos(carrito);
+                                    carritoNegocio.GuardarCarritoEnBd(carritoBd);
+                                }
+                                Response.Redirect("/Productos/Carrito.aspx", false);
+                            }
+                            else
+                                Response.Redirect("/Default.aspx", false);
                         }
                         else
                         {

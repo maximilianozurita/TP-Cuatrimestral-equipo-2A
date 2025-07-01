@@ -86,6 +86,18 @@ namespace dominio
             }
             CalcularSumaTotal();
         }
+
+        public void UnificarCarritos(Carrito otroCarrito)
+        {
+            foreach (ItemCarrito item in otroCarrito.Items)
+            {
+                if (!item.flag_Eliminado && !item.Cancelado)
+                {
+                    this.AgregarProducto(item.Producto, item.Cantidad);
+                }
+            }
+            CalcularSumaTotal();
+        }
         private void CalcularSumaTotal()
         {
             this.SumaTotal = 0;

@@ -16,9 +16,10 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         protected void Page_Load(object sender, EventArgs e)
         {
             carrito = (dominio.Carrito)Session["Carrito"];
+            Usuario usuario = (Usuario)Session["Usuario"];
             if (!IsPostBack)
             {
-                Usuario usuario = (Usuario)Session["Usuario"];
+                
                 if (carrito is null && usuario is null)
                 {
                     carrito = new dominio.Carrito();
@@ -46,6 +47,14 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                     rptItemCarrito.DataBind();
                 }
                 CargarFiltros();
+            }
+            else
+            {
+                if (carrito != null && carrito.Items.Count > 0 && usuario==null)
+                {
+                    rptItemCarrito.DataSource = carrito.Items;
+                    rptItemCarrito.DataBind();
+                }
             }
 
         }
@@ -183,6 +192,19 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         public void btnFinalizarCompra_Click(object sender, EventArgs e)
         {
+            Usuario usuario = (Usuario)Session["Usuario"];
+            if (usuario == null)
+            {
+                string script = "showToastLogin()";
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    this.GetType(),
+                    "toastLoginCart",
+                    script,
+                    true
+                );
+                return;
+            }
             Session.Add("Carrito", carrito);
             Response.Redirect("./FormularioCompra.aspx", false);
         }

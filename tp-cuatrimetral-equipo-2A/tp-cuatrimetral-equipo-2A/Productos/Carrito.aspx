@@ -41,8 +41,8 @@
             Tu carrito está vacío.
         </div>
         <% }
-        else
-        { %>
+            else
+            { %>
 
         <div class="row">
             <asp:Repeater ID="rptItemCarrito" runat="server">
@@ -94,4 +94,24 @@
 
         <% } %>
     </div>
+
+    <asp:ScriptManager ID="ScriptToast" runat="server" />
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="toastLogin" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Inicie sesión o regístrese para realizar la compra.
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function showToastLogin() {
+            var toastElement = document.getElementById('toastLogin');
+            var bsToast = new bootstrap.Toast(toastElement);
+            bsToast.show();
+        }
+    </script>
 </asp:Content>
