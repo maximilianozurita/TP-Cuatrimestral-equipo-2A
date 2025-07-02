@@ -11,6 +11,8 @@ namespace dominio
 {
     public static class Helper
     {
+        private static readonly string Key = "12345678901234567890123456789012"; //en entorno real me bajo un paquete de nuget, es el ejemplo mas sencillo que encontre en google
+        private static readonly string IV = "1234567890123456";
         public static bool VerificarUsuario(HttpSessionState Session, HttpResponse Response, params Permisos[] permisosRequeridos)
         {
             if (Session["usuario"] == null)
@@ -37,6 +39,8 @@ namespace dominio
             }
             return true;
         }
+
+        
         public static string HashPassword(string password)
         {
             using (SHA256 sha = SHA256.Create())
@@ -49,6 +53,38 @@ namespace dominio
                     sb.Append(b.ToString("x2"));
                 }
                 return sb.ToString();
+            }
+        }
+
+        //lei la docu y no entendi un pomo, es mas facil bajar un paquete pero los que baje crashearon no se por que
+        //se implemento y listo, igual la semilla deberia ser de variable de entorno pero bue, es para mostrar
+        public static string Encriptar(string texto)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(Key);
+                aes.IV = Encoding.UTF8.GetBytes(IV);
+                ICryptoTransform encryptor = aes.CreateEncryptor();
+
+                byte[] inputBytes = Encoding.UTF8.GetBytes(texto);
+                byte[] result = encryptor.TransformFinalBlock(inputBytes, 0, inputBytes.Length);
+
+                return Convert.ToBase64String(result);
+            }
+        }
+
+        public static string Desencriptar(string textoEncriptado)
+        {
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = Encoding.UTF8.GetBytes(Key);
+                aes.IV = Encoding.UTF8.GetBytes(IV);
+                ICryptoTransform decryptor = aes.CreateDecryptor();
+
+                byte[] inputBytes = Convert.FromBase64String(textoEncriptado);
+                byte[] result = decryptor.TransformFinalBlock(inputBytes, 0, inputBytes.Length);
+
+                return Encoding.UTF8.GetString(result);
             }
         }
     }

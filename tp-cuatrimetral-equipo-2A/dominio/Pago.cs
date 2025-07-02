@@ -7,5 +7,8 @@ namespace dominio
 {
     public class Pago
     {
+        public string CBU { get; set; }
+        public string Alias { get; set; }
+        public string Token { get; set; }
     }
 }

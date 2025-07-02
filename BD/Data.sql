@@ -176,3 +176,6 @@ VALUES
 (14, 4),
 (15, 3);
 GO
+INSERT INTO MediosDePago (Id, CBU, Alias, Token)
+VALUES (1, 'cbu', 'alias', 'token');
+GO
