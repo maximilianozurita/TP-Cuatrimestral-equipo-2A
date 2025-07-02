@@ -56,7 +56,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             if (RadioButtonMercadopago.Checked)
             {
 
-                MercadoPagoConfig.AccessToken = PagoNegocio.ObtenerTokenMercadopago();
+                MercadoPagoConfig.AccessToken = PagoNegocio.ObtenerPagos().Token;
                 var lista = new List<PreferenceItemRequest>();
                 carrito = (dominio.Carrito)Session["Carrito"];
                 carrito.Items.ForEach(item =>
