@@ -26,8 +26,7 @@ namespace negocio
             }
             catch (Exception ex)
             {
-                pago.Token = "APP_USR-5339864898656958-062915-7b25249619821e8e7a437d9b443377f3-1382826563";
-                return pago;
+                throw ex;
             }
             finally
             {

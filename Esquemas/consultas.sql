@@ -34,6 +34,6 @@ select i.ID,i.Usuario_ID,Producto_ID,FechaAgregado,Cantidad,
                     inner join Productos as p on p.ID = i.Producto_ID
                     where Usuario_ID = 2 and Cancelado = 0
 select * from imagenes
-select 
-
+select * from MediosDePago
+update MediosDePago set CBU='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=',Alias='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=',Token='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=' where id = 1; 
 

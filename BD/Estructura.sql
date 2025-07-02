@@ -107,8 +107,9 @@ CREATE TABLE Envios (
 GO
 CREATE TABLE MediosDePago(
 	Id INT PRIMARY KEY CHECK (Id = 1),
-   CBU VARCHAR(50),
-   Alias VARCHAR(100),
-   Token VARCHAR(255)
+   CBU VARCHAR(256),
+   Alias VARCHAR(256),
+   Token VARCHAR(256)
 );
 GO
+drop table MediosDePago
