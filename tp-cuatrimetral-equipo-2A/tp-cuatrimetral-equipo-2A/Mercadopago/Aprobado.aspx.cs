@@ -13,14 +13,33 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
+
             if (!IsPostBack)
             {
-                int id = int.Parse(Request.QueryString["external_reference"]);
-                VentaNegocio negocio = new VentaNegocio();
-                Venta venta = new Venta();
-                venta.FechaVenta = DateTime.Now;
+                Carrito carrito = (Carrito)Session["Carrito"];
+                Usuario usuario = (Usuario)Session["Usuario"];
+                if (carrito == null || carrito.Items.Count == 0 || usuario == null)
+                {
+                    Response.Redirect("../Default.aspx");
+                    return;
+                }
+                VentaNegocio ventaNegocio = new VentaNegocio();
+                Venta venta = new Venta
+                {
+                    SumaTotal = carrito.SumaTotal,
+                    FechaVenta = DateTime.Now,
+                    Usuario = usuario,
+                    VentaProducto = carrito.Items.Select(item => new VentaProducto
+                    {
+                        Producto = item.Producto,
+                        Cantidad = item.Cantidad,
+                        PrecioUnitario = (decimal)item.Producto.PrecioConDescuento
+                    }).ToList()
+                };
+                ventaNegocio.CrearVenta(venta);
             }
+
 
         }
     }
