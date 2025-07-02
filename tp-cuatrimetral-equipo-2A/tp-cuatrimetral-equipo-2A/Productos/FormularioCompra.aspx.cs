@@ -121,7 +121,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 mensaje += $"<p>Monto: {carrito.SumaTotal.ToString("C2")}</p>";
                 emailService.SetMail(usuario.Email, "Confirmación de compra", mensaje);
                 emailService.SendMail();
-
+                Response.Redirect("../Mercadopago/Pendiente.aspx");
             }
 
 
