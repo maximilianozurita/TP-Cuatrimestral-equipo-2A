@@ -25,6 +25,7 @@ namespace tp_cuatrimetral_equipo_2A.Admin.Cobros
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
+            //faltan un par de validaciones
             Pago pago = new Pago();
             pago.Alias = txtAlias.Text;
             pago.Token = txtToken.Text;

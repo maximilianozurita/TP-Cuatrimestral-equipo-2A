@@ -104,6 +104,23 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             }
             else
             {
+                Usuario usuario = Session["Usuario"] as Usuario;
+                EmailService emailService = new EmailService();
+                string CBU =  PagoNegocio.ObtenerPagos().CBU;
+                string Alias = PagoNegocio.ObtenerPagos().Alias;
+                string mensaje = $"<h1>Gracias por su compra!</h1><p>El total de su compra es: {carrito.SumaTotal.ToString("C2")}</p>";
+                mensaje += "<p>Detalles de la compra:</p><ul>";
+                foreach (var item in carrito.Items)
+                {
+                    mensaje += $"<li>{item.Producto.Nombre} - Cantidad: {item.Cantidad} - Precio Unitario: {item.Producto.PrecioConDescuento.ToString("C2")}</li>";
+                }
+                mensaje += "</ul>";
+                mensaje += "<p>A continuacion le detallamos los datos de transferencia </p>";
+                mensaje += "<p>CBU:"+ CBU + "</p>";
+                mensaje += "<p>Alias: "+ Alias + "</p>";
+                mensaje += $"<p>Monto: {carrito.SumaTotal.ToString("C2")}</p>";
+                emailService.SetMail(usuario.Email, "Confirmación de compra", mensaje);
+                emailService.SendMail();
 
             }
 

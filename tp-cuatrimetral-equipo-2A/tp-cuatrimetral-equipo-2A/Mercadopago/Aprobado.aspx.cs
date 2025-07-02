@@ -17,7 +17,9 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
             if (!IsPostBack)
             {
                 int id = int.Parse(Request.QueryString["external_reference"]);
-                
+                VentaNegocio negocio = new VentaNegocio();
+                Venta venta = new Venta();
+                venta.FechaVenta = DateTime.Now;
             }
 
         }
