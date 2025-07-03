@@ -205,6 +205,20 @@ namespace negocio
             }
         }
 
+        public void CrearListaVenta(Venta venta)
+        {   
+            AccesoDatos datos = new AccesoDatos();
+            string values = "";
+            venta.VentaProducto.ForEach(x =>
+            {
+                values = values + "("+venta.ID+", "+x.Producto.ID+", "+x.Cantidad+", "+x.PrecioUnitario+"),";
+            });
+            values = values.TrimEnd(',');
+            datos.SetearConsulta("INSERT INTO VentasProducto (Venta_ID, Producto_ID, Cantidad, PrecioUnitario) VALUES " + values);
+            datos.EjecutarAccion();
+
+        }
+
         public int CambiarEstadoVenta(int ventaId, int estado)
         {
             AccesoDatos datos = new AccesoDatos();

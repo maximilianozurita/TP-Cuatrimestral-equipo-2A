@@ -15,8 +15,8 @@
                             <i class="bi bi-shop me-1"></i> Seguir comprando
                         </a>
 
-                        <a href="/Pedidos/MisPedidos.aspx" class="btn btn-success mt-4">
-                            <i class="bi bi-receipt me-1"></i> Ver mis pedidos
+                        <a href="/Productos/MisCompras.aspx" class="btn btn-success mt-4">
+                            <i class="bi bi-receipt me-1"></i> Ver mis Compras
                         </a>
                     </div>
                 </div>

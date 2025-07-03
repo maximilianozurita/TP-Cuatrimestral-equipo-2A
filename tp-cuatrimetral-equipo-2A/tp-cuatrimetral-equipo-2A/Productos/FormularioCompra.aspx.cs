@@ -70,6 +70,8 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             };
             VentaNegocio ventaNegocio = new VentaNegocio();
             int idVenta = ventaNegocio.CrearVenta(venta);
+            venta.ID = idVenta;
+            ventaNegocio.CrearListaVenta(venta);
             try
             {
                 if (RadioButtonMercadopago.Checked) MercadoPago(idVenta);
