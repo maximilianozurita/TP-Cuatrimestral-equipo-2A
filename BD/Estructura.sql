@@ -112,4 +112,4 @@ CREATE TABLE MediosDePago(
    Token VARCHAR(256)
 );
 GO
-drop table MediosDePago
+
