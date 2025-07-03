@@ -43,6 +43,6 @@ delete from VentasProducto
 delete from Envios
 use eCommerce
 ALTER TABLE Ventas
-DROP COLUMN Confirmado;
+ADD Estado INT DEFAULT 0;
 
 

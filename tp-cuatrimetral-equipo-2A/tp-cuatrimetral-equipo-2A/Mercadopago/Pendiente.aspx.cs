@@ -17,7 +17,9 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
 
             if (!IsPostBack)
             {
-                //poner venta como pendiente o no hacer nada creo
+                int idVenta = int.Parse(Request.QueryString["external_reference"]);
+                VentaNegocio ventaNegocio = new VentaNegocio();
+                ventaNegocio.CambiarEstadoVenta(idVenta, 10); // 0 es el estado de pendiente
             }
 
         }

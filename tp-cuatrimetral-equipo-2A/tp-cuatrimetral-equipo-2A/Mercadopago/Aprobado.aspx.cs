@@ -17,7 +17,9 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
 
             if (!IsPostBack)
             {
-                //poner venta como confirmado
+                int idVenta = int.Parse(Request.QueryString["external_reference"]);
+                VentaNegocio ventaNegocio = new VentaNegocio();
+                ventaNegocio.CambiarEstadoVenta(idVenta, 1); // 1 es el estado de aprobado
             }
 
 
