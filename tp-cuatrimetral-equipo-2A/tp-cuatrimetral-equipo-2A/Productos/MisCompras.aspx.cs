@@ -19,35 +19,41 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 {
                     return;
                 }
-                CargarEstadosEnvio();
                 CargarCompras();
+                cargarFiltroEstado();
             }
         }
-        private void CargarEstadosEnvio()
+
+        private void cargarFiltroEstado()
         {
-            EnvioNegocio envioNeg = new EnvioNegocio();
-            var estados = envioNeg.ListarEstadoEnvios();
-            ddlEstadoEnvio.DataSource = estados;
-            ddlEstadoEnvio.DataTextField = "Descripcion";
-            ddlEstadoEnvio.DataValueField = "ID";
-            ddlEstadoEnvio.DataBind();
-            ddlEstadoEnvio.Items.Insert(0, new ListItem("Todos", "0"));
+            ddlEstado.Items.Clear();
+            ddlEstado.Items.Add(new ListItem("Todos", "2"));
+            ddlEstado.Items.Add(new ListItem("Concretada", "1"));
+            ddlEstado.Items.Add(new ListItem("Pendiente", "0"));
+            ddlEstado.Items.Add(new ListItem("Cancelado", "-1"));
         }
+        
         private void CargarCompras()
         {
             VentaNegocio ventaNeg = new VentaNegocio();
             var usuario = (Usuario)Session["usuario"];
-            List<Venta> compras = ventaNeg.ListarComprasPorUsuario(usuario.ID);
-
+            List<Venta> compras = ventaNeg.ComprasPorUsuario(usuario.ID);
+            ventaNeg.CargaDetalleCompra(compras);
             if (DateTime.TryParse(txtFechaDesde.Text, out DateTime desde))
                 compras = compras.Where(c => c.FechaVenta >= desde).ToList();
 
             if (DateTime.TryParse(txtFechaHasta.Text, out DateTime hasta))
                 compras = compras.Where(c => c.FechaVenta <= hasta).ToList();
 
-            int estadoSeleccionado = int.Parse(ddlEstadoEnvio.SelectedValue);
-            if (estadoSeleccionado != 0)
-                compras = compras.Where(c => c.Envio?.EstadoEnvio?.ID == estadoSeleccionado).ToList();
+            
+            if (int.TryParse(ddlEstado.SelectedValue, out int estadoSeleccionado))
+            {
+                if (estadoSeleccionado != 2)
+                {
+                    compras = compras.Where(c => c.Estado == estadoSeleccionado).ToList();
+                }
+            }
+
 
             if (compras != null && compras.Count > 0)
             {

@@ -239,7 +239,7 @@ namespace negocio
             }
         }
 
-        public List<Venta> VentasPorUsuario(int usuarioId)
+        public List<Venta> ComprasPorUsuario(int usuarioId)
         {
             List<Venta> lista = new List<Venta>();
             AccesoDatos datos = new AccesoDatos();
@@ -271,7 +271,7 @@ namespace negocio
             }
         }
 
-        public void CargaDetalleVenta(List<Venta> ventas)
+        public void CargaDetalleCompra(List<Venta> ventas)
         {
             AccesoDatos datos = new AccesoDatos();
             try
