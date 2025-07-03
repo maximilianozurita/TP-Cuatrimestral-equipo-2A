@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.WebPages;
 
 namespace tp_cuatrimetral_equipo_2A.Mercadopago
 {
@@ -16,7 +17,12 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
 
             if (!IsPostBack)
             {
-                int idVenta = int.Parse(Request.QueryString["external_reference"]);
+                string MercadoReferencia = Request.QueryString["external_reference"];
+                if (MercadoReferencia.IsEmpty())
+                {
+                    return;
+                }
+                int idVenta = int.Parse(MercadoReferencia);
                 VentaNegocio ventaNegocio = new VentaNegocio();
                 ventaNegocio.CambiarEstadoVenta(idVenta, -1); // -1 es el estado de rechazado
             }

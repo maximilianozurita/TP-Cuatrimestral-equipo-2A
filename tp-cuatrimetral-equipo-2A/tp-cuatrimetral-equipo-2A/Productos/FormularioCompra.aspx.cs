@@ -70,64 +70,73 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             };
             VentaNegocio ventaNegocio = new VentaNegocio();
             int idVenta = ventaNegocio.CrearVenta(venta);
-
-            if (RadioButtonMercadopago.Checked)
+            try
             {
-                MercadoPagoConfig.AccessToken = PagoNegocio.ObtenerPagos().Token;
-                var lista = new List<PreferenceItemRequest>();
-                carrito.Items.ForEach(item =>
+                if (RadioButtonMercadopago.Checked) MercadoPago(idVenta);
+                else Transferencia(idVenta);
+            }
+            catch
+            {
+                ventaNegocio.CambiarEstadoVenta(idVenta, -1);
+            }
+            
+
+
+        }
+        private void MercadoPago(int idVenta)
+        {
+            MercadoPagoConfig.AccessToken = PagoNegocio.ObtenerPagos().Token;
+            var lista = new List<PreferenceItemRequest>();
+            carrito.Items.ForEach(item =>
+            {
+                lista.Add(new PreferenceItemRequest
                 {
-                    lista.Add(new PreferenceItemRequest
-                    {
-                        Title = item.Producto.Nombre,
-                        Quantity = item.Cantidad,
-                        CurrencyId = "ARS",
-                        UnitPrice = (Decimal)item.Producto.PrecioConDescuento
-                    });
+                    Title = item.Producto.Nombre,
+                    Quantity = item.Cantidad,
+                    CurrencyId = "ARS",
+                    UnitPrice = (Decimal)item.Producto.PrecioConDescuento
                 });
-                
-                var request = new PreferenceRequest
-                {
-                    Items = lista,
-                    BackUrls = new PreferenceBackUrlsRequest
-                    {
-                        Success = "https://localhost:44324/Mercadopago/Aprobado.aspx",
-                        Failure = "https://localhost:44324/Mercadopago/Rechazado.aspx",
-                        Pending = "https://localhost:44324/Mercadopago/Pendiente.aspx"
-                    },
-                    AutoReturn = "approved",
-                    ExternalReference = idVenta.ToString()
+            });
 
-                };
-
-                var client = new PreferenceClient();
-                Preference preference = client.CreateAsync(request).Result;
-                Response.Redirect($"{preference.InitPoint}");
-            }
-            else
+            var request = new PreferenceRequest
             {
-                
-                EmailService emailService = new EmailService();
-                string CBU =  PagoNegocio.ObtenerPagos().CBU;
-                string Alias = PagoNegocio.ObtenerPagos().Alias;
-                string mensaje = $"<h1>Gracias por su compra!</h1><p>El total de su compra es: {carrito.SumaTotal.ToString("C2")}</p>";
-                mensaje += "<p>Detalles de la compra:</p><ul>";
-                foreach (var item in carrito.Items)
+                Items = lista,
+                BackUrls = new PreferenceBackUrlsRequest
                 {
-                    mensaje += $"<li>{item.Producto.Nombre} - Cantidad: {item.Cantidad} - Precio Unitario: {item.Producto.PrecioConDescuento.ToString("C2")}</li>";
-                }
-                mensaje += "</ul>";
-                mensaje += "<p>A continuacion le detallamos los datos de transferencia </p>";
-                mensaje += "<p>CBU:"+ CBU + "</p>";
-                mensaje += "<p>Alias: "+ Alias + "</p>";
-                mensaje += $"<p>Monto: {carrito.SumaTotal.ToString("C2")}</p>";
-                mensaje += $"<p>codigo de venta : {idVenta}</p>";
-                emailService.SetMail(usuario.Email, "Confirmación de compra", mensaje);
-                emailService.SendMail();
-                Response.Redirect("../Mercadopago/Pendiente.aspx");
+                    Success = "https://localhost:44324/Mercadopago/Aprobado.aspx",
+                    Failure = "https://localhost:44324/Mercadopago/Rechazado.aspx",
+                    Pending = "https://localhost:44324/Mercadopago/Pendiente.aspx"
+                },
+                AutoReturn = "approved",
+                ExternalReference = idVenta.ToString()
+
+            };
+
+            var client = new PreferenceClient();
+            Preference preference = client.CreateAsync(request).Result;
+            Response.Redirect($"{preference.InitPoint}");
+        }
+
+        private void Transferencia(int idVenta)
+        {
+            EmailService emailService = new EmailService();
+            string CBU = PagoNegocio.ObtenerPagos().CBU;
+            string Alias = PagoNegocio.ObtenerPagos().Alias;
+            string mensaje = $"<h1>Gracias por su compra!</h1><p>El total de su compra es: {carrito.SumaTotal.ToString("C2")}</p>";
+            mensaje += "<p>Detalles de la compra:</p><ul>";
+            foreach (var item in carrito.Items)
+            {
+                mensaje += $"<li>{item.Producto.Nombre} - Cantidad: {item.Cantidad} - Precio Unitario: {item.Producto.PrecioConDescuento.ToString("C2")}</li>";
             }
-
-
+            mensaje += "</ul>";
+            mensaje += "<p>A continuacion le detallamos los datos de transferencia </p>";
+            mensaje += "<p>CBU:" + CBU + "</p>";
+            mensaje += "<p>Alias: " + Alias + "</p>";
+            mensaje += $"<p>Monto: {carrito.SumaTotal.ToString("C2")}</p>";
+            mensaje += $"<p>codigo de venta : {idVenta}</p>";
+            emailService.SetMail(usuario.Email, "Confirmación de compra", mensaje);
+            emailService.SendMail();
+            Response.Redirect("../Mercadopago/Pendiente.aspx");
         }
         public void btnVolver_Click(object sender, EventArgs e)
         {
