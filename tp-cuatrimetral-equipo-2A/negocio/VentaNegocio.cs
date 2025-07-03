@@ -239,5 +239,65 @@ namespace negocio
             }
         }
 
+        public List<Venta> VentasPorUsuario(int usuarioId)
+        {
+            List<Venta> lista = new List<Venta>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("SELECT * FROM Ventas WHERE Usuario_ID = @usuarioId");
+                datos.SetearParametros("@usuarioId", usuarioId);
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Venta venta = new Venta
+                    {
+                        ID = (int)datos.Lector["ID"],
+                        SumaTotal = Convert.ToSingle(datos.Lector["SumaTotal"]),
+                        FechaVenta = (DateTime)datos.Lector["FechaVenta"],
+                        Estado = datos.Lector["Estado"] is DBNull ? 0 : (int)datos.Lector["Estado"]
+                    };
+                    lista.Add(venta);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public void CargaDetalleVenta(List<Venta> ventas)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                foreach (var venta in ventas)
+                {
+                    venta.VentaProducto = ListarProductosDeVenta(venta.ID);
+                    if (venta.Envio == null)
+                    {
+                        venta.Envio = new Envio();
+                    }
+                    if (venta.Envio.EstadoEnvio == null)
+                    {
+                        venta.Envio.EstadoEnvio = new EstadoEnvio();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
     }
 }
