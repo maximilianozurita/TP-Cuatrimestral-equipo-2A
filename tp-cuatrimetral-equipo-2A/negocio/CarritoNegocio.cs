@@ -47,12 +47,12 @@ namespace negocio
                     carrito.Total();
                     carrito.Items = lista;
                     carrito.UsuarioID = UsuarioId;
+                    carrito.Total();
                 }
                 else
                 {
                     carrito = null;
                 }
-                carrito.Total();
                 return carrito;
             }
             catch (Exception ex)

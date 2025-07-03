@@ -7,33 +7,7 @@
     <div class="container my-5">
         <h2 class="text-center mb-4">Carrito de Compras</h2>
 
-        <asp:Panel ID="pnlFiltros" runat="server" CssClass="card p-3 shadow-sm mb-4">
-            <div class="row g-3 align-items-end">
-                <div class="col-md-3">
-                    <label for="txtNombre" class="form-label">Nombre</label>
-                    <asp:TextBox ID="txtNombre" runat="server" CssClass="form-control" />
-                </div>
-                <div class="col-md-2">
-                    <label for="txtPrecioMin" class="form-label">Precio Mín</label>
-                    <asp:TextBox ID="txtPrecioMin" runat="server" CssClass="form-control" TextMode="Number" />
-                </div>
-                <div class="col-md-2">
-                    <label for="txtPrecioMax" class="form-label">Precio Máx</label>
-                    <asp:TextBox ID="txtPrecioMax" runat="server" CssClass="form-control" TextMode="Number" />
-                </div>
-                <div class="col-md-2">
-                    <label for="ddlMarca" class="form-label">Marca</label>
-                    <asp:DropDownList ID="ddlMarca" runat="server" CssClass="form-select" />
-                </div>
-                <div class="col-md-2">
-                    <label for="ddlCategoria" class="form-label">Categoría</label>
-                    <asp:DropDownList ID="ddlCategoria" runat="server" CssClass="form-select" />
-                </div>
-                <div class="col-md-1 text-end">
-                    <asp:Button ID="btnFiltrar" runat="server" Text="Filtrar" CssClass="btn btn-primary mt-1" OnClick="btnFiltrar_Click" />
-                </div>
-            </div>
-        </asp:Panel>
+        
 
         <% if (rptItemCarrito.DataSource == null)
             { %>
