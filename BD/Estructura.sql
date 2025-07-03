@@ -55,7 +55,7 @@ CREATE TABLE Ventas (
 	Usuario_ID INT,
 	SumaTotal DECIMAL(18, 2),
 	FechaVenta DATETIME,
-	Confirmado Bit Default 0,
+	Estado INT Default 0,
 	CONSTRAINT FK_Ventas_Usuarios FOREIGN KEY (Usuario_ID) REFERENCES Usuarios(ID)
 );
 go

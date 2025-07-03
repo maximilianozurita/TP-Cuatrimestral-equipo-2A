@@ -18,6 +18,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
     public partial class FormularioCompra : System.Web.UI.Page
     {
         public dominio.Carrito carrito = null;
+        public dominio.Usuario usuario = null;
         protected void Page_Load(object sender, EventArgs e)
         {
             carrito = (dominio.Carrito)Session["Carrito"];
@@ -53,12 +54,27 @@ namespace tp_cuatrimetral_equipo_2A.Productos
 
         public void btnConfirmarCompra_Click(object sender, EventArgs e)
         {
+            usuario = Session["Usuario"] as Usuario;
+            carrito = Session["Carrito"] as dominio.Carrito;
+            Venta venta = new Venta
+            {
+                SumaTotal = carrito.SumaTotal,
+                FechaVenta = DateTime.Now,
+                Usuario = (Usuario)Session["Usuario"],
+                VentaProducto = carrito.Items.Select(item => new VentaProducto
+                {
+                    Producto = item.Producto,
+                    Cantidad = item.Cantidad,
+                    PrecioUnitario = (decimal)item.Producto.PrecioConDescuento
+                }).ToList()
+            };
+            VentaNegocio ventaNegocio = new VentaNegocio();
+            int idVenta = ventaNegocio.CrearVenta(venta);
+
             if (RadioButtonMercadopago.Checked)
             {
-
                 MercadoPagoConfig.AccessToken = PagoNegocio.ObtenerPagos().Token;
                 var lista = new List<PreferenceItemRequest>();
-                carrito = (dominio.Carrito)Session["Carrito"];
                 carrito.Items.ForEach(item =>
                 {
                     lista.Add(new PreferenceItemRequest
@@ -69,21 +85,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                         UnitPrice = (Decimal)item.Producto.PrecioConDescuento
                     });
                 });
-                Venta venta = new Venta
-                {
-                    SumaTotal = carrito.SumaTotal,
-                    FechaVenta = DateTime.Now,
-                    Usuario = (Usuario)Session["Usuario"],
-                    VentaProducto = carrito.Items.Select(item => new VentaProducto
-                    {
-                        Producto = item.Producto,
-                        Cantidad = item.Cantidad,
-                        PrecioUnitario = (decimal)item.Producto.PrecioConDescuento
-                    }).ToList()
-                };
-                VentaNegocio ventaNegocio = new VentaNegocio();
-                int idVenta = ventaNegocio.CrearVenta(venta);
-
+                
                 var request = new PreferenceRequest
                 {
                     Items = lista,
@@ -104,7 +106,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             }
             else
             {
-                Usuario usuario = Session["Usuario"] as Usuario;
+                
                 EmailService emailService = new EmailService();
                 string CBU =  PagoNegocio.ObtenerPagos().CBU;
                 string Alias = PagoNegocio.ObtenerPagos().Alias;
@@ -119,6 +121,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 mensaje += "<p>CBU:"+ CBU + "</p>";
                 mensaje += "<p>Alias: "+ Alias + "</p>";
                 mensaje += $"<p>Monto: {carrito.SumaTotal.ToString("C2")}</p>";
+                mensaje += $"<p>codigo de venta : {idVenta}</p>";
                 emailService.SetMail(usuario.Email, "Confirmación de compra", mensaje);
                 emailService.SendMail();
                 Response.Redirect("../Mercadopago/Pendiente.aspx");

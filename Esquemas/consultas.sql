@@ -35,5 +35,14 @@ select i.ID,i.Usuario_ID,Producto_ID,FechaAgregado,Cantidad,
                     where Usuario_ID = 2 and Cancelado = 0
 select * from imagenes
 select * from MediosDePago
-update MediosDePago set CBU='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=',Alias='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=',Token='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=' where id = 1; 
+update MediosDePago set CBU='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=',Alias='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=',Token='UKq+orEO7FqKoR4PTBH8okdDnDnbjtRvaCwCmG+CzO1TMfCIcnMItDpWf+ySAjaI6TXi0Pl74GMj1N9h8jR/htvDBrePvQQ4+foXDKKXtJM=' where id = 1;
+
+select * from ventas
+delete from ventas
+delete from VentasProducto
+delete from Envios
+use eCommerce
+ALTER TABLE Ventas
+DROP COLUMN Confirmado;
+
 

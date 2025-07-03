@@ -18,7 +18,7 @@ namespace negocio
                 string consulta = @"
                     SELECT v.ID, v.SumaTotal, v.FechaVenta,
                         " + Usuario.Columnas("u") + @"
-                        , e.ID AS EnvioID, e.Estado_envio_ID,
+                        , e.ID AS EnvioID, e.Estado_envio_ID, e.Estado,
                         ee.Descripcion AS EstadoEnvioDescripcion, ee.FechaBaja AS EstadoEnvioFechaBaja
                     FROM Ventas v
                     JOIN Usuarios u ON (v.Usuario_ID = u.ID)
@@ -131,6 +131,7 @@ namespace negocio
             venta.FechaVenta = (DateTime)datos.Lector["FechaVenta"];
             venta.Usuario = datos.Lector["usuarioID"] != DBNull.Value ? userNeg.InicializarObjeto(datos) : null;
             venta.VentaProducto = ListarProductosDeVenta((int)datos.Lector["ID"]);
+            venta.Estado = datos.Lector["Estado"] is DBNull ? 0 : (int)datos.Lector["Estado"];
 
             Envio envio = new Envio();
             envio.ID = (int)datos.Lector["EnvioID"];
@@ -192,6 +193,26 @@ namespace negocio
                 datos.SetearParametros("@usuarioId", venta.Usuario.ID);
                 datos.SetearParametros("@sumaTotal", venta.SumaTotal);
                 datos.SetearParametros("@fechaVenta", venta.FechaVenta);
+                return datos.EjecutarAccionAndReturnId();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.CerrarConexion();
+            }
+        }
+
+        public int CambiarEstadoVenta(int ventaId, int estadoEnvioId)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta("UPDATE Envios SET Estado_envio_ID = @estadoEnvioId WHERE Venta_ID = @ventaId");
+                datos.SetearParametros("@estadoEnvioId", estadoEnvioId);
+                datos.SetearParametros("@ventaId", ventaId);
                 return datos.EjecutarAccionAndReturnId();
             }
             catch (Exception ex)

@@ -11,7 +11,7 @@ namespace dominio
         public Usuario Usuario { get; set; }
         public float SumaTotal { get; set; }
         public DateTime FechaVenta { get; set; }
-        public bool Confirmada { get; set; } = false;
+        public int Estado { get; set; } = 0;
         public List<VentaProducto> VentaProducto { get; set; } = new List<VentaProducto>();
         public Envio Envio { get; set; }
     }

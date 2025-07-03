@@ -16,7 +16,7 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
 
             if (!IsPostBack)
             {
-
+                //poner venta como rechazada
             }
 
         }
