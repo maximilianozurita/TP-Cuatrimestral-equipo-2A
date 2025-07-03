@@ -210,7 +210,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("UPDATE Venta SET Estado = @estado WHERE ID = @ventaId");
+                datos.SetearConsulta("UPDATE Ventas SET Estado = @estado WHERE ID = @ventaId");
                 datos.SetearParametros("@estado", estado);
                 datos.SetearParametros("@ventaId", ventaId);
                 return datos.EjecutarAccionAndReturnId();
