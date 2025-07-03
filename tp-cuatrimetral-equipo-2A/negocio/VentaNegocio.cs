@@ -205,13 +205,13 @@ namespace negocio
             }
         }
 
-        public int CambiarEstadoVenta(int ventaId, int estadoEnvioId)
+        public int CambiarEstadoVenta(int ventaId, int estado)
         {
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("UPDATE Envios SET Estado_envio_ID = @estadoEnvioId WHERE Venta_ID = @ventaId");
-                datos.SetearParametros("@estadoEnvioId", estadoEnvioId);
+                datos.SetearConsulta("UPDATE Venta SET Estado = @estado WHERE ID = @ventaId");
+                datos.SetearParametros("@estado", estado);
                 datos.SetearParametros("@ventaId", ventaId);
                 return datos.EjecutarAccionAndReturnId();
             }
