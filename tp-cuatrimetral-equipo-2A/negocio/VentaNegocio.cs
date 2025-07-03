@@ -189,7 +189,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.SetearConsulta("INSERT INTO Ventas (Usuario_ID, SumaTotal, FechaVenta) OUTPUT INSERTED.ID VALUES (@usuarioId, @sumaTotal, @fechaVenta)");
+                datos.SetearConsulta("INSERT INTO Ventas (Usuario_ID, SumaTotal, FechaVenta, Estado) OUTPUT INSERTED.ID VALUES (@usuarioId, @sumaTotal, @fechaVenta,0)");
                 datos.SetearParametros("@usuarioId", venta.Usuario.ID);
                 datos.SetearParametros("@sumaTotal", venta.SumaTotal);
                 datos.SetearParametros("@fechaVenta", venta.FechaVenta);
