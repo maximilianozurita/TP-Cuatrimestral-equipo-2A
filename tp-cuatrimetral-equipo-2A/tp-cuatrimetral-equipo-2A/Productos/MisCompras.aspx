@@ -48,7 +48,7 @@
 
                     <div class="card-body">
 
-                        <div class="mb-3">
+                        <div class="mb-3"> Estado de compra: 
                             <%#
                                  (Convert.ToInt32(Eval("Estado")) == -1)
                                      ? "<span class='badge bg-danger text-white'><i class='bi bi-x-circle me-1'></i>Cancelado</span>"
@@ -57,7 +57,10 @@
                                  : "<span class='badge bg-success text-white'><i class='bi bi-check-circle me-1'></i>Concretada</span>"
                             %>
                         </div>
-
+                        
+                        <div class="mb-3">
+                            <strong>Estado de Envío:</strong> <%# Eval("Envio.EstadoEnvio.Descripcion") ?? "Sin estado" %>
+                        </div>
                         <asp:Repeater ID="rptProductos" runat="server" DataSource='<%# Eval("VentaProducto") %>'>
                             <ItemTemplate>
                                 <div class="d-flex justify-content-between border-bottom py-2">

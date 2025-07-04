@@ -16,9 +16,9 @@ namespace negocio
             try
             {
                 string consulta = @"
-                    SELECT v.ID, v.SumaTotal, v.FechaVenta,
+                    SELECT v.ID, v.SumaTotal, v.FechaVenta, v.Estado,
                         " + Usuario.Columnas("u") + @"
-                        , e.ID AS EnvioID, e.Estado_envio_ID, e.Estado,
+                        , e.ID AS EnvioID, e.Estado_envio_ID,
                         ee.Descripcion AS EstadoEnvioDescripcion, ee.FechaBaja AS EstadoEnvioFechaBaja
                     FROM Ventas v
                     JOIN Usuarios u ON (v.Usuario_ID = u.ID)
@@ -55,7 +55,7 @@ namespace negocio
             try
             {
                 datos.SetearConsulta(@"
-                    SELECT v.ID, v.SumaTotal, v.FechaVenta,
+                    SELECT v.ID, v.SumaTotal, v.FechaVenta, v.Estado,
                         " + Usuario.Columnas("u") + @"
                         , e.ID AS EnvioID, e.Estado_envio_ID,
                         ee.Descripcion AS EstadoEnvioDescripcion,
@@ -92,7 +92,7 @@ namespace negocio
             try
             {
                 datos.SetearConsulta(@"
-                    SELECT v.ID, v.SumaTotal, v.FechaVenta,
+                    SELECT v.ID, v.SumaTotal, v.FechaVenta, v.Estado,
                            e.ID AS Estado_envio_ID, e.Descripcion AS EstadoEnvioDescripcion, e.FechaBaja as EstadoEnvioFechaBaja,
                            en.ID AS EnvioID, 
                           " + Usuario.Columnas("u") + @"

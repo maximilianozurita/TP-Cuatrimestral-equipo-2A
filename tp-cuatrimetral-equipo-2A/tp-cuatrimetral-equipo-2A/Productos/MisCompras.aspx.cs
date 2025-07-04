@@ -37,7 +37,7 @@ namespace tp_cuatrimetral_equipo_2A.Productos
         {
             VentaNegocio ventaNeg = new VentaNegocio();
             var usuario = (Usuario)Session["usuario"];
-            List<Venta> compras = ventaNeg.ComprasPorUsuario(usuario.ID);
+            List<Venta> compras = ventaNeg.ListarComprasPorUsuario(usuario.ID);
             ventaNeg.CargaDetalleCompra(compras);
             if (DateTime.TryParse(txtFechaDesde.Text, out DateTime desde))
                 compras = compras.Where(c => c.FechaVenta >= desde).ToList();
