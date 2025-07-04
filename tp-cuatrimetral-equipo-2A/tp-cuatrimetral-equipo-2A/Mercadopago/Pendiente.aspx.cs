@@ -25,7 +25,7 @@ namespace tp_cuatrimetral_equipo_2A.Mercadopago
                 }
                 int idVenta = int.Parse(MercadoReferencia);
                 VentaNegocio ventaNegocio = new VentaNegocio();
-                ventaNegocio.CambiarEstadoVenta(idVenta, 10); // 0 es el estado de pendiente
+                ventaNegocio.CambiarEstadoVenta(idVenta, 0); // 0 es el estado de pendiente
             }
 
         }

@@ -82,8 +82,6 @@ namespace tp_cuatrimetral_equipo_2A.Productos
                 ventaNegocio.CambiarEstadoVenta(idVenta, -1);
             }
             
-
-
         }
         private void MercadoPago(int idVenta)
         {
@@ -138,7 +136,9 @@ namespace tp_cuatrimetral_equipo_2A.Productos
             mensaje += $"<p>codigo de venta : {idVenta}</p>";
             emailService.SetMail(usuario.Email, "Confirmación de compra", mensaje);
             emailService.SendMail();
-            Response.Redirect("../Mercadopago/Pendiente.aspx");
+            Response.Redirect("../Mercadopago/Pendiente.aspx", false);
+            HttpContext.Current.ApplicationInstance.CompleteRequest();
+            return;
         }
         public void btnVolver_Click(object sender, EventArgs e)
         {

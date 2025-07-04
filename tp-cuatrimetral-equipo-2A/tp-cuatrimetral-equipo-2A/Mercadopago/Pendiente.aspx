@@ -10,8 +10,8 @@
                         <i class="bi bi-hourglass-split text-warning" style="font-size: 4rem;"></i>
                         <h2 class="card-title mt-3 mb-2">Pago pendiente</h2>
                         <p class="card-text fs-5 text-muted">Estamos procesando tu pago. Te notificaremos por email cuando se confirme.</p>
-                        <a href="/Pedidos/MisPedidos.aspx" class="btn btn-warning mt-4">
-                            <i class="bi bi-clock-history me-1"></i> Ver estado del pedido
+                        <a href="/Productos/MisCompras.aspx" class="btn btn-warning mt-4">
+                            <i class="bi bi-clock-history me-1"></i> Ver estado de la Compra
                         </a>
                     </div>
                 </div>

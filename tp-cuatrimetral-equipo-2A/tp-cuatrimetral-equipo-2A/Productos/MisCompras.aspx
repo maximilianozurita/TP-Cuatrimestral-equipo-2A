@@ -82,7 +82,7 @@
 
         <asp:Panel ID="pnlSinCompras" runat="server" Visible="false">
             <div class="alert alert-info text-center">
-                Aún no realizaste ninguna compra.
+                No Hay ninguna compra.
             </div>
         </asp:Panel>
     </div>
